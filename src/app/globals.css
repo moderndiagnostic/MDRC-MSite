@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ✅ IMPORTANT */
+@layer utilities {
+  .gradient-blue {
+    background: linear-gradient(90deg, #1160A5 0%, #189ED3 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-blue-2 {
+    background: linear-gradient(90deg, #189ED3 0%, #1AB0E5 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-light-blue {
+    background: linear-gradient(180deg, #FFFFFF 0%, #E6F8FF 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-light-blue-2 {
+    background: linear-gradient(180deg, #E6F8FF 0%, #FFFFFF 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-light-green {
+    background: linear-gradient(90deg, #D5FFF2 0%, #FFFFFF 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-light-gray {
+    background: linear-gradient(180deg, #EAEAEA 0%, #FFFFFF 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-light-gray-2 {
+    background: linear-gradient(180deg, #FFFFFF 0%, #EAEAEA 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-red {
+    background: linear-gradient(90deg, #E22128 0%, #FF5158 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-green {
+    background: linear-gradient(90deg, #05AF79 0%, #0ECE91 100%);
+  }
+}
+
+.bg-dark-blue {
+  background: #005C96;
+}
+
+.tx-blue {
+  color: #1160A5;
+}
+
+.tx-light-blue {
+  color: #189ED3;
+}
+
+.tx-green {
+  color: #05AF79;
+}
+
+.tx-gray-footer {
+  color: #808080;
+}
+
+/* Pointer cursor for all clickable elements */
+a,
+button {
+  cursor: pointer;
+}
+
+/* Optional: smoother UX */
+a:hover,
+button:hover {
+  opacity: 0.9;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a:hover,
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled,
+a.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #00b266;
+  outline-offset: 2px;
+}
+
+#datepicker-portal {
+  position: relative;
+  z-index: 9999;
+}
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.lab-service-content h3 {
+  margin-bottom: 10px !important;
+  font-size: 28px;
+  line-height: 36px;
+  color: #050748;
+  font-weight: inherit;
+}
+
+.lab-service-content h4 {
+  margin-bottom: 10px !important;
+  font-size: 20px;
+  line-height: 32px;
+  color: #050748;
+  font-weight: inherit;
+}
+
+.lab-service-content ul {
+  list-style: disc;
+  margin-bottom: 15px;
+  text-align: left !important;
+}
+
+.lab-service-content ul li {
+  margin: 10px 0px 0px 20px;
+  color: #000;
+  font-size: 19px;
+}
+
+.lab-service-content p {
+  font-size: 16px !important;
+  color: #000;
+  margin-bottom: 15px !important;
+}
+
+.service-swiper .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: #d1d5db;
+  opacity: 1;
+  margin: 0 6px !important;
+}
+
+.service-swiper .swiper-pagination-bullet-active {
+  background: #2563eb;
+}
+
+/* Hide arrows for Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #fafafa; /* dark navy */
+  border-radius: 10px;
+}
+
+/* Thumb (scroll handle) */
+::-webkit-scrollbar-thumb {
+  background: #1160A5; /* blue */
+  border-radius: 10px;
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: #1160A5; /* darker blue */
+}
