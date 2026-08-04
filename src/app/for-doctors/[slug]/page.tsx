@@ -219,7 +219,7 @@ const DynamicPage = () => {
               <div className="flex gap-4 items-center">
                 <img src="/assets/images/icon/labs.svg" className="" />
                 <div>
-                  <p className="font-semibold tx-light-blue ">21+</p>
+                  <p className="font-semibold tx-light-blue ">30+</p>
                   <p className="text-sm text-gray-500">Labs in India</p>
                 </div>
               </div>
