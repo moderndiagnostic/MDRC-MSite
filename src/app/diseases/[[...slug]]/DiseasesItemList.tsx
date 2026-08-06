@@ -458,7 +458,7 @@ export default function DiseasesItemList() {
               >
                 <img src="/assets/images/logo/call.svg" alt="call" />
                 <div>
-                  <h4 className="text-[16px] tx-blue font-semibold">
+                  <h4 className="text-[14px] tx-blue font-semibold">
                     Unable To Find The Right Test/Scan ?
                   </h4>
                   <p className="text-sm font-medium tx-blue">
