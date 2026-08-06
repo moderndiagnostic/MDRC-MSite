@@ -81,7 +81,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
               inset: 0;
               background-color: #E0E0E0;
               overflow: hidden;
-              z-index: 20;
+              z-index: 21;
             }
             .shimmer-beam {
               position: absolute;
