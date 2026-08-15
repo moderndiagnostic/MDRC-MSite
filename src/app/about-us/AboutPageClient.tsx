@@ -289,7 +289,7 @@ export default function AboutPageClient({ params }: AboutPageProps) {
               </h3>
 
               <p className="text-sm text-gray-600 leading-relaxed">
-                MDRC Diagnostic centre at Sector 44, Gurugram and our Reference
+                MDRC Diagnostic centre at Sector 40, Gurugram and our Reference
                 Lab at New Railway Road, Gurugram are NABH accredited.
               </p>
 
