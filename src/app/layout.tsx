@@ -1,5 +1,6 @@
 
 import "./globals.css";
+import { Suspense } from "react";
 import { Roboto } from "next/font/google";
 import Script from "next/script";
 import { UserProvider } from "@/context/userContext";
@@ -57,7 +58,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div className="w-full max-w-[430px] bg-white">
                   <Header />
                   <main>{children}</main>
-                  <ModalWrapper />
+                  <Suspense fallback={null}>
+                    <ModalWrapper />
+                  </Suspense>
                   <Footer />
                 </div>
 
