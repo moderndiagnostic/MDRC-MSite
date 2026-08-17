@@ -1,15 +1,35 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { dashboardService } from "@/services/dashboardService";
 import { useUser } from "@/context/userContext";
 import { useCity } from "@/context/CityContext";
+import { DASHBOARD_STORAGE_KEY } from "@/constants/city";
 
 type DashboardContextType = {
   homeData: any;
   loading: boolean;
   error: string;
   refetch: () => void;
+};
+
+const EMPTY_HOME_DATA = {
+  banner: [],
+  diseases: [],
+  category: [],
+  items: [],
+  cityDetail: null,
+  popular_category: [],
+  healthTestAndPackages: [],
+  radiologyAndImagingTest: [],
+  pathologyCatAndItem: [],
+  homeHealthTestsBanner: [],
+  meta_title: "",
+  meta_keyword: "",
+  meta_description: "",
+  meta_schema: "",
+  favicon: "",
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);
@@ -22,6 +42,29 @@ export const useDashboard = () => {
   return ctx;
 };
 
+const cacheKey = (cityId: string, userId?: string) =>
+  `${DASHBOARD_STORAGE_KEY}_${cityId}_${userId || "guest"}`;
+
+const readDashboardCache = (cityId: string, userId?: string) => {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(cacheKey(cityId, userId));
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
+
+const writeDashboardCache = (
+  cityId: string,
+  userId: string | undefined,
+  data: any,
+) => {
+  try {
+    sessionStorage.setItem(cacheKey(cityId, userId), JSON.stringify(data));
+  } catch {}
+};
+
 export const DashboardProvider = ({
   children,
 }: {
@@ -29,25 +72,10 @@ export const DashboardProvider = ({
 }) => {
   const { user } = useUser();
   const { cityDetails, updateCityDetails } = useCity();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
-  const [homeData, setHomeData] = useState<any>({
-    banner: [],
-    diseases: [],
-    category: [],
-    items: [],
-    cityDetail: null,
-    popular_category: [],
-    healthTestAndPackages: [],
-    radiologyAndImagingTest: [],
-    pathologyCatAndItem: [],
-    homeHealthTestsBanner: [],
-    meta_title: "",
-    meta_keyword: "",
-    meta_description: "",
-    meta_schema: "",
-    favicon: "",
-  });
-
+  const [homeData, setHomeData] = useState<any>(EMPTY_HOME_DATA);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const loadingRef = useRef(false);
@@ -71,14 +99,18 @@ export const DashboardProvider = ({
       const response = await dashboardService.getDashboardData(payload);
 
       if (response?.msgCode === "1") {
-        setHomeData(response.result || []);
+        const result = response.result || [];
+        setHomeData(result);
+        writeDashboardCache(cityDetails.id, user?.userID, result);
 
-        const apiCityDetail = response.result.cityDetail;
+        const apiCityDetail = result.cityDetail;
         if (apiCityDetail?.id && apiCityDetail.id !== cityDetails.id) {
           updateCityDetails(apiCityDetail);
         }
 
-        localStorage.setItem("videourl", response.result.video_url);
+        if (result.video_url) {
+          localStorage.setItem("videourl", result.video_url);
+        }
       } else {
         setError("Failed to load dashboard data");
       }
@@ -92,8 +124,16 @@ export const DashboardProvider = ({
 
   useEffect(() => {
     if (!cityDetails?.id) return;
+
+    const cached = readDashboardCache(cityDetails.id, user?.userID);
+    if (cached) {
+      setHomeData(cached);
+    }
+
+    if (!isHome) return;
+
     fetchDashboardData();
-  }, [user?.userID, cityDetails?.id]);
+  }, [user?.userID, cityDetails?.id, isHome]);
 
   return (
     <DashboardContext.Provider

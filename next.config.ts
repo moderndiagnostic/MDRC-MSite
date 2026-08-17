@@ -5,7 +5,6 @@ const nextConfig: import("next").NextConfig = {
       {
         protocol: "https",
         hostname: "www.mdrcindia.com",
-        pathname: "/uploads/**",
       },
     ],
   },

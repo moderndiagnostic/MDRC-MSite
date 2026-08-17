@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LOCATION_STORAGE_KEY, City } from "@/proxy";
+import { LOCATION_STORAGE_KEY, City } from "@/constants/city";
 import LocationService from "@/services/location.service";
 import { getDeviceType } from "@/utils/device";
 

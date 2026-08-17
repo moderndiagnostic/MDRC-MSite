@@ -2,29 +2,20 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import LocationService from "@/services/location.service";
 import { getDeviceType } from "@/utils/device";
+import {
+  City,
+  CITY_COOKIE_KEY,
+  CITY_SESSION_HEADER,
+  DEFAULT_CITY,
+} from "@/constants/city";
 
-export interface City {
-  id: string;
-  name: string;
-  image: string;
-  phone: string;
-  slug: string;
-  whatsapp: string;
-}
-
-export const DEFAULT_CITY = {
-  id: "MQ==",
-  name: "Gurugram",
-  slug: "gurgaon",
-  phone: "01246712000",
-  whatsapp: "918586988847",
-  image:
-    "https://www.mdrcindia.com/uploads/item_category/img_69787d7a04a483.00199320.svg",
-};
-
-export const CITY_COOKIE_KEY = "cityDetail";
-export const LOCATION_STORAGE_KEY = "mdrc_location_data";
-export const CITY_SESSION_HEADER = "x-city-list";
+export type { City };
+export {
+  CITY_COOKIE_KEY,
+  CITY_SESSION_HEADER,
+  DEFAULT_CITY,
+  LOCATION_STORAGE_KEY,
+} from "@/constants/city";
 
 const citySlugPages = [
   "pathology",
@@ -35,6 +26,10 @@ const citySlugPages = [
   "premium-health-checkup",
   "health-risk",
 ];
+
+let cityListCache: City[] | null = null;
+let cityListCachedAt = 0;
+const CITY_LIST_TTL_MS = 5 * 60 * 1000;
 
 const sortCities = (cityList: City[]): City[] => {
   return [...cityList].sort((a, b) => {
@@ -51,6 +46,26 @@ function extractCitySlug(pathname: string): string | null {
   const segments = pathname.split("/").filter(Boolean);
   if (!citySlugPages.includes(segments[0])) return null;
   return segments.length > 1 ? segments[segments.length - 1] : null;
+}
+
+async function getCachedCityList(): Promise<City[] | null> {
+  if (cityListCache && Date.now() - cityListCachedAt < CITY_LIST_TTL_MS) {
+    return cityListCache;
+  }
+
+  const payload = {
+    view: "city_list",
+    deviceType: getDeviceType ? getDeviceType() : "Android",
+  };
+
+  const cityResponse = await LocationService.getCityList(payload as any);
+  if (cityResponse?.msgCode === "1") {
+    cityListCache = sortCities(cityResponse.result.cityList);
+    cityListCachedAt = Date.now();
+    return cityListCache;
+  }
+
+  return cityListCache;
 }
 
 export async function proxy(request: NextRequest) {
@@ -89,17 +104,24 @@ export async function proxy(request: NextRequest) {
   const cityCookie = request.cookies.get(CITY_COOKIE_KEY)?.value;
   const citySlugFromUrl = extractCitySlug(pathname);
 
-  try {
-    const payload = {
-      view: "city_list",
-      deviceType: getDeviceType ? getDeviceType() : "Android",
-    };
+  if (!citySlugFromUrl) {
+    if (cityCookie) {
+      return NextResponse.next();
+    }
 
     const response = NextResponse.next();
-    const cityResponse = await LocationService.getCityList(payload as any);
+    response.cookies.set(CITY_COOKIE_KEY, JSON.stringify(DEFAULT_CITY), {
+      path: "/",
+      sameSite: "lax",
+    });
+    return response;
+  }
 
-    if (cityResponse?.msgCode === "1") {
-      const cityList = sortCities(cityResponse.result.cityList);
+  try {
+    const cityList = await getCachedCityList();
+    const response = NextResponse.next();
+
+    if (cityList) {
       response.headers.set(CITY_SESSION_HEADER, JSON.stringify(cityList));
 
       let selectedCity = DEFAULT_CITY;
@@ -110,32 +132,40 @@ export async function proxy(request: NextRequest) {
         } catch {}
       }
 
-      if (citySlugFromUrl) {
-        const cityFromUrl = cityList.find((c) => c.slug === citySlugFromUrl);
-        if (cityFromUrl) {
-          selectedCity = cityFromUrl;
-          response.cookies.set(CITY_COOKIE_KEY, JSON.stringify(selectedCity), {
-            path: "/",
-            sameSite: "lax",
-          });
-        }
-      }
-
-      if (!cityCookie) {
+      const cityFromUrl = cityList.find((c) => c.slug === citySlugFromUrl);
+      if (cityFromUrl) {
+        selectedCity = cityFromUrl;
+        response.cookies.set(CITY_COOKIE_KEY, JSON.stringify(selectedCity), {
+          path: "/",
+          sameSite: "lax",
+        });
+      } else if (!cityCookie) {
         response.cookies.set(CITY_COOKIE_KEY, JSON.stringify(selectedCity), {
           path: "/",
           sameSite: "lax",
         });
       }
+
       return response;
     }
   } catch (err) {
     console.error("Failed to fetch city data:", err);
   }
 
+  if (!cityCookie) {
+    const response = NextResponse.next();
+    response.cookies.set(CITY_COOKIE_KEY, JSON.stringify(DEFAULT_CITY), {
+      path: "/",
+      sameSite: "lax",
+    });
+    return response;
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/:path*"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|assets/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff|woff2)$).*)",
+  ],
 };

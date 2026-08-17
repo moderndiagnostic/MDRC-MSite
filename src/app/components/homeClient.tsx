@@ -1,16 +1,12 @@
 "use client";
+import dynamic from "next/dynamic";
 import BannerSlider from "../../components/BannerSlider";
 import FullBodyCheckupSlider from "../../components/FullBodyCheckupSlider";
 import HealthTestsTabSlider from "../../components/HealthTestsTabSlider";
 import PopularHealthCheckupSlider from "../../components/PopularHealthCheckupSlider";
 import TestsByConditionSlider from "../../components/TestsByConditionSlider";
-import BrandVideoSection from "../../components/BrandVideoSection";
-import CustomerReviewsSlider from "../../components/CustomerReviewsSlider";
-import FaqAccordion from "../../components/FaqAccordion";
-import BlogsSlider from "../../components/BlogsSlider";
 import { Check, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import NewsEventSlider from "../../components/NewsEventSlider";
 import Link from "next/link";
 import RadiologyImaginingTest from "@/components/RadiologyImaginingTest";
 import { useDashboard } from "@/context/DashboardContext";
@@ -22,7 +18,33 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useEffect, useState } from "react";
-import { ContactInquiryModal } from "@/components/modals/ContactInquiryModal";
+import LazyOnView from "@/components/LazyOnView";
+
+const BrandVideoSection = dynamic(
+  () => import("../../components/BrandVideoSection"),
+  { ssr: false },
+);
+const CustomerReviewsSlider = dynamic(
+  () => import("../../components/CustomerReviewsSlider"),
+  { ssr: false },
+);
+const FaqAccordion = dynamic(() => import("../../components/FaqAccordion"), {
+  ssr: false,
+});
+const BlogsSlider = dynamic(() => import("../../components/BlogsSlider"), {
+  ssr: false,
+});
+const NewsEventSlider = dynamic(
+  () => import("../../components/NewsEventSlider"),
+  { ssr: false },
+);
+const ContactInquiryModal = dynamic(
+  () =>
+    import("@/components/modals/ContactInquiryModal").then(
+      (mod) => mod.ContactInquiryModal,
+    ),
+  { ssr: false },
+);
 
 export default function HomePageClient() {
   const { homeData } = useDashboard();
@@ -472,18 +494,21 @@ export default function HomePageClient() {
               width={160}
               height={320}
               className="object-contain"
-              priority
             />
           </div>
         </div>
       </section>
 
       <section>
-        <NewsEventSlider />
+        <LazyOnView>
+          <NewsEventSlider />
+        </LazyOnView>
       </section>
 
       <section>
-        <BrandVideoSection />
+        <LazyOnView>
+          <BrandVideoSection />
+        </LazyOnView>
       </section>
 
       <section className="my-8 relative mb-0">
@@ -540,15 +565,21 @@ export default function HomePageClient() {
       </section>
 
       <section>
-        <CustomerReviewsSlider />
+        <LazyOnView>
+          <CustomerReviewsSlider />
+        </LazyOnView>
       </section>
 
       <section>
-        <FaqAccordion pageType={"home"} />
+        <LazyOnView>
+          <FaqAccordion pageType={"home"} />
+        </LazyOnView>
       </section>
 
       <section>
-        <BlogsSlider />
+        <LazyOnView>
+          <BlogsSlider />
+        </LazyOnView>
       </section>
 
       <section className="my-8 px-4">
@@ -576,7 +607,9 @@ export default function HomePageClient() {
           </div>
         </Link>
       </section>
-      <ContactInquiryModal isOpen={openInquiry} onClose={handleCloseInquiry} />
+      {openInquiry ? (
+        <ContactInquiryModal isOpen={openInquiry} onClose={handleCloseInquiry} />
+      ) : null}
     </div>
   );
 }

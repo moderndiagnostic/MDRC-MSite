@@ -128,15 +128,20 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                       src={item.image}
                       alt={`banner-${i}`}
                       onLoad={() => handleImageLoad(i)}
+                      fetchPriority={i === 0 ? "high" : "low"}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding={i === 0 ? "sync" : "async"}
                       className="w-full h-auto object-cover transition-opacity duration-500"
                     />
                   </a>
                 ) : (
-                  // If item.page is not available, just display the image without a link
                   <img
                     src={item.image}
                     alt={`banner-${i}`}
                     onLoad={() => handleImageLoad(i)}
+                    fetchPriority={i === 0 ? "high" : "low"}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    decoding={i === 0 ? "sync" : "async"}
                     className="w-full h-auto object-cover transition-opacity duration-500"
                   />
                 )}

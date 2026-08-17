@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { City, DEFAULT_CITY } from "@/proxy";
+import { City, CITY_COOKIE_KEY, DEFAULT_CITY } from "@/constants/city";
 
 interface CityContextType {
   cityDetails: City;
@@ -12,36 +12,29 @@ interface CityContextType {
 const CityContext = createContext<CityContextType | null>(null);
 
 export const CityProvider = ({ children }: any) => {
-  const [cityDetails, setCityDetails] = useState<City | null>(null);
+  const [cityDetails, setCityDetails] = useState<City>(DEFAULT_CITY);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const cookieCity = Cookies.get("cityDetail");
+    const cookieCity = Cookies.get(CITY_COOKIE_KEY);
 
     if (cookieCity) {
       try {
-        const parsedCity = JSON.parse(cookieCity);
-        setCityDetails(parsedCity);
+        setCityDetails(JSON.parse(cookieCity));
       } catch {
         setCityDetails(DEFAULT_CITY);
-        Cookies.remove("cityDetail");
+        Cookies.remove(CITY_COOKIE_KEY);
       }
-    } else {
-      setCityDetails(DEFAULT_CITY);
     }
   }, []);
 
   const updateCityDetails = (city: City) => {
     setCityDetails(city);
-    Cookies.set("cityDetail", JSON.stringify(city), {
+    Cookies.set(CITY_COOKIE_KEY, JSON.stringify(city), {
       path: "/",
       expires: 7,
       sameSite: "lax",
     });
   };
-
-  if (!cityDetails) return null;
 
   return (
     <CityContext.Provider value={{ cityDetails, updateCityDetails }}>
