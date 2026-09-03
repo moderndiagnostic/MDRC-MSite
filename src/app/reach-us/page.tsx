@@ -4,6 +4,10 @@ import { generateMetadataFromData, getCanonicalUrl } from "@/utils/meta";
 import { ReachUsApiResponse } from "@/hooks/useReachUs";
 import { reachUsService } from "@/services/reachUsService";
 
+// Always fetch from the API at request time so CMS/database updates
+// appear on production without waiting for a new deploy/rebuild.
+export const dynamic = "force-dynamic";
+
 async function fetchReachUsData(): Promise<ReachUsApiResponse> {
   try {
     const response = await reachUsService.getAddresses();
