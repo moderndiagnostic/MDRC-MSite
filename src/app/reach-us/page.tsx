@@ -42,11 +42,11 @@ async function fetchReachUsData(): Promise<ReachUsApiResponse | null> {
 
 export async function generateMetadata() {
   const data = await fetchReachUsData();
-  const metaInput = data?.result || {};
+  const metaInput = data?.result;
   return generateMetadataFromData({
-    meta_title: metaInput.meta_title,
-    meta_description: metaInput.meta_description,
-    favicon: metaInput.favicon,
+    meta_title: metaInput?.meta_title,
+    meta_description: metaInput?.meta_description,
+    favicon: metaInput?.favicon,
     canonical: getCanonicalUrl("/reach-us"),
   });
 }
