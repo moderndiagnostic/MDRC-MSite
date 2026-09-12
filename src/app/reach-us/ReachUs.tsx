@@ -92,18 +92,18 @@ const LocationCard: React.FC<{ location: Location }> = ({ location }) => {
 };
 
 const ReachUsComponent: React.FC<ReachUsProps> = ({ serverData }) => {
-  if (!serverData) {
+  if (!serverData?.result) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#0a6baf]" />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <p className="text-gray-600 text-sm">No data available</p>
       </div>
     );
   }
 
   const { addressList, callBlock, meta_schema } = serverData.result;
-  const whatsappNumber = callBlock.whatsapp?.replace(/[^0-9]/g, "") ?? "";
+  const whatsappNumber = callBlock?.whatsapp?.replace(/[^0-9]/g, "") ?? "";
 
-  if (!addressList?.length) {
+  if (!addressList?.length || !callBlock) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <p className="text-gray-600 text-sm">No data available</p>

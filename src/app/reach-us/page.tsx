@@ -8,15 +8,35 @@ import { reachUsService } from "@/services/reachUsService";
 // appear on production without waiting for a new deploy/rebuild.
 export const dynamic = "force-dynamic";
 
-async function fetchReachUsData(): Promise<ReachUsApiResponse> {
+function parseReachUsResponse(response: unknown): ReachUsApiResponse | null {
+  let data: any = response;
+
+  // PHP indent() returns pretty-printed text. Axios sometimes leaves it as a string.
+  if (typeof data === "string") {
+    const trimmed = data.trim().replace(/^\\+/, "");
+    try {
+      data = JSON.parse(trimmed);
+    } catch {
+      console.error("Reach Us API JSON parse failed");
+      return null;
+    }
+  }
+
+  return data?.result ? data : null;
+}
+
+async function fetchReachUsData(): Promise<ReachUsApiResponse | null> {
   try {
     const response = await reachUsService.getAddresses();
-    console.log(response,'response');
-    
-    return response;
+    const parsed = parseReachUsResponse(response);
+    if (!parsed) {
+      console.error("Reach Us API returned no result:", response);
+      return null;
+    }
+    return parsed;
   } catch (error) {
     console.error("Error fetching Reach Us data:", error);
-    return true as any;
+    return null;
   }
 }
 
