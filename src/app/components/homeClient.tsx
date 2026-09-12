@@ -17,8 +17,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LazyOnView from "@/components/LazyOnView";
+import AppDownloadPopup from "@/components/modals/AppDownloadPopup";
 
 const BrandVideoSection = dynamic(
   () => import("../../components/BrandVideoSection"),
@@ -50,35 +51,45 @@ export default function HomePageClient() {
   const { homeData } = useDashboard();
   const { cityDetails } = useCity();
   const [openInquiry, setOpenInquiry] = useState(false);
+  const [openAppPopup, setOpenAppPopup] = useState(false);
+  const inquiryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const modalClosed = document.cookie.includes("inquiryClosed=true");
+    const appDismissed =
+      typeof window !== "undefined" &&
+      sessionStorage.getItem("mdrc_app_popup_dismissed") === "1";
 
-    if (modalClosed) return;
+    if (appDismissed) return;
 
     const timer = setTimeout(() => {
-      setOpenInquiry(true);
-    }, 5000);
+      setOpenAppPopup(true);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (inquiryTimerRef.current) clearTimeout(inquiryTimerRef.current);
+    };
+  }, []);
+
+  const handleCloseAppPopup = () => {
+    setOpenAppPopup(false);
+    sessionStorage.setItem("mdrc_app_popup_dismissed", "1");
+
+    const modalClosed = document.cookie.includes("inquiryClosed=true");
+    if (modalClosed) return;
+
+    if (inquiryTimerRef.current) clearTimeout(inquiryTimerRef.current);
+    inquiryTimerRef.current = setTimeout(() => {
+      setOpenInquiry(true);
+    }, 30000);
+  };
+
   const handleCloseInquiry = () => {
-    const closedOnce = document.cookie.includes("inquiryClosedOnce=true");
-
     setOpenInquiry(false);
-
-    if (!closedOnce) {
-      // First close → reopen after 20 seconds
-      document.cookie = "inquiryClosedOnce=true; path=/; max-age=10800";
-
-      setTimeout(() => {
-        setOpenInquiry(true);
-      }, 30000);
-    } else {
-      // Second close → stop modal for 3 hours
-      document.cookie = "inquiryClosed=true; path=/; max-age=10800";
-    }
+    document.cookie = "inquiryClosed=true; path=/; max-age=10800";
   };
 
   useEffect(() => {
@@ -607,6 +618,7 @@ export default function HomePageClient() {
           </div>
         </Link>
       </section>
+      <AppDownloadPopup isOpen={openAppPopup} onClose={handleCloseAppPopup} />
       {openInquiry ? (
         <ContactInquiryModal isOpen={openInquiry} onClose={handleCloseInquiry} />
       ) : null}
