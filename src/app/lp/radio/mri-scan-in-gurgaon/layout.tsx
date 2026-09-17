@@ -39,7 +39,7 @@ export const metadata = {
     description: DESCRIPTION,
     images: [
       {
-        url: "/images/siemens-3t-mri-machine-gurugram.jpg",
+        url: "/assets/images/lp/mri-scan-in-gurgaon/siemens-3t-mri-machine-gurugram.jpg",
         width: 1200,
         height: 630,
         alt: "Advanced MRI Scan in Gurugram at MDRC",
@@ -50,7 +50,7 @@ export const metadata = {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/images/siemens-3t-mri-machine-gurugram.jpg"],
+    images: ["/assets/images/lp/mri-scan-in-gurgaon/siemens-3t-mri-machine-gurugram.jpg"],
   },
   robots: {
     index: true,
@@ -64,11 +64,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: "/images/mdrc-favicon.png", type: "image/png" },
+      { url: "/assets/images/lp/mri-scan-in-gurgaon/mdrc-favicon.png", type: "image/png" },
       { url: "/favicon.ico" },
     ],
-    shortcut: "/images/mdrc-favicon.png",
-    apple: "/images/mdrc-favicon.png",
+    shortcut: "/assets/images/lp/mri-scan-in-gurgaon/mdrc-favicon.png",
+    apple: "/assets/images/lp/mri-scan-in-gurgaon/mdrc-favicon.png",
   },
 };
 
@@ -77,7 +77,7 @@ const jsonLd = {
   "@type": "MedicalClinic",
   name: "Modern Diagnostic & Research Centre",
   url: SITE_URL,
-  image: `${SITE_URL}/images/siemens-3t-mri-machine-gurugram.jpg`,
+  image: `${SITE_URL}/assets/images/lp/mri-scan-in-gurgaon/siemens-3t-mri-machine-gurugram.jpg`,
   telephone: "+91-8920300300",
   medicalSpecialty: "Diagnostic Radiology",
   areaServed: "Gurugram",

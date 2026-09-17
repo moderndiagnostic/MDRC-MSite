@@ -24,32 +24,32 @@ const mriScans = [
   {
     title: "Brain MRI",
     description: "Detailed imaging of the brain and neurological structures.",
-    image: "/images/mri-scan-icons/brain-mri.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/mri-scan-icons/brain-mri.png",
   },
   {
     title: "Spine MRI",
     description: "Detailed evaluation of the spine, discs, and surrounding structures.",
-    image: "/images/mri-scan-icons/spine-mri.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/mri-scan-icons/spine-mri.png",
   },
   {
     title: "Knee MRI",
     description: "Imaging to assess the knee joint, cartilage, and soft tissues.",
-    image: "/images/mri-scan-icons/knee-mri.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/mri-scan-icons/knee-mri.png",
   },
   {
     title: "Shoulder MRI",
     description: "Evaluation of the shoulder joint, muscles, tendons, and ligaments.",
-    image: "/images/mri-scan-icons/shoulder-mri.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/mri-scan-icons/shoulder-mri.png",
   },
   {
     title: "Abdomen MRI",
     description: "Detailed imaging of abdominal organs and soft tissues.",
-    image: "/images/mri-scan-icons/abdomen-mri.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/mri-scan-icons/abdomen-mri.png",
   },
   {
     title: "MR Angiography (MRA)",
     description: "Imaging of blood vessels to assess circulation and vascular conditions.",
-    image: "/images/mri-scan-icons/mr-angiography-mra.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/mri-scan-icons/mr-angiography-mra.png",
   },
 ];
 
@@ -57,32 +57,32 @@ const features = [
   {
     title: "3T MRI Technology",
     description: "Advanced 3T MRI technology for superior imaging precision.",
-    image: "/images/why-choose-mri/3t-mri-technology.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/why-choose-mri/3t-mri-technology.png",
   },
   {
     title: "High-resolution Imaging",
     description: "Crystal-clear, high-resolution images for accurate diagnosis.",
-    image: "/images/why-choose-mri/high-resolution-imaging.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/why-choose-mri/high-resolution-imaging.png",
   },
   {
     title: "Experienced Radiologists",
     description: "Expert radiologists delivering trusted and precise interpretations.",
-    image: "/images/why-choose-mri/experienced-radiologists.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/why-choose-mri/experienced-radiologists.png",
   },
   {
     title: "Faster & Accurate Reporting",
     description: "Quick, reliable reports to support timely medical decisions.",
-    image: "/images/why-choose-mri/faster-accurate-reporting.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/why-choose-mri/faster-accurate-reporting.png",
   },
   {
     title: "Patient-friendly Environment",
     description: "A comfortable, caring, and stress-free experience for every patient.",
-    image: "/images/why-choose-mri/patient-friendly-environment.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/why-choose-mri/patient-friendly-environment.png",
   },
   {
     title: "Advanced Diagnostic Expertise",
     description: "Cutting-edge diagnostic expertise backed by clinical experience.",
-    image: "/images/why-choose-mri/advanced-diagnostic-expertise.png",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/why-choose-mri/advanced-diagnostic-expertise.png",
   },
 ];
 
@@ -91,37 +91,37 @@ const preparationSteps = [
     number: "01",
     title: "Book Appointment",
     description: "Schedule your MRI at a convenient time before you visit the centre.",
-    image: "/images/scanning-preparation/book-appointment.svg",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/scanning-preparation/book-appointment.svg",
   },
   {
     number: "02",
     title: "Carry Previous Reports with Doctor Prescription",
     description: "Bring previous reports and your doctor’s prescription for the scan.",
-    image: "/images/scanning-preparation/carry-previous-reports.svg",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/scanning-preparation/carry-previous-reports.svg",
   },
   {
     number: "03",
     title: "Inform the Radiologist",
     description: "Inform the team about implants or medical devices.",
-    image: "/images/scanning-preparation/inform-the-radiologist.svg",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/scanning-preparation/inform-the-radiologist.svg",
   },
   {
     number: "04",
     title: "Follow Instructions",
     description: "Follow fasting instructions, if applicable.",
-    image: "/images/scanning-preparation/follow-instructions.svg",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/scanning-preparation/follow-instructions.svg",
   },
 ];
 
 const doctors = [
-  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "/images/doctors/dr-devendra-singh-yadav-managing-director.jpg" },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "/images/doctors/dr-deepali-yadav-director-sr-consultant-radiology.jpg" },
-  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "/images/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg" },
-  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "/images/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg" },
-  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "/images/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg" },
-  { name: "Dr. Garima Yadav", role: "Consultant Radiologist", image: "/images/doctors/dr-garima-yadav-consultant-radiologist.jpg" },
-  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "/images/doctors/dr-rajat-garg-consultant-radiologist.jpg" },
-  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "/images/doctors/dr-padma-chauhan-consultant-radiologist.jpg" },
+  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-devendra-singh-yadav-managing-director.jpg" },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-deepali-yadav-director-sr-consultant-radiology.jpg" },
+  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg" },
+  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg" },
+  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg" },
+  { name: "Dr. Garima Yadav", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-garima-yadav-consultant-radiologist.jpg" },
+  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-rajat-garg-consultant-radiologist.jpg" },
+  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-padma-chauhan-consultant-radiologist.jpg" },
 ];
 
 const locations = [
@@ -132,7 +132,7 @@ const locations = [
     address: "1057P, Sector-40, Gurugram, Haryana – 122002",
     timing: "7:00 AM – 8:00 PM",
     tags: ["3T MRI", "NABL & NABH", "7 AM – 8 PM"],
-    image: "/images/centres/mdrc-sector-40-3t-mri-centre.jpg",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/centres/mdrc-sector-40-3t-mri-centre.jpg",
     imagePosition: "center center",
   },
   {
@@ -142,22 +142,22 @@ const locations = [
     address: "363-364/4, Sector-12, New Railway Road, Gurugram – 122001",
     timing: "Open 24×7",
     tags: ["Advanced Imaging", "NABL Accredited", "Open 24×7"],
-    image: "/images/centres/mdrc-new-railway-road-centre.jpg",
+    image: "/assets/images/lp/mri-scan-in-gurgaon/centres/mdrc-new-railway-road-centre.jpg",
     imagePosition: "center center",
   },
 ];
 
 const services = [
-  { name: "PET-CT / SPECT-CT", image: "/images/services/pet-ct-spect-ct.svg", scan: "PET-CT / SPECT-CT" },
-  { name: "MRI", image: "/images/services/mri.svg", scan: "MRI" },
-  { name: "CT Scan", image: "/images/services/ct-scan.svg", scan: "CT Scan" },
-  { name: "Ultrasound", image: "/images/services/ultrasound.svg", scan: "Ultrasound" },
-  { name: "X-Ray", image: "/images/services/x-ray.svg", scan: "X-Ray" },
-  { name: "CBCT", image: "/images/services/cbct.svg", scan: "CBCT" },
-  { name: "Mammography", image: "/images/services/mammography.svg", scan: "Mammography" },
-  { name: "Pathology", image: "/images/services/pathology.svg", scan: "Others" },
-  { name: "Health Checkups", image: "/images/services/health-checkups.svg", scan: "Others" },
-  { name: "Other Services", image: "/images/services/other-services.svg", scan: "Others" },
+  { name: "PET-CT / SPECT-CT", image: "/assets/images/lp/mri-scan-in-gurgaon/services/pet-ct-spect-ct.svg", scan: "PET-CT / SPECT-CT" },
+  { name: "MRI", image: "/assets/images/lp/mri-scan-in-gurgaon/services/mri.svg", scan: "MRI" },
+  { name: "CT Scan", image: "/assets/images/lp/mri-scan-in-gurgaon/services/ct-scan.svg", scan: "CT Scan" },
+  { name: "Ultrasound", image: "/assets/images/lp/mri-scan-in-gurgaon/services/ultrasound.svg", scan: "Ultrasound" },
+  { name: "X-Ray", image: "/assets/images/lp/mri-scan-in-gurgaon/services/x-ray.svg", scan: "X-Ray" },
+  { name: "CBCT", image: "/assets/images/lp/mri-scan-in-gurgaon/services/cbct.svg", scan: "CBCT" },
+  { name: "Mammography", image: "/assets/images/lp/mri-scan-in-gurgaon/services/mammography.svg", scan: "Mammography" },
+  { name: "Pathology", image: "/assets/images/lp/mri-scan-in-gurgaon/services/pathology.svg", scan: "Others" },
+  { name: "Health Checkups", image: "/assets/images/lp/mri-scan-in-gurgaon/services/health-checkups.svg", scan: "Others" },
+  { name: "Other Services", image: "/assets/images/lp/mri-scan-in-gurgaon/services/other-services.svg", scan: "Others" },
 ];
 
 const faqs = [
@@ -385,7 +385,7 @@ export default function MriScanGurugramPage() {
       <header className="site-header">
         <div className="container header-inner">
           <a href={SITE_URL} className="logo" aria-label="Modern Diagnostic & Research Centre">
-            <img src="/images/modern-diagnostic-research-centre-logo.png" alt="Modern Diagnostic & Research Centre" />
+            <img src="/assets/images/lp/mri-scan-in-gurgaon/modern-diagnostic-research-centre-logo.png" alt="Modern Diagnostic & Research Centre" />
           </a>
           <div className="header-actions">
             <button type="button" className="btn-book" onClick={() => openBooking("MRI")}>
@@ -410,7 +410,7 @@ export default function MriScanGurugramPage() {
                   Book Scan Now
                 </button>
                 <a href={PHONE_HREF} className="hero-call-btn">
-                  <img src="/images/phone-call-icon.png" alt="" />
+                  <img src="/assets/images/lp/mri-scan-in-gurgaon/phone-call-icon.png" alt="" />
                   <span>{PHONE_DISPLAY}</span>
                 </a>
               </div>
@@ -429,7 +429,7 @@ export default function MriScanGurugramPage() {
             <div className="hero-visual">
               <div className="hero-image-wrapper">
                 <img
-                  src="/images/siemens-3t-mri-machine-gurugram.jpg"
+                  src="/assets/images/lp/mri-scan-in-gurgaon/siemens-3t-mri-machine-gurugram.jpg"
                   alt="3T MRI Machine at MDRC Gurugram"
                   width="700"
                   height="600"
@@ -494,7 +494,7 @@ export default function MriScanGurugramPage() {
               </div>
             </div>
             <div className="intro-visual">
-              <img src="/images/patient-undergoing-mri-scan.jpg" alt="Patient undergoing an MRI scan at MDRC" />
+              <img src="/assets/images/lp/mri-scan-in-gurgaon/patient-undergoing-mri-scan.jpg" alt="Patient undergoing an MRI scan at MDRC" />
             </div>
           </div>
         </section>
@@ -705,7 +705,7 @@ export default function MriScanGurugramPage() {
         <section className="section section-dark">
           <div className="container trust-image-grid">
             <div className="trust-image-wrapper">
-              <img src="/images/patient-diagnostic-imaging-care.jpg" alt="Patient receiving diagnostic imaging care at MDRC" />
+              <img src="/assets/images/lp/mri-scan-in-gurgaon/patient-diagnostic-imaging-care.jpg" alt="Patient receiving diagnostic imaging care at MDRC" />
             </div>
             <div className="trust-content">
               <span className="eyebrow eyebrow-light">PATIENT EXPERIENCE</span>
@@ -770,7 +770,7 @@ export default function MriScanGurugramPage() {
         <div className="container footer-inner">
           <div className="footer-logo">
             <a href={SITE_URL} className="logo">
-              <img src="/images/modern-diagnostic-research-centre-logo.png" alt="Modern Diagnostic & Research Centre" />
+              <img src="/assets/images/lp/mri-scan-in-gurgaon/modern-diagnostic-research-centre-logo.png" alt="Modern Diagnostic & Research Centre" />
             </a>
           </div>
           <div className="footer-meta">
@@ -784,11 +784,11 @@ export default function MriScanGurugramPage() {
 
       <nav className="mobile-sticky-cta" aria-label="Quick contact actions">
         <a href={PHONE_HREF} className="sticky-btn sticky-call" aria-label="Call MDRC">
-          <img src="/images/phone-call-icon.png" alt="" />
+          <img src="/assets/images/lp/mri-scan-in-gurgaon/phone-call-icon.png" alt="" />
           <span>{PHONE_DISPLAY}</span>
         </a>
         <a href={WHATSAPP_HREF} className="sticky-btn sticky-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp MDRC">
-          <img src="/images/whatsapp-icon.png" alt="" />
+          <img src="/assets/images/lp/mri-scan-in-gurgaon/whatsapp-icon.png" alt="" />
           <span>WhatsApp</span>
         </a>
       </nav>
