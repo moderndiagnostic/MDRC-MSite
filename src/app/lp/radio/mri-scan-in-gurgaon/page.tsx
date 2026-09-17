@@ -478,7 +478,7 @@ export default function MriScanGurugramPage() {
                   Get access to advanced MRI scanning in Gurugram with high-quality imaging and accurate diagnostic support. MRI uses powerful magnetic fields and radio waves to create detailed images of organs, tissues, joints, and other structures inside the body.
                 </p>
                 <p>
-                  At MDRC, every scan is performed in a calm, patient-friendly setting and reported by experienced radiologists. Whether your doctor has advised a brain, spine, joint, abdomen, or vascular study, Our SkyraFit 3T MRI has wide bore (70 Cm) gantry, which is less claustrophobic for patients. It can take comfortably take obese patients. Its 64 channels deliver high resolution images for clear answers, so that treatment decisions are made with confidence. MRI does not use any ionising radiations.
+                  At MDRC, every scan is performed in a calm, patient-friendly setting and reported by experienced radiologists. Whether your doctor has advised a brain, spine, joint, abdomen, or vascular study, Our SkyraFit <strong>3T MRI has wide bore (70 Cm) gantry, which is less claustrophobic</strong> for patients. It can take comfortably take obese patients. Its 64 channels deliver high resolution images for clear answers, so that treatment decisions are made with confidence. MRI does not use any ionising radiations.
                 </p>
                 <div className="content-points">
                   <div className="content-point">

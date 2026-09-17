@@ -382,8 +382,14 @@ body.mri-landing-active {
 .hero-trust {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px 14px;
   margin-top: 26px;
+}
+
+.hero-trust-item:last-child {
+  flex-basis: 100%;
+  justify-content: center;
 }
 
 .hero-trust-item {
@@ -577,6 +583,11 @@ body.mri-landing-active {
 
 .intro-content p + p {
   margin-top: 14px;
+}
+
+.intro-content strong {
+  font-weight: 800;
+  color: var(--text-dark);
 }
 
 .content-points {
