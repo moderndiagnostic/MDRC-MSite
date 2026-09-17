@@ -385,7 +385,7 @@ export default function MriScanGurugramPage() {
         body: fd,
       });
       const result = await response.json();
-      if (result.RESULT === "OK") {
+      if (String(result?.RESULT || "").toUpperCase() === "OK" || result?.id) {
         setSubmitted(true);
       } else {
         alert(result.error_msg || "Could not submit. Please try again.");
@@ -824,8 +824,13 @@ export default function MriScanGurugramPage() {
             </button>
             {submitted ? (
               <div className="booking-success">
-                <h2>Thank you</h2>
-                <p>Your request has been sent. Our team will contact you shortly to confirm your appointment.</p>
+                <div className="success-check" aria-hidden="true">
+                  <span>✓</span>
+                </div>
+                <h2>Thank you!</h2>
+                <p>
+                  Your scan booking request has been sent successfully. Our team will contact you shortly to confirm your appointment.
+                </p>
                 <div className="app-download">
                   <strong>Download our MDRC India Health App</strong>
                   <div className="app-links">
@@ -838,7 +843,7 @@ export default function MriScanGurugramPage() {
                   </div>
                 </div>
                 <button type="button" className="btn-book" onClick={closeBooking}>
-                  Close
+                  Done
                 </button>
               </div>
             ) : (
