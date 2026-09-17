@@ -221,6 +221,7 @@ export default function MriScanGurugramPage() {
   const [bookingScan, setBookingScan] = useState("MRI");
   const [form, setForm] = useState<BookingForm>(emptyForm);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const openBooking = (nextScan: string) => {
     setBookingScan(SCAN_TYPES.includes(nextScan) ? nextScan : "MRI");
@@ -337,6 +338,11 @@ export default function MriScanGurugramPage() {
       setForm((current) => ({ ...current, acceptedTerms: checked }));
       return;
     }
+    if (name === "name") {
+      const cleaned = value.replace(/[^A-Za-z .']/g, "").replace(/\s+/g, " ");
+      setForm((current) => ({ ...current, name: cleaned }));
+      return;
+    }
     if (name === "phone") {
       const digits = value.replace(/\D/g, "").slice(0, 10);
       setForm((current) => ({ ...current, phone: digits }));
@@ -345,38 +351,50 @@ export default function MriScanGurugramPage() {
     setForm((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmedName = form.name.trim();
     const cleanPhone = form.phone.replace(/\D/g, "");
 
-    if (!trimmedName) {
-      alert("Please enter your full name.");
+    if (!/^[A-Za-z][A-Za-z .']{1,59}$/.test(trimmedName)) {
+      alert("Please enter a valid name using letters only.");
       return;
     }
 
-    if (cleanPhone.length !== 10) {
+    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
       alert("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     if (!form.acceptedTerms) {
-      alert("Please accept the Terms & Conditions to continue.");
+      alert("Please accept the Terms And Conditions.");
       return;
     }
 
-    const text = [
-      "Scan Booking Request",
-      `Name: ${trimmedName}`,
-      `Phone: ${cleanPhone}`,
-      form.email ? `Email: ${form.email.trim()}` : null,
-      `Scan: ${form.scan}`,
-      form.message ? `Message: ${form.message.trim()}` : null,
-    ]
-      .filter(Boolean)
-      .join("\n");
-    window.open(`${WHATSAPP_HREF}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
-    setSubmitted(true);
+    const fd = new FormData();
+    fd.append("name", trimmedName);
+    fd.append("phone", cleanPhone);
+    fd.append("email", form.email.trim());
+    fd.append("scan", form.scan);
+    fd.append("message", form.message.trim());
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch("/api/landing-page-enquiry", {
+        method: "POST",
+        body: fd,
+      });
+      const result = await response.json();
+      if (result.RESULT === "OK") {
+        setSubmitted(true);
+      } else {
+        alert(result.error_msg || "Could not submit. Please try again.");
+      }
+    } catch {
+      alert("Could not submit. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -912,8 +930,8 @@ export default function MriScanGurugramPage() {
                       </a>
                     </span>
                   </label>
-                  <button type="submit" className="btn-book booking-submit">
-                    Submit Request
+                  <button type="submit" className="btn-book booking-submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit Request"}
                   </button>
                 </form>
               </>
