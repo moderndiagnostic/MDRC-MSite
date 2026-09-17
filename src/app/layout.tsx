@@ -1,22 +1,16 @@
 
 import "./globals.css";
-import { Suspense } from "react";
 import { Roboto } from "next/font/google";
 import Script from "next/script";
 import { UserProvider } from "@/context/userContext";
 import { CityProvider } from "@/context/CityContext";
 import { CartProvider } from "@/context/CartContext";
 import { DashboardProvider } from "@/context/DashboardContext";
-
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import ModalWrapper from "../components/modals/ModalWrapper";
-import { ToastContainer } from "react-toastify";
-// import SmoothScroll from "@/components/FastScroll";
+import SiteChrome from "./SiteChrome";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+  weight: ["300", "400", "500", "700", "800"],
 });
 
 export const viewport = {
@@ -55,24 +49,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <CityProvider>
             <DashboardProvider>
               <CartProvider>
-                <div className="w-full max-w-[430px] bg-white">
-                  <Header />
-                  <main>{children}</main>
-                  <Suspense fallback={null}>
-                    <ModalWrapper />
-                  </Suspense>
-                  <Footer />
-                </div>
-
-                <ToastContainer
-                  position="bottom-right"
-                  autoClose={3000}
-                  hideProgressBar={false}
-                  newestOnTop
-                  closeOnClick
-                  pauseOnHover
-                  draggable
-                />
+                <SiteChrome>{children}</SiteChrome>
               </CartProvider>
             </DashboardProvider>
           </CityProvider>
