@@ -372,23 +372,43 @@ export default function MriScanGurugramPage() {
     }
 
     const fd = new FormData();
+    fd.append("method", "landing_page_enquiry");
     fd.append("name", trimmedName);
     fd.append("phone", cleanPhone);
     fd.append("email", form.email.trim());
     fd.append("scan", form.scan);
     fd.append("message", form.message.trim());
+    fd.append("terms", "Yes");
+
+    const isMdrcDomain =
+      typeof window !== "undefined" &&
+      window.location.hostname.replace(/^www\./, "") === "mdrcindia.com";
+
+    const submitUrl = isMdrcDomain
+      ? "/scripts/ajax/index.php"
+      : "/api/landing-page-enquiry";
 
     try {
       setIsSubmitting(true);
-      const response = await fetch("/api/landing-page-enquiry", {
+      const response = await fetch(submitUrl, {
         method: "POST",
         body: fd,
+        credentials: "same-origin",
       });
-      const result = await response.json();
-      if (String(result?.RESULT || "").toUpperCase() === "OK" || result?.id) {
+
+      const text = await response.text();
+      let result: { RESULT?: string; id?: number; error_msg?: string } | null = null;
+      try {
+        result = JSON.parse(text);
+      } catch {
+        const match = text.match(/\{[\s\S]*\}/);
+        if (match) result = JSON.parse(match[0]);
+      }
+
+      if (result && (String(result.RESULT || "").toUpperCase() === "OK" || result.id)) {
         setSubmitted(true);
       } else {
-        alert(result.error_msg || "Could not submit. Please try again.");
+        alert(result?.error_msg || "Could not submit. Please try again.");
       }
     } catch {
       alert("Could not submit. Please try again.");

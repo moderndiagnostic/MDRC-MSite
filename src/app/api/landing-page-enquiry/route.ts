@@ -19,10 +19,9 @@ export async function POST(request: Request) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json, text/plain, */*",
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
       body: payload.toString(),
+      cache: "no-store",
     });
 
     const text = await response.text();
@@ -31,12 +30,18 @@ export async function POST(request: Request) {
       data = JSON.parse(text);
     } catch {
       const match = text.match(/\{[\s\S]*\}/);
-      if (match) data = JSON.parse(match[0]);
+      if (match) {
+        try {
+          data = JSON.parse(match[0]);
+        } catch {
+          data = null;
+        }
+      }
     }
 
     const result = String(data?.RESULT ?? data?.result ?? "").toUpperCase();
-    if (result === "OK" || data?.id) {
-      return NextResponse.json({ RESULT: "OK", ...data });
+    if (response.ok && (result === "OK" || data?.id)) {
+      return NextResponse.json({ RESULT: "OK", ...(data || {}) });
     }
 
     return NextResponse.json({
