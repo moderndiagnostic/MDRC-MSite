@@ -214,6 +214,17 @@ const emptyForm = {
 
 type BookingForm = typeof emptyForm;
 
+const getLandingAjaxUrl = () => {
+  const path = window.location.pathname.replace(/\\/g, "/");
+  if (path.indexOf("/views/") !== -1) {
+    return path.replace(/\/views\/.*$/, "/scripts/ajax/index.php");
+  }
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    return "/api/landing-page-enquiry";
+  }
+  return "/scripts/ajax/index.php";
+};
+
 export default function MriScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
   const mriSlider = useRef<HTMLDivElement>(null);
@@ -380,41 +391,26 @@ export default function MriScanGurugramPage() {
     fd.append("message", form.message.trim());
     fd.append("terms", "Yes");
 
-    const isMdrcDomain =
-      typeof window !== "undefined" &&
-      window.location.hostname.replace(/^www\./, "") === "mdrcindia.com";
-
-    const submitUrl = isMdrcDomain
-      ? "/scripts/ajax/index.php"
-      : "/api/landing-page-enquiry";
-
-    try {
-      setIsSubmitting(true);
-      const response = await fetch(submitUrl, {
-        method: "POST",
-        body: fd,
-        credentials: "same-origin",
+    setIsSubmitting(true);
+    fetch(getLandingAjaxUrl(), {
+      method: "POST",
+      body: fd,
+      credentials: "same-origin",
+    })
+      .then((res) => res.json())
+      .then((res: { RESULT?: string; error_msg?: string }) => {
+        if (res.RESULT === "OK") {
+          setSubmitted(true);
+        } else {
+          alert(res.error_msg || "Could not submit. Please try again.");
+        }
+      })
+      .catch(() => {
+        alert("Could not submit. Please try again.");
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
-
-      const text = await response.text();
-      let result: { RESULT?: string; id?: number; error_msg?: string } | null = null;
-      try {
-        result = JSON.parse(text);
-      } catch {
-        const match = text.match(/\{[\s\S]*\}/);
-        if (match) result = JSON.parse(match[0]);
-      }
-
-      if (result && (String(result.RESULT || "").toUpperCase() === "OK" || result.id)) {
-        setSubmitted(true);
-      } else {
-        alert(result?.error_msg || "Could not submit. Please try again.");
-      }
-    } catch {
-      alert("Could not submit. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
