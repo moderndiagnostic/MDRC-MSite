@@ -9,7 +9,8 @@ import ModalWrapper from "../components/modals/ModalWrapper";
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isMriLanding = pathname === "/lp/radio/mri-scan-in-gurgaon";
+  const landingPath = (pathname || "").replace(/\/$/, "");
+  const isMriLanding = landingPath === "/lp/imaging/mri-scan-in-gurgaon";
 
   useEffect(() => {
     document.documentElement.classList.toggle("mri-landing-active", isMriLanding);

@@ -1,7 +1,7 @@
 import "./mri-scan.css";
 
 const SITE_URL = "https://www.mdrcindia.com";
-const PAGE_URL = `${SITE_URL}/lp/radio/mri-scan-in-gurgaon`;
+const PAGE_URL = `${SITE_URL}/lp/imaging/mri-scan-in-gurgaon`;
 const TITLE = "Advanced MRI Scan in Gurugram | MDRC";
 const DESCRIPTION =
   "Book an advanced MRI scan in Gurugram at MDRC. 3T MRI technology, expert radiologists, NABL & NABH accredited centres in Sector-40 and New Railway Road.";

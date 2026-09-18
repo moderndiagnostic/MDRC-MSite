@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 
 const ENQUIRY_URL = "https://www.mdrcindia.com/scripts/ajax/index.php";
 
+function getClientIp(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0]?.trim() || "";
+  return request.headers.get("x-real-ip") || request.headers.get("cf-connecting-ip") || "";
+}
+
 export async function POST(request: Request) {
   try {
     const incoming = await request.formData();
@@ -14,11 +20,15 @@ export async function POST(request: Request) {
     payload.set("message", String(incoming.get("message") || "").trim());
     payload.set("terms", "Yes");
 
+    const ip = getClientIp(request);
+    if (ip) payload.set("ip", ip);
+
     const response = await fetch(ENQUIRY_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json, text/plain, */*",
+        ...(ip ? { "X-Forwarded-For": ip, "X-Real-IP": ip } : {}),
       },
       body: payload.toString(),
       cache: "no-store",
