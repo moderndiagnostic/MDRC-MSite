@@ -641,36 +641,52 @@ body.pet-landing-active {
 }
 
 .pet-scan-card {
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
   min-height: 132px;
   height: 100%;
   padding: 18px;
   cursor: pointer;
 }
 
-.pet-scan-card .mri-scan-content {
-  flex: 1;
-  min-width: 0;
+.pet-scan-card-top {
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  align-items: center;
+  gap: 14px;
 }
 
-.pet-scan-card .mri-scan-content h3 {
+.pet-scan-card-top .mri-scan-icon {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+}
+
+.pet-scan-card-top .mri-scan-icon img {
+  width: 36px;
+  height: 36px;
+}
+
+.pet-scan-card-top h3 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
   font-size: 15px;
   line-height: 1.35;
-  min-height: 40px;
+  font-weight: 700;
+  color: var(--dark);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.pet-scan-card .mri-scan-content p {
-  margin-top: 6px;
+.pet-scan-card > p {
+  margin: 0;
   font-size: 12.5px;
   line-height: 1.45;
-  min-height: 54px;
+  color: var(--text);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -722,6 +738,13 @@ body.pet-landing-active {
   gap: 18px;
   min-height: 124px;
   padding: 20px;
+}
+
+.mri-scan-card.pet-scan-card {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 18px;
 }
 
 .mri-scan-card:hover,

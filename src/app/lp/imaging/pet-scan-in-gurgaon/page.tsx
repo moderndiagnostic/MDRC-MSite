@@ -442,13 +442,13 @@ export default function PetScanInGurgaonPage() {
                     if (e.key === "Enter" || e.key === " ") openBooking(scan.scan);
                   }}
                 >
-                  <div className="mri-scan-icon">
-                    <img src={scan.image} alt="" />
-                  </div>
-                  <div className="mri-scan-content">
+                  <div className="pet-scan-card-top">
+                    <div className="mri-scan-icon">
+                      <img src={scan.image} alt="" />
+                    </div>
                     <h3>{scan.title}</h3>
-                    <p>{scan.description}</p>
                   </div>
+                  <p>{scan.description}</p>
                 </article>
               ))}
             </div>
