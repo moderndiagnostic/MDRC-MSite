@@ -214,7 +214,26 @@ const emptyForm = {
 
 type BookingForm = typeof emptyForm;
 
-const LANDING_ENQUIRY_API = "/api/landing-page-enquiry";
+const getEnquiryUrl = () => {
+  if (typeof window === "undefined") return "/api/landing-page-enquiry";
+  const host = window.location.hostname;
+  if (host === "localhost" || host === "127.0.0.1") return "/api/landing-page-enquiry";
+  return "/scripts/ajax/index.php";
+};
+
+const parseEnquiryResponse = (text: string) => {
+  try {
+    return JSON.parse(text) as { RESULT?: string; result?: string; id?: number; error_msg?: string };
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) return null;
+    try {
+      return JSON.parse(match[0]) as { RESULT?: string; result?: string; id?: number; error_msg?: string };
+    } catch {
+      return null;
+    }
+  }
+};
 
 export default function MriScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
@@ -383,18 +402,20 @@ export default function MriScanGurugramPage() {
     fd.append("terms", "Yes");
 
     setIsSubmitting(true);
-    fetch(LANDING_ENQUIRY_API, {
+    fetch(getEnquiryUrl(), {
       method: "POST",
       body: fd,
       credentials: "same-origin",
     })
-      .then((res) => res.json())
-      .then((res: { RESULT?: string; error_msg?: string }) => {
-        if (res.RESULT === "OK") {
+      .then((res) => res.text())
+      .then((text) => {
+        const res = parseEnquiryResponse(text);
+        const result = String(res?.RESULT ?? res?.result ?? "").toUpperCase();
+        if (result === "OK" || res?.id) {
           setSubmitted(true);
-        } else {
-          alert(res.error_msg || "Could not submit. Please try again.");
+          return;
         }
+        alert(res?.error_msg || "Could not submit. Please try again.");
       })
       .catch(() => {
         alert("Could not submit. Please try again.");
