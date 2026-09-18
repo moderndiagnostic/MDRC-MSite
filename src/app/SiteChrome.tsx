@@ -9,21 +9,21 @@ import ModalWrapper from "../components/modals/ModalWrapper";
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isLpLanding =
-    pathname === "/lp/radio/mri-scan-in-gurgaon" ||
-    pathname === "/lp/imaging/pet-scan-in-gurgaon";
-  const isPetLanding = pathname === "/lp/imaging/pet-scan-in-gurgaon";
+  const landingPath = (pathname || "").replace(/\/$/, "");
+  const isMriLanding = landingPath === "/lp/imaging/mri-scan-in-gurgaon";
+  const isPetLanding = landingPath === "/lp/imaging/pet-scan-in-gurgaon";
+  const isLpLanding = isMriLanding || isPetLanding;
 
   useEffect(() => {
-    document.documentElement.classList.toggle("mri-landing-active", isLpLanding && !isPetLanding);
-    document.body.classList.toggle("mri-landing-active", isLpLanding && !isPetLanding);
+    document.documentElement.classList.toggle("mri-landing-active", isMriLanding);
+    document.body.classList.toggle("mri-landing-active", isMriLanding);
     document.documentElement.classList.toggle("pet-landing-active", isPetLanding);
     document.body.classList.toggle("pet-landing-active", isPetLanding);
     return () => {
       document.documentElement.classList.remove("mri-landing-active", "pet-landing-active");
       document.body.classList.remove("mri-landing-active", "pet-landing-active");
     };
-  }, [isLpLanding, isPetLanding]);
+  }, [isMriLanding, isPetLanding]);
 
   if (isLpLanding) {
     return <>{children}</>;

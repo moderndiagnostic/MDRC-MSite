@@ -8,6 +8,15 @@ const nextConfig: import("next").NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/lp/radio/mri-scan-in-gurgaon",
+        destination: "/lp/imaging/mri-scan-in-gurgaon",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
