@@ -10,18 +10,18 @@ import ModalWrapper from "../components/modals/ModalWrapper";
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const landingPath = (pathname || "").replace(/\/$/, "");
-  const isMriLanding = landingPath === "/lp/imaging/mri-scan-in-gurgaon";
+  const isImagingLanding = landingPath.startsWith("/lp/imaging/");
 
   useEffect(() => {
-    document.documentElement.classList.toggle("mri-landing-active", isMriLanding);
-    document.body.classList.toggle("mri-landing-active", isMriLanding);
+    document.documentElement.classList.toggle("mri-landing-active", isImagingLanding);
+    document.body.classList.toggle("mri-landing-active", isImagingLanding);
     return () => {
       document.documentElement.classList.remove("mri-landing-active");
       document.body.classList.remove("mri-landing-active");
     };
-  }, [isMriLanding]);
+  }, [isImagingLanding]);
 
-  if (isMriLanding) {
+  if (isImagingLanding) {
     return <>{children}</>;
   }
 
