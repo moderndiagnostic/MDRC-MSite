@@ -12,7 +12,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   const landingPath = (pathname || "").replace(/\/$/, "");
   const isMriLanding = landingPath === "/lp/imaging/mri-scan-in-gurgaon";
   const isPetLanding = landingPath === "/lp/imaging/pet-scan-in-gurgaon";
-  const isLpLanding = isMriLanding || isPetLanding;
+  const isImagingLanding = isMriLanding || isPetLanding;
 
   useEffect(() => {
     document.documentElement.classList.toggle("mri-landing-active", isMriLanding);
@@ -25,7 +25,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
     };
   }, [isMriLanding, isPetLanding]);
 
-  if (isLpLanding) {
+  if (isImagingLanding) {
     return <>{children}</>;
   }
 

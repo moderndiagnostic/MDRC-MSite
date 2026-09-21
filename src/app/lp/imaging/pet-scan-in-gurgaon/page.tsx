@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type RefObject } from "react";
-import "./pet-scan.css";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -9,92 +8,234 @@ const PHONE_HREF = "tel:8920300300";
 const WHATSAPP_HREF = "https://wa.me/918586988847";
 const IOS_APP = "https://apps.apple.com/in/app/modern-diagnostic-health-app/id6504657715";
 const ANDROID_APP = "https://play.google.com/store/apps/details?id=com.mdrcindia.booking";
+const IMG = "/assets/images/lp/pet-scan-in-gurgaon";
 
 const SCAN_TYPES = [
   "PET-CT / SPECT-CT",
-  "FDG Whole Body PET-CT",
-  "FDG Triple Phase PET-CT",
-  "PSMA Scan",
-  "DOTA PET Scan",
-  "DOPA Scan",
   "MRI",
   "CT Scan",
   "Ultrasound",
   "CBCT",
   "Mammography",
   "X-Ray",
-  "Other",
+  "Others",
 ];
 
 const petScans = [
-  { title: "FDG Whole Body Triple Phase PET-CT", description: "Advanced imaging combining metabolic PET with multi-phase diagnostic CT.", image: "/assets/images/lp/pet-scan-in-gurgaon/icons/fdg.svg", scan: "FDG Triple Phase PET-CT" },
-  { title: "PSMA Scan", description: "PSMA PET-CT for detection, staging and restaging of prostate cancer.", image: "/assets/images/lp/pet-scan-in-gurgaon/icons/psma.svg", scan: "PSMA Scan" },
-  { title: "DOTA PET Scan", description: "Specialised imaging designed primarily for neuroendocrine tumours (NETs).", image: "/assets/images/lp/pet-scan-in-gurgaon/icons/dota.svg", scan: "DOTA PET Scan" },
-  { title: "FDG F18 Whole Body PET-CT", description: "Gold-standard whole body FDG PET-CT for cancer staging and monitoring.", image: "/assets/images/lp/pet-scan-in-gurgaon/icons/fdg-f18.svg", scan: "FDG Whole Body PET-CT" },
-  { title: "DOPA Scan", description: "Specialised PET-CT for movement disorders and selected brain tumours.", image: "/assets/images/lp/pet-scan-in-gurgaon/icons/dopa.svg", scan: "DOPA Scan" },
-  { title: "SPECT-CT", description: "Nuclear medicine SPECT-CT for targeted functional imaging studies.", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-petct.svg", scan: "PET-CT / SPECT-CT" },
+  {
+    title: "FDG Whole Body Triple Phase PET-CT",
+    description: "Advanced imaging combining metabolic PET with multi-phase diagnostic CT.",
+    image: `${IMG}/pet-scan-icons/fdg-triple-phase.svg`,
+    scan: "PET-CT / SPECT-CT",
+  },
+  {
+    title: "PSMA Scan",
+    description: "PSMA PET-CT for detection, staging and restaging of prostate cancer.",
+    image: `${IMG}/pet-scan-icons/psma-scan.svg`,
+    scan: "PET-CT / SPECT-CT",
+  },
+  {
+    title: "DOTA PET Scan",
+    description: "Specialised imaging designed primarily for neuroendocrine tumours (NETs).",
+    image: `${IMG}/pet-scan-icons/dota-pet-scan.svg`,
+    scan: "PET-CT / SPECT-CT",
+  },
+  {
+    title: "FDG F18 Whole Body PET-CT",
+    description: "Gold-standard whole body FDG PET-CT for cancer staging and monitoring.",
+    image: `${IMG}/pet-scan-icons/fdg-whole-body.svg`,
+    scan: "PET-CT / SPECT-CT",
+  },
+  {
+    title: "DOPA Scan",
+    description: "Specialised PET-CT for movement disorders and selected brain tumours.",
+    image: `${IMG}/pet-scan-icons/dopa-scan.svg`,
+    scan: "PET-CT / SPECT-CT",
+  },
+  {
+    title: "SPECT-CT",
+    description: "Nuclear medicine SPECT-CT for targeted functional imaging studies.",
+    image: `${IMG}/pet-scan-icons/spect-ct.svg`,
+    scan: "PET-CT / SPECT-CT",
+  },
 ];
 
 const features = [
-  { title: "Advanced PET-CT Technology", description: "Hybrid PET and CT in a single scan for superior diagnostic precision.", image: "/assets/images/lp/pet-scan-in-gurgaon/choosingMRI/3T_MRI.webp" },
-  { title: "High-resolution Imaging", description: "Crystal-clear metabolic and anatomical images for accurate diagnosis.", image: "/assets/images/lp/pet-scan-in-gurgaon/choosingMRI/HighResolutionImage.webp" },
-  { title: "Experienced Radiologists", description: "Expert radiologists delivering trusted and precise interpretations.", image: "/assets/images/lp/pet-scan-in-gurgaon/choosingMRI/ExperiencedRadiologists.webp" },
-  { title: "Faster & Accurate Reporting", description: "Quick, reliable reports to support timely medical decisions.", image: "/assets/images/lp/pet-scan-in-gurgaon/choosingMRI/AccurateReporting.webp" },
-  { title: "Patient-friendly Environment", description: "A comfortable, caring, and stress-free experience for every patient.", image: "/assets/images/lp/pet-scan-in-gurgaon/choosingMRI/Patient_Friendly.webp" },
-  { title: "Advanced Diagnostic Expertise", description: "Cutting-edge diagnostic expertise backed by clinical experience.", image: "/assets/images/lp/pet-scan-in-gurgaon/choosingMRI/Advanced_Expertise.webp" },
+  {
+    title: "Advanced PET-CT Technology",
+    description: "Hybrid PET and CT in a single scan for superior diagnostic precision.",
+    image: `${IMG}/why-choose-pet/3t-mri-technology.png`,
+  },
+  {
+    title: "High-resolution Imaging",
+    description: "Crystal-clear metabolic and anatomical images for accurate diagnosis.",
+    image: `${IMG}/why-choose-pet/high-resolution-imaging.png`,
+  },
+  {
+    title: "Experienced Radiologists",
+    description: "Expert radiologists delivering trusted and precise interpretations.",
+    image: `${IMG}/why-choose-pet/experienced-radiologists.png`,
+  },
+  {
+    title: "Faster & Accurate Reporting",
+    description: "Quick, reliable reports to support timely medical decisions.",
+    image: `${IMG}/why-choose-pet/faster-accurate-reporting.png`,
+  },
+  {
+    title: "Patient-friendly Environment",
+    description: "A comfortable, caring, and stress-free experience for every patient.",
+    image: `${IMG}/why-choose-pet/patient-friendly-environment.png`,
+  },
+  {
+    title: "Advanced Diagnostic Expertise",
+    description: "Cutting-edge diagnostic expertise backed by clinical experience.",
+    image: `${IMG}/why-choose-pet/advanced-diagnostic-expertise.png`,
+  },
 ];
 
 const preparationSteps = [
-  { number: "01", title: "Book Appointment", description: "Schedule your PET-CT at a convenient time before you visit the centre.", image: "/assets/images/lp/pet-scan-in-gurgaon/scannningPrepration/bookAppointment.svg" },
-  { number: "02", title: "Carry Previous Reports with Doctor Prescription", description: "Bring previous reports and your doctor's prescription for the scan.", image: "/assets/images/lp/pet-scan-in-gurgaon/scannningPrepration/carryPrevious.svg" },
-  { number: "03", title: "Share Medical History", description: "Inform the team about diabetes, pregnancy, allergies, implants or recent treatments.", image: "/assets/images/lp/pet-scan-in-gurgaon/scannningPrepration/informRadiologists.svg" },
-  { number: "04", title: "Follow Fasting Instructions", description: "FDG scans usually need 4–6 hours of fasting. Drink water as advised by the centre.", image: "/assets/images/lp/pet-scan-in-gurgaon/scannningPrepration/followInstructions.svg" },
+  {
+    number: "01",
+    title: "Book Appointment",
+    description: "Schedule your PET-CT at a convenient time before you visit the centre.",
+    image: `${IMG}/scanning-preparation/book-appointment.svg`,
+  },
+  {
+    number: "02",
+    title: "Carry Previous Reports with Doctor Prescription",
+    description: "Bring previous reports and your doctor’s prescription for the scan.",
+    image: `${IMG}/scanning-preparation/carry-previous-reports.svg`,
+  },
+  {
+    number: "03",
+    title: "Share Medical History",
+    description: "Inform the team about diabetes, pregnancy, allergies, implants or recent treatments.",
+    image: `${IMG}/scanning-preparation/inform-the-radiologist.svg`,
+  },
+  {
+    number: "04",
+    title: "Follow Fasting Instructions",
+    description: "FDG scans usually need 4–6 hours of fasting. Drink water as advised by the centre.",
+    image: `${IMG}/scanning-preparation/follow-instructions.svg`,
+  },
 ];
 
 const doctors = [
-  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "/assets/images/lp/pet-scan-in-gurgaon/DevendraSingh.webp" },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "/assets/images/lp/pet-scan-in-gurgaon/DeepaliYadav.webp" },
-  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "/assets/images/lp/pet-scan-in-gurgaon/NitinKumar.webp" },
-  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/pet-scan-in-gurgaon/RashmiKumari.webp" },
-  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/pet-scan-in-gurgaon/AnkitKataria.webp" },
-  { name: "Dr. Garima Yadav", role: "Consultant Radiologist", image: "/assets/images/lp/pet-scan-in-gurgaon/GarimaYadav.webp" },
-  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "/assets/images/lp/pet-scan-in-gurgaon/RajatGarg.webp" },
-  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "/assets/images/lp/pet-scan-in-gurgaon/PadmaChauhan.webp" },
+  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: `${IMG}/doctors/dr-devendra-singh-yadav-managing-director.jpg` },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: `${IMG}/doctors/dr-deepali-yadav-director-sr-consultant-radiology.jpg` },
+  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: `${IMG}/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg` },
+  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: `${IMG}/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg` },
+  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: `${IMG}/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg` },
+  { name: "Dr. Garima Yadav", role: "Consultant Radiologist", image: `${IMG}/doctors/dr-garima-yadav-consultant-radiologist.jpg` },
+  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: `${IMG}/doctors/dr-rajat-garg-consultant-radiologist.jpg` },
+  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: `${IMG}/doctors/dr-padma-chauhan-consultant-radiologist.jpg` },
 ];
 
 const locations = [
-  { label: "GURUGRAM - Sec 40", badge: "PET-CT Centre", title: "Modern Diagnostic & Research Centre, Sector-40", address: "1057P, Sector-40, Gurugram, Haryana – 122002", tags: ["PET-CT", "NABL & NABH", "7:00 AM – 8:00 PM"], image: "/assets/images/lp/pet-scan-in-gurgaon/lab-sector40.webp", imagePosition: "center center" },
-  { label: "GURUGRAM - New Railway Road", badge: "Diagnostic Hub", title: "Modern Diagnostic & Research Centre, NRR", address: "363-364/4, Sector-12, New Railway Road, Gurugram – 122001", tags: ["Advanced Imaging", "NABL Accredited", "Open 24×7"], image: "/assets/images/lp/pet-scan-in-gurgaon/lab-nrr.webp", imagePosition: "center center" },
+  {
+    label: "GURUGRAM - Sec 40",
+    badge: "PET-CT Centre",
+    title: "Modern Diagnostic & Research Centre, Sector-40",
+    address: "1057P, Sector-40, Gurugram, Haryana – 122002",
+    tags: ["PET-CT", "NABL & NABH", "7:00 AM – 8:00 PM"],
+    image: `${IMG}/centres/mdrc-sector-40-3t-mri-centre.jpg`,
+    imagePosition: "center center",
+  },
+  {
+    label: "GURUGRAM - New Railway Road",
+    badge: "Diagnostic Hub",
+    title: "Modern Diagnostic & Research Centre, NRR",
+    address: "363-364/4, Sector-12, New Railway Road, Gurugram – 122001",
+    tags: ["Advanced Imaging", "NABL Accredited", "Open 24×7"],
+    image: `${IMG}/centres/mdrc-new-railway-road-centre.jpg`,
+    imagePosition: "center center",
+  },
 ];
 
 const services = [
-  { name: "PET-CT / SPECT-CT", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-petct.svg", scan: "PET-CT / SPECT-CT" },
-  { name: "MRI", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-mri.svg", scan: "MRI" },
-  { name: "CT Scan", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-ct.svg", scan: "CT Scan" },
-  { name: "CBCT", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-cbct.svg", scan: "CBCT" },
-  { name: "Ultrasound", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-ultrasound.svg", scan: "Ultrasound" },
-  { name: "X-Ray", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-xray.svg", scan: "X-Ray" },
-  { name: "Mammography", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-mammo.svg", scan: "Mammography" },
-  { name: "Pathology", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-pathology.svg", scan: "Others" },
-  { name: "Health Checkups", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-checkup.svg", scan: "Others" },
-  { name: "Other Services", image: "/assets/images/lp/pet-scan-in-gurgaon/services/icon-other.svg", scan: "Others" },
+  { name: "PET-CT / SPECT-CT", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT / SPECT-CT" },
+  { name: "MRI", image: `${IMG}/services/mri.svg`, scan: "MRI" },
+  { name: "CT Scan", image: `${IMG}/services/ct-scan.svg`, scan: "CT Scan" },
+  { name: "Ultrasound", image: `${IMG}/services/ultrasound.svg`, scan: "Ultrasound" },
+  { name: "X-Ray", image: `${IMG}/services/x-ray.svg`, scan: "X-Ray" },
+  { name: "CBCT", image: `${IMG}/services/cbct.svg`, scan: "CBCT" },
+  { name: "Mammography", image: `${IMG}/services/mammography.svg`, scan: "Mammography" },
+  { name: "Pathology", image: `${IMG}/services/pathology.svg`, scan: "Others" },
+  { name: "Health Checkups", image: `${IMG}/services/health-checkups.svg`, scan: "Others" },
+  { name: "Other Services", image: `${IMG}/services/other-services.svg`, scan: "Others" },
 ];
 
 const faqs = [
-  { question: "What is a PET-CT scan?", answer: "A PET-CT scan combines PET (Positron Emission Tomography) and CT (Computed Tomography) in one examination. PET shows how tissues and cells are functioning, while CT maps internal anatomy. Together they give doctors a detailed view of metabolic activity and structure, commonly used for cancer and other complex conditions." },
-  { question: "Why do I need a PET/CT scan?", answer: "Your doctor may advise PET-CT to detect or stage cancer, check whether treatment is working, look for recurrence, or evaluate selected neurological and metabolic conditions. Because it looks at both structure and cellular activity, it is especially useful when other scans need more clarity." },
-  { question: "How does PET-CT work?", answer: "A small amount of radiotracer (most often FDG, a form of sugar) is injected. Active cells, including many cancer cells, take up more tracer. After a rest period, the PET scanner detects this activity and the CT scanner captures anatomy. The images are fused for precise localisation." },
-  { question: "How long does the test take?", answer: "Plan for about 2 to 3 hours at the centre. After injection you typically rest for 45–60 minutes while the tracer circulates. The scan itself usually takes 15–30 minutes, depending on the tracer and body area." },
-  { question: "What happens after the PET scan?", answer: "You can usually resume normal activity unless the team advises otherwise. Drink extra water to help clear the tracer. Limit close contact with infants and pregnant women for several hours as instructed. Reports are typically available within 24–48 working hours." },
-  { question: "How do PET scans differ from CT and MRI scans?", answer: "CT and MRI mainly show anatomy. PET shows function — how tissues are working at a cellular level. PET-CT combines both in one appointment, which is why it is often used for cancer staging and treatment monitoring." },
-  { question: "What are the risks associated with a PET-CT scan?", answer: "PET-CT uses a small amount of radiation from the tracer and CT. The dose is kept as low as reasonably possible. Allergic reactions are uncommon. Tell the team if you are pregnant, breastfeeding, diabetic, or have kidney issues before booking." },
-  { question: "How soon can I see my PET-CT scan report?", answer: "Most PET-CT reports at MDRC are shared within 24 to 48 working hours. The expected reporting time will be confirmed at your appointment." },
-  { question: "What is a DOTA PET scan?", answer: "A DOTA PET-CT is a specialised nuclear medicine scan that uses a Ga-68 DOTA tracer. It is primarily used to detect, localise and stage neuroendocrine tumours (NETs), often with higher specificity than FDG PET for these tumours." },
-  { question: "What are the benefits of DOTA PET-CT scans?", answer: "DOTA PET-CT can find NETs earlier, map disease more accurately, and help doctors plan surgery, PRRT or other targeted treatment. It also helps assess whether a known neuroendocrine tumour is active." },
-  { question: "Is a DOTA PET-CT scan safe?", answer: "Yes. Like other PET-CT studies, it uses a small, controlled amount of radiotracer. Most patients tolerate the procedure well. The nuclear medicine team will review your history and give specific precautions if needed." },
-  { question: "What do you need to do before a DOTA PET-CT scan?", answer: "Bring your doctor's prescription and previous reports. Fasting is often not required for DOTA, but follow the instructions given at booking. Stay well hydrated, wear comfortable clothing without metal, and mention any recent treatments or pregnancy." },
-  { question: "What happens during a DOTA PET-CT scan?", answer: "A small tracer injection is given through a vein. After a rest period of about 45–60 minutes, you lie still on the scanner table while PET and CT images are acquired, usually for 15–30 minutes." },
-  { question: "What do you need to do after the procedure?", answer: "Drink plenty of fluids, empty your bladder often, and follow any contact precautions given by the centre. You can generally return to normal activity the same day unless advised otherwise." },
+  {
+    question: "What is a PET-CT scan?",
+    answer:
+      "A PET-CT scan combines PET (Positron Emission Tomography) and CT (Computed Tomography) in one examination. PET shows how tissues and cells are functioning, while CT maps internal anatomy. Together they give doctors a detailed view of metabolic activity and structure, commonly used for cancer and other complex conditions.",
+  },
+  {
+    question: "Why do I need a PET/CT scan?",
+    answer:
+      "Your doctor may advise PET-CT to detect or stage cancer, check whether treatment is working, look for recurrence, or evaluate selected neurological and metabolic conditions. Because it looks at both structure and cellular activity, it is especially useful when other scans need more clarity.",
+  },
+  {
+    question: "How does PET-CT work?",
+    answer:
+      "A small amount of radiotracer (most often FDG, a form of sugar) is injected. Active cells, including many cancer cells, take up more tracer. After a rest period, the PET scanner detects this activity and the CT scanner captures anatomy. The images are fused for precise localisation.",
+  },
+  {
+    question: "How long does the test take?",
+    answer:
+      "Plan for about 2 to 3 hours at the centre. After injection you typically rest for 45–60 minutes while the tracer circulates. The scan itself usually takes 15–30 minutes, depending on the tracer and body area.",
+  },
+  {
+    question: "What happens after the PET scan?",
+    answer:
+      "You can usually resume normal activity unless the team advises otherwise. Drink extra water to help clear the tracer. Limit close contact with infants and pregnant women for several hours as instructed. Reports are typically available within 24–48 working hours.",
+  },
+  {
+    question: "How do PET scans differ from CT and MRI scans?",
+    answer:
+      "CT and MRI mainly show anatomy. PET shows function — how tissues are working at a cellular level. PET-CT combines both in one appointment, which is why it is often used for cancer staging and treatment monitoring.",
+  },
+  {
+    question: "What are the risks associated with a PET-CT scan?",
+    answer:
+      "PET-CT uses a small amount of radiation from the tracer and CT. The dose is kept as low as reasonably possible. Allergic reactions are uncommon. Tell the team if you are pregnant, breastfeeding, diabetic, or have kidney issues before booking.",
+  },
+  {
+    question: "How soon can I see my PET-CT scan report?",
+    answer:
+      "Most PET-CT reports at MDRC are shared within 24 to 48 working hours. The expected reporting time will be confirmed at your appointment.",
+  },
+  {
+    question: "What is a DOTA PET scan?",
+    answer:
+      "A DOTA PET-CT is a specialised nuclear medicine scan that uses a Ga-68 DOTA tracer. It is primarily used to detect, localise and stage neuroendocrine tumours (NETs), often with higher specificity than FDG PET for these tumours.",
+  },
+  {
+    question: "What are the benefits of DOTA PET-CT scans?",
+    answer:
+      "DOTA PET-CT can find NETs earlier, map disease more accurately, and help doctors plan surgery, PRRT or other targeted treatment. It also helps assess whether a known neuroendocrine tumour is active.",
+  },
+  {
+    question: "Is a DOTA PET-CT scan safe?",
+    answer:
+      "Yes. Like other PET-CT studies, it uses a small, controlled amount of radiotracer. Most patients tolerate the procedure well. The nuclear medicine team will review your history and give specific precautions if needed.",
+  },
+  {
+    question: "What do you need to do before a DOTA PET-CT scan?",
+    answer:
+      "Bring your doctor’s prescription and previous reports. Fasting is often not required for DOTA, but follow the instructions given at booking. Stay well hydrated, wear comfortable clothing without metal, and mention any recent treatments or pregnancy.",
+  },
+  {
+    question: "What happens during a DOTA PET-CT scan?",
+    answer:
+      "A small tracer injection is given through a vein. After a rest period of about 45–60 minutes, you lie still on the scanner table while PET and CT images are acquired, usually for 15–30 minutes.",
+  },
+  {
+    question: "What do you need to do after the procedure?",
+    answer:
+      "Drink plenty of fluids, empty your bladder often, and follow any contact precautions given by the centre. You can generally return to normal activity the same day unless advised otherwise.",
+  },
 ];
 
 const emptyForm = {
@@ -108,18 +249,9 @@ const emptyForm = {
 
 type BookingForm = typeof emptyForm;
 
-const getLandingAjaxUrl = () => {
-  const path = window.location.pathname.replace(/\\/g, "/");
-  if (path.indexOf("/views/") !== -1) {
-    return path.replace(/\/views\/.*$/, "/scripts/ajax/index.php");
-  }
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-    return "/api/landing-page-enquiry";
-  }
-  return "/scripts/ajax/index.php";
-};
+const LANDING_ENQUIRY_API = "/lp/imaging/pet-scan-in-gurgaon/enquiry";
 
-export default function PetScanInGurgaonPage() {
+export default function PetScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingScan, setBookingScan] = useState("PET-CT / SPECT-CT");
@@ -135,7 +267,7 @@ export default function PetScanInGurgaonPage() {
   const closeBooking = () => setBookingOpen(false);
 
   const scrollSlider = (sliderRef: RefObject<HTMLDivElement | null>, direction: number, cardSelector: string) => {
-    const grid = sliderRef.current;
+    const grid = sliderRef.current as HTMLDivElement | null;
     if (!grid) return;
     const card = grid.querySelector(cardSelector);
     const gap = parseFloat(getComputedStyle(grid).gap) || 18;
@@ -154,63 +286,55 @@ export default function PetScanInGurgaonPage() {
   const scrollDoctors = (direction: number) => scrollSlider(doctorGrid, direction, ".doctor-card");
 
   useEffect(() => {
-    const setupAutoScroll = (
-      sliderRef: RefObject<HTMLDivElement | null>,
-      cardSelector: string,
-      intervalMs: number,
-    ) => {
-      const slider = sliderRef.current;
-      if (!slider) return () => {};
+    const slider = doctorGrid.current;
+    if (!slider) return undefined;
 
-      let isPaused = false;
-      let resumeTimeout: ReturnType<typeof setTimeout> | undefined;
+    let isPaused = false;
+    let resumeTimeout: ReturnType<typeof setTimeout> | undefined;
 
-      const pause = () => {
-        isPaused = true;
-        clearTimeout(resumeTimeout);
-      };
-
-      const unpause = () => {
-        isPaused = false;
-      };
-
-      const resumeLater = () => {
-        clearTimeout(resumeTimeout);
-        resumeTimeout = setTimeout(() => {
-          isPaused = false;
-        }, 2500);
-      };
-
-      slider.addEventListener("mouseenter", pause);
-      slider.addEventListener("mouseleave", unpause);
-      slider.addEventListener("touchstart", pause, { passive: true });
-      slider.addEventListener("touchend", resumeLater, { passive: true });
-
-      const timer = setInterval(() => {
-        if (isPaused) return;
-        const card = slider.querySelector(cardSelector);
-        const gap = parseFloat(getComputedStyle(slider).gap) || 18;
-        const amount = card ? card.getBoundingClientRect().width + gap : 300;
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
-
-        if (slider.scrollLeft >= maxScroll - 10) {
-          slider.scrollTo({ left: 0, behavior: "smooth" });
-        } else {
-          slider.scrollBy({ left: amount, behavior: "smooth" });
-        }
-      }, intervalMs);
-
-      return () => {
-        clearInterval(timer);
-        clearTimeout(resumeTimeout);
-        slider.removeEventListener("mouseenter", pause);
-        slider.removeEventListener("mouseleave", unpause);
-        slider.removeEventListener("touchstart", pause);
-        slider.removeEventListener("touchend", resumeLater);
-      };
+    const pause = () => {
+      isPaused = true;
+      clearTimeout(resumeTimeout);
     };
 
-    return setupAutoScroll(doctorGrid, ".doctor-card", 3800);
+    const unpause = () => {
+      isPaused = false;
+    };
+
+    const resumeLater = () => {
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        isPaused = false;
+      }, 2500);
+    };
+
+    slider.addEventListener("mouseenter", pause);
+    slider.addEventListener("mouseleave", unpause);
+    slider.addEventListener("touchstart", pause, { passive: true });
+    slider.addEventListener("touchend", resumeLater, { passive: true });
+
+    const timer = setInterval(() => {
+      if (isPaused) return;
+      const card = slider.querySelector(".doctor-card");
+      const gap = parseFloat(getComputedStyle(slider).gap) || 18;
+      const amount = card ? card.getBoundingClientRect().width + gap : 300;
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+      if (slider.scrollLeft >= maxScroll - 10) {
+        slider.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        slider.scrollBy({ left: amount, behavior: "smooth" });
+      }
+    }, 3800);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(resumeTimeout);
+      slider.removeEventListener("mouseenter", pause);
+      slider.removeEventListener("mouseleave", unpause);
+      slider.removeEventListener("touchstart", pause);
+      slider.removeEventListener("touchend", resumeLater);
+    };
   }, []);
 
   useEffect(() => {
@@ -278,18 +402,18 @@ export default function PetScanInGurgaonPage() {
     fd.append("terms", "Yes");
 
     setIsSubmitting(true);
-    fetch(getLandingAjaxUrl(), {
+    fetch(LANDING_ENQUIRY_API, {
       method: "POST",
       body: fd,
       credentials: "same-origin",
     })
       .then((res) => res.json())
       .then((res: { RESULT?: string; error_msg?: string }) => {
-        if (res.RESULT === "OK") {
+        if (String(res.RESULT || "").toUpperCase() === "OK") {
           setSubmitted(true);
-        } else {
-          alert(res.error_msg || "Could not submit. Please try again.");
+          return;
         }
+        alert(res.error_msg || "Could not submit. Please try again.");
       })
       .catch(() => {
         alert("Could not submit. Please try again.");
@@ -300,21 +424,17 @@ export default function PetScanInGurgaonPage() {
   };
 
   return (
-    <div className="pet-landing-page">
+    <div className="mri-landing-page">
       <div className="app-shell">
       <header className="site-header">
         <div className="container header-inner">
           <a href={SITE_URL} className="logo" aria-label="Modern Diagnostic & Research Centre">
-            <img src="/assets/images/lp/pet-scan-in-gurgaon/mdrc-logo.webp" alt="Modern Diagnostic & Research Centre" />
+            <img src={`${IMG}/modern-diagnostic-research-centre-logo.png`} alt="Modern Diagnostic & Research Centre" />
           </a>
           <div className="header-actions">
             <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / SPECT-CT")}>
               Book Now
             </button>
-            <a href={PHONE_HREF} className="header-call header-call-desktop">
-              <img src="/assets/images/lp/pet-scan-in-gurgaon/call.webp" alt="" />
-              <span>Call Now</span>
-            </a>
           </div>
         </div>
       </header>
@@ -334,7 +454,7 @@ export default function PetScanInGurgaonPage() {
                   Book Now
                 </button>
                 <a href={PHONE_HREF} className="hero-call-btn">
-                  <img src="/assets/images/lp/pet-scan-in-gurgaon/call.webp" alt="" />
+                  <img src={`${IMG}/phone-call-icon.png`} alt="" />
                   <span>{PHONE_DISPLAY}</span>
                 </a>
               </div>
@@ -345,7 +465,7 @@ export default function PetScanInGurgaonPage() {
                 <div className="hero-trust-item">
                   <span className="check-icon">✓</span> Expert Radiologists
                 </div>
-                <div className="hero-trust-item hero-trust-item-center">
+                <div className="hero-trust-item">
                   <span className="check-icon">✓</span> FDG, PSMA, DOTA & DOPA
                 </div>
               </div>
@@ -353,7 +473,7 @@ export default function PetScanInGurgaonPage() {
             <div className="hero-visual">
               <div className="hero-image-wrapper">
                 <img
-                  src="/assets/images/lp/pet-scan-in-gurgaon/heroSectionImage.webp"
+                  src={`${IMG}/pet-ct-scanner-gurugram.webp`}
                   alt="PET-CT scanner for advanced imaging in Gurugram"
                   width="700"
                   height="600"
@@ -399,7 +519,7 @@ export default function PetScanInGurgaonPage() {
               </div>
               <div className="intro-content">
                 <p>
-                  A Whole Body FDG PET-CT Scan is a highly reliable, advanced diagnostic imaging test that helps doctors evaluate a wide variety of complex health conditions. This scan brilliantly combines two powerful imaging techniques — PET (Positron Emission Tomography) and CT (Computed Tomography) — to provide a deeply detailed view of your body's metabolic activity and internal structures, right here in Gurugram.
+                  A Whole Body FDG PET-CT Scan is a highly reliable, advanced diagnostic imaging test that helps doctors evaluate a wide variety of complex health conditions. This scan brilliantly combines two powerful imaging techniques — PET (Positron Emission Tomography) and CT (Computed Tomography) — to provide a deeply detailed view of your body’s metabolic activity and internal structures, right here in Gurugram.
                 </p>
                 <p>
                   Because it looks at both physical structure and cellular activity, PET-CT is incredibly versatile. It is primarily used to detect, stage and monitor cancer, assess treatment response, and evaluate selected neurological and other metabolic conditions. At MDRC, every scan is performed in a calm, patient-friendly setting and reported by experienced radiologists.
@@ -418,7 +538,7 @@ export default function PetScanInGurgaonPage() {
               </div>
             </div>
             <div className="intro-visual">
-              <img src="/assets/images/lp/pet-scan-in-gurgaon/indian-mri-scan.webp" alt="Radiologist assisting a patient for PET-CT scan at MDRC Gurugram" />
+              <img src={`${IMG}/patient-pet-ct-scan.webp`} alt="Radiologist assisting a patient for PET-CT scan at MDRC Gurugram" />
             </div>
           </div>
         </section>
@@ -431,24 +551,24 @@ export default function PetScanInGurgaonPage() {
               <p>Our PET-CT services cover specialised tracers for oncology, prostate, neuroendocrine and neurological imaging.</p>
             </div>
             <div className="pet-scans-grid">
-              {petScans.map((scan) => (
+              {petScans.map((item) => (
                 <article
                   className="mri-scan-card pet-scan-card"
-                  key={scan.title}
-                  onClick={() => openBooking(scan.scan)}
+                  key={item.title}
+                  onClick={() => openBooking(item.scan)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") openBooking(scan.scan);
+                  onKeyDown={(event: KeyboardEvent<HTMLElement>) => {
+                    if (event.key === "Enter" || event.key === " ") openBooking(item.scan);
                   }}
                 >
                   <div className="pet-scan-card-top">
                     <div className="mri-scan-icon">
-                      <img src={scan.image} alt="" />
+                      <img src={item.image} alt="" />
                     </div>
-                    <h3>{scan.title}</h3>
+                    <h3>{item.title}</h3>
                   </div>
-                  <p>{scan.description}</p>
+                  <p>{item.description}</p>
                 </article>
               ))}
             </div>
@@ -550,7 +670,7 @@ export default function PetScanInGurgaonPage() {
                       alt={location.title}
                       style={{ objectPosition: location.imagePosition || "center center" }}
                     />
-                    {location.badge ? <span className="location-img-badge">{location.badge}</span> : null}
+                    {location.badge && <span className="location-img-badge">{location.badge}</span>}
                   </div>
                   <div className="location-content">
                     <div className="location-meta-row">
@@ -568,7 +688,7 @@ export default function PetScanInGurgaonPage() {
                       </svg>
                       <span>{location.address}</span>
                     </address>
-                    {location.tags ? (
+                    {location.tags && (
                       <div className="location-tags">
                         {location.tags.map((tag) => (
                           <span key={tag} className="location-tag">
@@ -576,7 +696,7 @@ export default function PetScanInGurgaonPage() {
                           </span>
                         ))}
                       </div>
-                    ) : null}
+                    )}
                   </div>
                 </article>
               ))}
@@ -609,16 +729,28 @@ export default function PetScanInGurgaonPage() {
         <section className="section section-dark">
           <div className="container trust-image-grid">
             <div className="trust-image-wrapper">
-              <img src="/assets/images/lp/pet-scan-in-gurgaon/PatientTrust.webp" alt="Patient receiving diagnostic imaging care at MDRC" />
+              <img src={`${IMG}/patient-diagnostic-imaging-care.webp`} alt="Patient receiving diagnostic imaging care at MDRC" />
             </div>
             <div className="trust-content">
               <span className="eyebrow eyebrow-light">PATIENT EXPERIENCE</span>
               <h2>Why Patients Trust Us</h2>
               <ul className="trust-list">
-                <li><span>✓</span><p>Advanced diagnostic technology</p></li>
-                <li><span>✓</span><p>Experienced professionals</p></li>
-                <li><span>✓</span><p>Patient-focused environment</p></li>
-                <li><span>✓</span><p>Reliable diagnostic services</p></li>
+                <li>
+                  <span>✓</span>
+                  <p>Advanced diagnostic technology</p>
+                </li>
+                <li>
+                  <span>✓</span>
+                  <p>Experienced professionals</p>
+                </li>
+                <li>
+                  <span>✓</span>
+                  <p>Patient-focused environment</p>
+                </li>
+                <li>
+                  <span>✓</span>
+                  <p>Reliable diagnostic services</p>
+                </li>
               </ul>
             </div>
           </div>
@@ -642,10 +774,8 @@ export default function PetScanInGurgaonPage() {
         </section>
 
         <section className="final-cta" id="contact">
-          <div className="final-cta-glow" aria-hidden="true" />
           <div className="container final-cta-inner">
-            <div className="final-cta-copy">
-              <span className="final-cta-badge">Book in minutes</span>
+            <div>
               <h2>Need a PET-CT Scan in Gurugram?</h2>
               <p>
                 Book your PET-CT scan at MDRC India and get access to advanced hybrid imaging with experienced radiology professionals.
@@ -664,7 +794,7 @@ export default function PetScanInGurgaonPage() {
         <div className="container footer-inner">
           <div className="footer-logo">
             <a href={SITE_URL} className="logo">
-              <img src="/assets/images/lp/pet-scan-in-gurgaon/mdrc-logo.webp" alt="Modern Diagnostic & Research Centre" />
+              <img src={`${IMG}/modern-diagnostic-research-centre-logo.png`} alt="Modern Diagnostic & Research Centre" />
             </a>
           </div>
           <div className="footer-meta">
@@ -678,11 +808,11 @@ export default function PetScanInGurgaonPage() {
 
       <nav className="mobile-sticky-cta" aria-label="Quick contact actions">
         <a href={PHONE_HREF} className="sticky-btn sticky-call" aria-label="Call MDRC">
-          <img src="/assets/images/lp/pet-scan-in-gurgaon/call.webp" alt="" />
+          <img src={`${IMG}/phone-call-icon.png`} alt="" />
           <span>{PHONE_DISPLAY}</span>
         </a>
         <a href={WHATSAPP_HREF} className="sticky-btn sticky-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp MDRC">
-          <img src="/assets/images/lp/pet-scan-in-gurgaon/whatsapp.webp" alt="" />
+          <img src={`${IMG}/whatsapp-icon.png`} alt="" />
           <span>WhatsApp</span>
         </a>
       </nav>
@@ -733,7 +863,7 @@ export default function PetScanInGurgaonPage() {
                 <form className="booking-form" onSubmit={handleSubmit}>
                   <label>
                     <span>
-                      Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}> *</span>
+                      Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>
                     </span>
                     <input
                       name="name"
@@ -746,7 +876,7 @@ export default function PetScanInGurgaonPage() {
                   </label>
                   <label>
                     <span>
-                      Phone Number <span style={{ color: "#dc2626", fontWeight: "700" }}> *</span>
+                      Phone Number <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>
                     </span>
                     <input
                       name="phone"
