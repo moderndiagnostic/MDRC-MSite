@@ -15,9 +15,9 @@ const SCAN_TYPES = [
   "MRI",
   "CT Scan",
   "Ultrasound",
+  "X-Ray",
   "CBCT",
   "Mammography",
-  "X-Ray",
   "Others",
 ];
 
@@ -153,7 +153,7 @@ const locations = [
 ];
 
 const services = [
-  { name: "PET-CT / SPECT-CT", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT / SPECT-CT" },
+  { name: "PET-CT / SPECT-CT", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT / SPECT-CT", highlight: "Sec 40 Only" },
   { name: "MRI", image: `${IMG}/services/mri.svg`, scan: "MRI" },
   { name: "CT Scan", image: `${IMG}/services/ct-scan.svg`, scan: "CT Scan" },
   { name: "Ultrasound", image: `${IMG}/services/ultrasound.svg`, scan: "Ultrasound" },
@@ -714,10 +714,11 @@ export default function PetScanGurugramPage() {
               {services.map((service) => (
                 <button
                   type="button"
-                  className="simple-service"
+                  className={`simple-service${service.highlight ? " simple-service-highlight" : ""}`}
                   key={service.name}
                   onClick={() => openBooking(service.scan)}
                 >
+                  {service.highlight ? <span className="simple-service-badge">{service.highlight}</span> : null}
                   <img className="simple-service-icon" src={service.image} alt="" />
                   <span>{service.name}</span>
                 </button>
@@ -778,7 +779,7 @@ export default function PetScanGurugramPage() {
             <div>
               <h2>Need a PET-CT Scan in Gurugram?</h2>
               <p>
-                Book your PET-CT scan at MDRC India and get access to advanced hybrid imaging with experienced radiology professionals.
+                Book FDG, PSMA, DOTA, DOPA and other PET-CT / SPECT-CT scans with experienced nuclear medicine professionals at MDRC.
               </p>
             </div>
             <div className="final-buttons">
