@@ -135,7 +135,7 @@ const locations = [
   {
     label: "GURUGRAM - Sec 40",
     badge: "PET-CT Centre",
-    title: "Modern Diagnostic & Research Centre, Sector-40, Gurgaon",
+    title: "Modern Diagnostic & Research Centre, Sector-40, Gurugram",
     address: "1057P, Sector-40, Gurugram, Haryana – 122002",
     tags: ["PET-CT", "NABL & NABH", "7:00 AM – 8:00 PM"],
     image: `${IMG}/centres/mdrc-sector-40-3t-mri-centre.jpg`,
