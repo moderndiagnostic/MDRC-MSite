@@ -72,8 +72,8 @@ const features = [
     image: `${IMG}/why-choose-pet/high-resolution-imaging.png`,
   },
   {
-    title: "Experienced Radiologists",
-    description: "Expert radiologists delivering trusted and precise interpretations.",
+    title: "Expert Nuclear Medicine Team",
+    description: "Expert nuclear medicine team delivering trusted and precise interpretations.",
     image: `${IMG}/why-choose-pet/experienced-radiologists.png`,
   },
   {
@@ -447,7 +447,7 @@ export default function PetScanGurugramPage() {
                 Advanced PET-CT Scan <span>in Gurugram</span>
               </h1>
               <p className="hero-description">
-                High-precision PET-CT imaging that combines metabolic PET and anatomical CT, reported by expert radiologists.
+                High-precision PET-CT imaging that combines metabolic PET and anatomical CT, reported by an expert nuclear medicine physician.
               </p>
               <div className="hero-buttons">
                 <button type="button" className="btn-book hero-primary-btn" onClick={() => openBooking("PET-CT / SPECT-CT")}>
@@ -463,9 +463,9 @@ export default function PetScanGurugramPage() {
                   <span className="check-icon">✓</span> Hybrid PET-CT Imaging
                 </div>
                 <div className="hero-trust-item">
-                  <span className="check-icon">✓</span> Expert Radiologists
+                  <span className="check-icon">✓</span> Expert Nuclear Medicine Team
                 </div>
-                <div className="hero-trust-item">
+                <div className="hero-trust-item hero-trust-item-center">
                   <span className="check-icon">✓</span> FDG, PSMA, DOTA & DOPA
                 </div>
               </div>
@@ -522,14 +522,14 @@ export default function PetScanGurugramPage() {
                   A Whole Body FDG PET-CT Scan is a highly reliable, advanced diagnostic imaging test that helps doctors evaluate a wide variety of complex health conditions. This scan brilliantly combines two powerful imaging techniques — PET (Positron Emission Tomography) and CT (Computed Tomography) — to provide a deeply detailed view of your body’s metabolic activity and internal structures, right here in Gurugram.
                 </p>
                 <p>
-                  Because it looks at both physical structure and cellular activity, PET-CT is incredibly versatile. It is primarily used to detect, stage and monitor cancer, assess treatment response, and evaluate selected neurological and other metabolic conditions. At MDRC, every scan is performed in a calm, patient-friendly setting and reported by experienced radiologists.
+                  Because it looks at both physical structure and cellular activity, PET-CT is incredibly versatile. It is primarily used to detect, stage and monitor cancer, assess treatment response, and evaluate selected neurological and other metabolic conditions. At MDRC, every scan is performed in a calm, patient-friendly setting and reported by an expert nuclear medicine physician.
                 </p>
                 <div className="content-points">
                   <div className="content-point">
                     <span className="check-icon">✓</span> Hybrid PET-CT Technology
                   </div>
                   <div className="content-point">
-                    <span className="check-icon">✓</span> Experienced Radiology Team
+                    <span className="check-icon">✓</span> Expert Nuclear Medicine Team
                   </div>
                   <div className="content-point">
                     <span className="check-icon">✓</span> Patient-focused Experience
