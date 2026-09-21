@@ -1,7 +1,7 @@
 import "./pet-scan.css";
 
 const SITE_URL = "https://www.mdrcindia.com";
-const PAGE_URL = `${SITE_URL}/lp/imaging/pet-scan-in-gurgaon`;
+const PAGE_URL = `${SITE_URL}/lp/imaging/pet-ct-scan-in-gurgaon`;
 const TITLE = "PET CT Scan in Gurugram | FDG, PSMA, DOTA, DOPA | MDRC";
 const DESCRIPTION =
   "Book a PET CT scan in Gurugram at MDRC. Whole body FDG PET-CT, PSMA, DOTA and DOPA scans with expert radiologists. NABL & NABH accredited centres in Sector-40 and New Railway Road.";
@@ -95,7 +95,7 @@ const jsonLd = {
     {
       "@type": "PostalAddress",
       streetAddress: "363-364/4, Sector-12, New Railway Road",
-      addressLocality: "Gurugram",
+      addressLocality: "Gurgaon",
       addressRegion: "Haryana",
       postalCode: "122001",
       addressCountry: "IN",

@@ -135,18 +135,18 @@ const locations = [
   {
     label: "GURUGRAM - Sec 40",
     badge: "PET-CT Centre",
-    title: "Modern Diagnostic & Research Centre, Sector-40",
+    title: "Modern Diagnostic & Research Centre, Sector-40, Gurgaon",
     address: "1057P, Sector-40, Gurugram, Haryana – 122002",
     tags: ["PET-CT", "NABL & NABH", "7:00 AM – 8:00 PM"],
     image: `${IMG}/centres/mdrc-sector-40-3t-mri-centre.jpg`,
     imagePosition: "center center",
   },
   {
-    label: "GURUGRAM - New Railway Road",
+    label: "GURGAON - New Railway Road",
     badge: "Diagnostic Hub",
-    title: "Modern Diagnostic & Research Centre, NRR",
-    address: "363-364/4, Sector-12, New Railway Road, Gurugram – 122001",
-    tags: ["Advanced Imaging", "NABL Accredited", "Open 24×7"],
+    title: "Modern Diagnostic & Research Centre, NRR, Gurgaon",
+    address: "363-364/4, Sector-12, New Railway Road, Gurgaon – 122001, Haryana, India",
+    tags: ["Advanced Imaging", "NABL & NABH", "Open 24×7"],
     image: `${IMG}/centres/mdrc-new-railway-road-centre.jpg`,
     imagePosition: "center center",
   },
@@ -209,7 +209,7 @@ const faqs = [
   {
     question: "What is a DOTA PET scan?",
     answer:
-      "A DOTA PET-CT is a specialised nuclear medicine scan that uses a Ga-68 DOTA tracer. It is primarily used to detect, localise and stage neuroendocrine tumours (NETs), often with higher specificity than FDG PET for these tumours.",
+      "A DOTA PET-CT is a specialised nuclear medicine scan that uses a DOTA / NOTA tracer. It is primarily used to detect, localise and stage neuroendocrine tumours (NETs), often with higher specificity than FDG PET for these tumours.",
   },
   {
     question: "What are the benefits of DOTA PET-CT scans?",
@@ -249,7 +249,7 @@ const emptyForm = {
 
 type BookingForm = typeof emptyForm;
 
-const LANDING_ENQUIRY_API = "/lp/imaging/pet-scan-in-gurgaon/enquiry";
+const LANDING_ENQUIRY_API = "/lp/imaging/pet-ct-scan-in-gurgaon/enquiry";
 
 export default function PetScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
