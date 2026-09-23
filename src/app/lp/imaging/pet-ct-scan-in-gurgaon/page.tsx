@@ -5,7 +5,13 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type Key
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
 const PHONE_HREF = "tel:8920300300";
-const WHATSAPP_HREF = "https://wa.me/918586988847";
+const WHATSAPP_MESSAGE = `Hi Sir,
+Greetings from MDRC!
+Thank you for contacting Modern Diagnostic and Research Centre.
+We are happy to help you.
+Please share your query with us!!
+Modern Diagnostic & Research Centre`;
+const WHATSAPP_HREF = `https://wa.me/918586988847?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const IOS_APP = "https://apps.apple.com/in/app/modern-diagnostic-health-app/id6504657715";
 const ANDROID_APP = "https://play.google.com/store/apps/details?id=com.mdrcindia.booking";
 const IMG = "/assets/images/lp/pet-scan-in-gurgaon";

@@ -4,12 +4,17 @@
 import React from "react";
 import { Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
 import { Location, ReachUsApiResponse } from "@/hooks/useReachUs";
+import { getReachUsPhoneForLocation } from "@/constants/reachUsPhones";
 
 interface ReachUsProps {
   serverData?: ReachUsApiResponse | null;
 }
 
 const LocationCard: React.FC<{ location: Location }> = ({ location }) => {
+  const mappedPhone = getReachUsPhoneForLocation(location.name, location.address);
+  const phone1 = mappedPhone || location.phone1;
+  const phone2 = mappedPhone ? "" : location.phone2;
+
   return (
     <div className="bg-white border border-gray-300 p-4 mb-4 relative rounded-md shadow-sm hover:shadow-md transition-shadow">
       <h3 className="text-base font-semibold text-gray-800 mb-3">
@@ -24,26 +29,26 @@ const LocationCard: React.FC<{ location: Location }> = ({ location }) => {
           </p>
         </div>
 
-        {location.phone1 && (
+        {phone1 && (
           <div className="flex items-center gap-2">
             <Phone className="w-4 h-4 text-green-600 shrink-0" />
             <a
-              href={`tel:${location.phone1}`}
+              href={`tel:${phone1.replace(/[^0-9+]/g, "")}`}
               className="text-gray-700 text-xs hover:text-blue-600 transition-colors"
             >
-              {location.phone1}
+              {phone1}
             </a>
           </div>
         )}
 
-        {location.phone2 && (
+        {phone2 && (
           <div className="flex items-center gap-2">
             <Phone className="w-4 h-4 text-green-600 shrink-0" />
             <a
-              href={`tel:${location.phone2}`}
+              href={`tel:${phone2.replace(/[^0-9+]/g, "")}`}
               className="text-gray-700 text-xs hover:text-blue-600 transition-colors"
             >
-              {location.phone2}
+              {phone2}
             </a>
           </div>
         )}
