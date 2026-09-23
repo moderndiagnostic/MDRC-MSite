@@ -121,7 +121,6 @@ const doctors = [
   { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg" },
   { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg" },
   { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg" },
-  { name: "Dr. Garima Yadav", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-garima-yadav-consultant-radiologist.jpg" },
   { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-rajat-garg-consultant-radiologist.jpg" },
   { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-padma-chauhan-consultant-radiologist.jpg" },
 ];
