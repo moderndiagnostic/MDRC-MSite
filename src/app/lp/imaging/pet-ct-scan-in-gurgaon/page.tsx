@@ -13,7 +13,7 @@ const ANDROID_APP = "https://play.google.com/store/apps/details?id=com.mdrcindia
 const IMG = "/assets/images/lp/pet-scan-in-gurgaon";
 
 const SCAN_TYPES = [
-  "PET-CT / Others",
+  "PET-CT",
   "MRI",
   "CT Scan",
   "Ultrasound",
@@ -28,37 +28,37 @@ const petScans = [
     title: "FDG Whole Body Triple Phase PET-CT",
     description: "Advanced imaging combining metabolic PET with multi-phase diagnostic CT.",
     image: `${IMG}/pet-scan-icons/fdg-triple-phase.svg`,
-    scan: "PET-CT / Others",
+    scan: "PET-CT",
   },
   {
     title: "PSMA Scan",
     description: "PSMA PET-CT for detection, staging and restaging of prostate cancer.",
     image: `${IMG}/pet-scan-icons/psma-scan.svg`,
-    scan: "PET-CT / Others",
+    scan: "PET-CT",
   },
   {
     title: "DOTA PET Scan",
     description: "Specialised imaging designed primarily for neuroendocrine tumours (NETs).",
     image: `${IMG}/pet-scan-icons/dota-pet-scan.svg`,
-    scan: "PET-CT / Others",
+    scan: "PET-CT",
   },
   {
     title: "FDG F18 Whole Body PET-CT",
     description: "Gold-standard whole body FDG PET-CT for cancer staging and monitoring.",
     image: `${IMG}/pet-scan-icons/fdg-whole-body.svg`,
-    scan: "PET-CT / Others",
+    scan: "PET-CT",
   },
   {
     title: "DOPA Scan",
     description: "Specialised PET-CT for movement disorders and selected brain tumours.",
     image: `${IMG}/pet-scan-icons/dopa-scan.svg`,
-    scan: "PET-CT / Others",
+    scan: "PET-CT",
   },
   {
     title: "Others",
     description: "Specialized PET-CT imaging options for specific diagnostic needs, based on your clinical requirements.",
     image: `${IMG}/pet-scan-icons/spect-ct.svg`,
-    scan: "PET-CT / Others",
+    scan: "PET-CT",
   },
 ];
 
@@ -154,7 +154,7 @@ const locations = [
 ];
 
 const services = [
-  { name: "PET-CT / Others", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT / Others", highlight: "Sec 40 Only" },
+  { name: "PET-CT", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT", highlight: "Sec 40 Only" },
   { name: "MRI", image: `${IMG}/services/mri.svg`, scan: "MRI" },
   { name: "CT Scan", image: `${IMG}/services/ct-scan.svg`, scan: "CT Scan" },
   { name: "Ultrasound", image: `${IMG}/services/ultrasound.svg`, scan: "Ultrasound" },
@@ -243,7 +243,7 @@ const emptyForm = {
   name: "",
   phone: "",
   email: "",
-  scan: "PET-CT / Others",
+  scan: "PET-CT",
   message: "",
   acceptedTerms: true,
 };
@@ -255,13 +255,13 @@ const LANDING_ENQUIRY_API = "/lp/imaging/pet-ct-scan-in-gurgaon/enquiry";
 export default function PetScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [bookingScan, setBookingScan] = useState("PET-CT / Others");
+  const [bookingScan, setBookingScan] = useState("PET-CT");
   const [form, setForm] = useState<BookingForm>(emptyForm);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const openBooking = (nextScan: string) => {
-    setBookingScan(SCAN_TYPES.includes(nextScan) ? nextScan : "PET-CT / Others");
+    setBookingScan(SCAN_TYPES.includes(nextScan) ? nextScan : "PET-CT");
     setBookingOpen(true);
   };
 
@@ -433,7 +433,7 @@ export default function PetScanGurugramPage() {
             <img src={`${IMG}/modern-diagnostic-research-centre-logo.png`} alt="Modern Diagnostic & Research Centre" />
           </a>
           <div className="header-actions">
-            <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / Others")}>
+            <button type="button" className="btn-book" onClick={() => openBooking("PET-CT")}>
               Book Now
             </button>
           </div>
@@ -451,7 +451,7 @@ export default function PetScanGurugramPage() {
                 High-precision PET-CT imaging that combines metabolic PET and anatomical CT, reported by an expert nuclear medicine physician.
               </p>
               <div className="hero-buttons">
-                <button type="button" className="btn-book hero-primary-btn" onClick={() => openBooking("PET-CT / Others")}>
+                <button type="button" className="btn-book hero-primary-btn" onClick={() => openBooking("PET-CT")}>
                   Book Now
                 </button>
                 <a href={PHONE_HREF} className="hero-call-btn">
@@ -574,7 +574,7 @@ export default function PetScanGurugramPage() {
               ))}
             </div>
             <div className="section-cta">
-              <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / Others")}>
+              <button type="button" className="btn-book" onClick={() => openBooking("PET-CT")}>
                 Book Now
               </button>
             </div>
@@ -784,7 +784,7 @@ export default function PetScanGurugramPage() {
               </p>
             </div>
             <div className="final-buttons">
-              <button type="button" className="btn-book btn-white-book" onClick={() => openBooking("PET-CT / Others")}>
+              <button type="button" className="btn-book btn-white-book" onClick={() => openBooking("PET-CT")}>
                 Book Now
               </button>
             </div>

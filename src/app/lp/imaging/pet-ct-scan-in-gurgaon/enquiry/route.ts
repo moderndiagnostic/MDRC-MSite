@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         name: String(incoming.get("name") || ""),
         phone: String(incoming.get("phone") || ""),
         email: String(incoming.get("email") || ""),
-        scan: String(incoming.get("scan") || "PET-CT / Others"),
+        scan: String(incoming.get("scan") || "PET-CT"),
         message: String(incoming.get("message") || ""),
         terms: "Yes",
       },
