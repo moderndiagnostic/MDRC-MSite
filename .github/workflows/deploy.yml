@@ -40,6 +40,6 @@ jobs:
             npm run build
 
             echo "Reloading PM2..."
-            pm2 reload mdrc-msite --update-env
+            pm2 reload msite --update-env
 
             echo "Deployment completed successfully."
