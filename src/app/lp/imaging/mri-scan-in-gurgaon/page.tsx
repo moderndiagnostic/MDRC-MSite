@@ -149,7 +149,7 @@ const locations = [
 ];
 
 const services = [
-  { name: "PET-CT / SPECT-CT", image: "/assets/images/lp/mri-scan-in-gurgaon/services/pet-ct-spect-ct.svg", scan: "PET-CT / SPECT-CT" },
+  { name: "PET-CT ", image: "/assets/images/lp/mri-scan-in-gurgaon/services/pet-ct-spect-ct.svg", scan: "PET-CT / SPECT-CT" },
   { name: "MRI", image: "/assets/images/lp/mri-scan-in-gurgaon/services/mri.svg", scan: "MRI" },
   { name: "CT Scan", image: "/assets/images/lp/mri-scan-in-gurgaon/services/ct-scan.svg", scan: "CT Scan" },
   { name: "Ultrasound", image: "/assets/images/lp/mri-scan-in-gurgaon/services/ultrasound.svg", scan: "Ultrasound" },
