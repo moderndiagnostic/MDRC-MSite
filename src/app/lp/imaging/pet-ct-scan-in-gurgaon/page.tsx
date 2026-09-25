@@ -124,7 +124,7 @@ const preparationSteps = [
 
 const doctors = [
   { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: `${IMG}/doctors/dr-devendra-singh-yadav-managing-director.jpg` },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: `${IMG}/doctors/dr-deepali-yadav-director-sr-consultant-radiology.jpg` },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab269e17ca900.56126854.jpg" },
   { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: `${IMG}/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg` },
   { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: `${IMG}/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg` },
   { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: `${IMG}/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg` },
