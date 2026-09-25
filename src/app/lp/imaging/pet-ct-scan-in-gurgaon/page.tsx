@@ -13,7 +13,7 @@ const ANDROID_APP = "https://play.google.com/store/apps/details?id=com.mdrcindia
 const IMG = "/assets/images/lp/pet-scan-in-gurgaon";
 
 const SCAN_TYPES = [
-  "PET-CT / SPECT-CT",
+  "PET-CT / Others",
   "MRI",
   "CT Scan",
   "Ultrasound",
@@ -28,37 +28,37 @@ const petScans = [
     title: "FDG Whole Body Triple Phase PET-CT",
     description: "Advanced imaging combining metabolic PET with multi-phase diagnostic CT.",
     image: `${IMG}/pet-scan-icons/fdg-triple-phase.svg`,
-    scan: "PET-CT / SPECT-CT",
+    scan: "PET-CT / Others",
   },
   {
     title: "PSMA Scan",
     description: "PSMA PET-CT for detection, staging and restaging of prostate cancer.",
     image: `${IMG}/pet-scan-icons/psma-scan.svg`,
-    scan: "PET-CT / SPECT-CT",
+    scan: "PET-CT / Others",
   },
   {
     title: "DOTA PET Scan",
     description: "Specialised imaging designed primarily for neuroendocrine tumours (NETs).",
     image: `${IMG}/pet-scan-icons/dota-pet-scan.svg`,
-    scan: "PET-CT / SPECT-CT",
+    scan: "PET-CT / Others",
   },
   {
     title: "FDG F18 Whole Body PET-CT",
     description: "Gold-standard whole body FDG PET-CT for cancer staging and monitoring.",
     image: `${IMG}/pet-scan-icons/fdg-whole-body.svg`,
-    scan: "PET-CT / SPECT-CT",
+    scan: "PET-CT / Others",
   },
   {
     title: "DOPA Scan",
     description: "Specialised PET-CT for movement disorders and selected brain tumours.",
     image: `${IMG}/pet-scan-icons/dopa-scan.svg`,
-    scan: "PET-CT / SPECT-CT",
+    scan: "PET-CT / Others",
   },
   {
-    title: "SPECT-CT",
-    description: "Nuclear medicine SPECT-CT for targeted functional imaging studies.",
+    title: "Others",
+    description: "Specialized PET-CT imaging options for specific diagnostic needs, based on your clinical requirements.",
     image: `${IMG}/pet-scan-icons/spect-ct.svg`,
-    scan: "PET-CT / SPECT-CT",
+    scan: "PET-CT / Others",
   },
 ];
 
@@ -123,13 +123,13 @@ const preparationSteps = [
 ];
 
 const doctors = [
-  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: `${IMG}/doctors/dr-devendra-singh-yadav-managing-director.jpg` },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab269e17ca900.56126854.jpg" },
-  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: `${IMG}/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg` },
-  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: `${IMG}/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg` },
-  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: `${IMG}/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg` },
-  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: `${IMG}/doctors/dr-rajat-garg-consultant-radiologist.jpg` },
-  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: `${IMG}/doctors/dr-padma-chauhan-consultant-radiologist.jpg` },
+  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab6293222f360.01643474.jpg" },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629eb9d81b8.78874086.jpg" },
+  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629c50e8631.06714162.jpg" },
+  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629adb09171.37034093.jpg" },
+  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b65e9e178.76656913.jpg" },
+  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b43e47b16.91390783.jpg" },
+  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b30207909.87842987.jpg" },
 ];
 
 const locations = [
@@ -154,7 +154,7 @@ const locations = [
 ];
 
 const services = [
-  { name: "PET-CT / SPECT-CT", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT / SPECT-CT", highlight: "Sec 40 Only" },
+  { name: "PET-CT / Others", image: `${IMG}/services/pet-ct-spect-ct.svg`, scan: "PET-CT / Others", highlight: "Sec 40 Only" },
   { name: "MRI", image: `${IMG}/services/mri.svg`, scan: "MRI" },
   { name: "CT Scan", image: `${IMG}/services/ct-scan.svg`, scan: "CT Scan" },
   { name: "Ultrasound", image: `${IMG}/services/ultrasound.svg`, scan: "Ultrasound" },
@@ -243,7 +243,7 @@ const emptyForm = {
   name: "",
   phone: "",
   email: "",
-  scan: "PET-CT / SPECT-CT",
+  scan: "PET-CT / Others",
   message: "",
   acceptedTerms: true,
 };
@@ -255,13 +255,13 @@ const LANDING_ENQUIRY_API = "/lp/imaging/pet-ct-scan-in-gurgaon/enquiry";
 export default function PetScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [bookingScan, setBookingScan] = useState("PET-CT / SPECT-CT");
+  const [bookingScan, setBookingScan] = useState("PET-CT / Others");
   const [form, setForm] = useState<BookingForm>(emptyForm);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const openBooking = (nextScan: string) => {
-    setBookingScan(SCAN_TYPES.includes(nextScan) ? nextScan : "PET-CT / SPECT-CT");
+    setBookingScan(SCAN_TYPES.includes(nextScan) ? nextScan : "PET-CT / Others");
     setBookingOpen(true);
   };
 
@@ -433,7 +433,7 @@ export default function PetScanGurugramPage() {
             <img src={`${IMG}/modern-diagnostic-research-centre-logo.png`} alt="Modern Diagnostic & Research Centre" />
           </a>
           <div className="header-actions">
-            <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / SPECT-CT")}>
+            <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / Others")}>
               Book Now
             </button>
           </div>
@@ -451,7 +451,7 @@ export default function PetScanGurugramPage() {
                 High-precision PET-CT imaging that combines metabolic PET and anatomical CT, reported by an expert nuclear medicine physician.
               </p>
               <div className="hero-buttons">
-                <button type="button" className="btn-book hero-primary-btn" onClick={() => openBooking("PET-CT / SPECT-CT")}>
+                <button type="button" className="btn-book hero-primary-btn" onClick={() => openBooking("PET-CT / Others")}>
                   Book Now
                 </button>
                 <a href={PHONE_HREF} className="hero-call-btn">
@@ -574,7 +574,7 @@ export default function PetScanGurugramPage() {
               ))}
             </div>
             <div className="section-cta">
-              <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / SPECT-CT")}>
+              <button type="button" className="btn-book" onClick={() => openBooking("PET-CT / Others")}>
                 Book Now
               </button>
             </div>
@@ -780,11 +780,11 @@ export default function PetScanGurugramPage() {
             <div>
               <h2>Need a PET-CT Scan in Gurugram?</h2>
               <p>
-                Book FDG, PSMA, DOTA, DOPA and other PET-CT / SPECT-CT scans with experienced nuclear medicine professionals at MDRC.
+                Book FDG, PSMA, DOTA, DOPA and other PET-CT scans with experienced nuclear medicine professionals at MDRC.
               </p>
             </div>
             <div className="final-buttons">
-              <button type="button" className="btn-book btn-white-book" onClick={() => openBooking("PET-CT / SPECT-CT")}>
+              <button type="button" className="btn-book btn-white-book" onClick={() => openBooking("PET-CT / Others")}>
                 Book Now
               </button>
             </div>

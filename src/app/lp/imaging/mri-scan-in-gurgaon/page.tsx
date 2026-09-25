@@ -116,13 +116,13 @@ const preparationSteps = [
 ];
 
 const doctors = [
-  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-devendra-singh-yadav-managing-director.jpg" },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab269e17ca900.56126854.jpg" },
-  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-nitin-kumar-director-sr-consultant-radiology-imaging.jpg" },
-  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-rashmi-kumari-sr-consultant-radiologist.jpg" },
-  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-ankit-kataria-sr-consultant-radiologist.jpg" },
-  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-rajat-garg-consultant-radiologist.jpg" },
-  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "/assets/images/lp/mri-scan-in-gurgaon/doctors/dr-padma-chauhan-consultant-radiologist.jpg" },
+  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab6293222f360.01643474.jpg" },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629eb9d81b8.78874086.jpg" },
+  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629c50e8631.06714162.jpg" },
+  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629adb09171.37034093.jpg" },
+  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b65e9e178.76656913.jpg" },
+  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b43e47b16.91390783.jpg" },
+  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b30207909.87842987.jpg" },
 ];
 
 const locations = [
