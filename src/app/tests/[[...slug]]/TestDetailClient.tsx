@@ -105,15 +105,13 @@ export default function TestDetailPage({
     callBlock,
     featureList,
     descList,
-  } = data;
+  } = data ?? {};
 
   const itemDesc = descList;
+  const safeFeatureList = Array.isArray(featureList) ? featureList : [];
 
   const isItemInCart = !!cartItemMap[itemDetail?.itemID];
   const processing = isProcessing[itemDetail?.itemID];
-
-  // if (loading) return <p>Loading...</p>;
-  if (!itemDetail) return <p>No item details available.</p>;
 
   useEffect(() => {
     if (!user) {
@@ -145,6 +143,10 @@ export default function TestDetailPage({
 
     return () => cancelAnimationFrame(animationId);
   }, []);
+
+  // if (loading) return <p>Loading...</p>;
+  if (!itemDetail) return <p>No item details available.</p>;
+
   return (
     <div className=" space-y-6">
       <section className="mb-3">
@@ -229,7 +231,7 @@ export default function TestDetailPage({
             {/* Scrollable pill row - direct buttons matching image [file:2] */}
             <div className="relative overflow-hidden">
               <div ref={trackRef} className="flex gap-3 w-max">
-                {[...featureList, ...featureList].map((item, index) => (
+                {[...safeFeatureList, ...safeFeatureList].map((item, index) => (
                   <div
                     key={index}
                     className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl bg-gray-50"

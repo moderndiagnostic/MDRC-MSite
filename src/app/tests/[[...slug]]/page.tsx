@@ -78,5 +78,5 @@ export default async function Page({ params }: Props) {
 
   const data = await fetchItemDetail(itemSlug);  
 
-  return <TestDetailPage data={data} itemSlug={itemSlug} />;
+  return <TestDetailPage data={data ?? null} itemSlug={itemSlug} />;
 }
