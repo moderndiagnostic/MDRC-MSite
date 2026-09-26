@@ -11,7 +11,7 @@ import ApplyJobModal from "@/components/modals/ApplyJobModal";
 import { useCareer } from "@/hooks/useCareer";
 
 const CareerPageClient = ({ initialData }: { initialData?: any }) => {
-  const { jobs, other, loading, error } = useCareer(initialData);
+  const { jobs, other, loading, error } = useCareer({ initialData });
 
   const [careerExpanded, setCareerExpanded] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);

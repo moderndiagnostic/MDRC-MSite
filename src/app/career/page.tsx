@@ -4,10 +4,23 @@ import { generateMetadataFromData, getCanonicalUrl } from "@/utils/meta";
 import type { Metadata } from "next";
 import { careerService } from "@/services/careerService";
 
-export async function generateMetadata(): Promise<Metadata> {
+// Fetch at request time so a blocked/failed API during `next build`
+// does not fail the whole deploy (CI servers often get Cloudflare 403).
+export const dynamic = "force-dynamic";
+
+async function fetchCareerData() {
   try {
     const response: any = await careerService.getCareerList();
-    const data = response.data ?? response;
+    return response?.data ?? response ?? null;
+  } catch (error) {
+    console.error("Failed to fetch career data:", error);
+    return null;
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const data = await fetchCareerData();
 
     const meta_title = data?.meta_title || "Careers at Modern Diagnostic";
     const meta_description =
@@ -40,8 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CareerPageWrapper() {
-  const response: any = await careerService.getCareerList();
-  const initialData = response.data ?? response;
+  const initialData = await fetchCareerData();
 
   return <CareerPageClient initialData={initialData} />;
 }
