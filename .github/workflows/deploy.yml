@@ -36,6 +36,9 @@ jobs:
             echo "Installing dependencies..."
             npm install --no-audit --no-fund
 
+            echo "Cleaning previous build cache..."
+            rm -rf .next
+
             echo "Building application..."
             npm run build
 
