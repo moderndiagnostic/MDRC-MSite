@@ -33,7 +33,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   });
 }
 
-export default async function CategoriesPage(_props?: Props) {
+export default async function CategoriesPage(_props: Props) {
   // const params = await props.params;
   const data = await fetchCategories();
 
