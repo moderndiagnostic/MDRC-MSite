@@ -1,9 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 const WEBAPI_URL = "https://www.mdrcindia.com/webApi/index.php";
 const PHP_ENQUIRY_URL = "https://www.mdrcindia.com/scripts/ajax/index.php";
+
+function readValue(formEl: HTMLFormElement | null, name: string, fallback = "") {
+  const field = formEl?.elements.namedItem(name);
+  if (field && "value" in field) return String(field.value || "");
+  return fallback;
+}
+
+function normalizeIndianMobile(raw: string) {
+  let digits = raw.replace(/\D/g, "");
+  if (digits.startsWith("91") && digits.length >= 12) digits = digits.slice(2);
+  if (digits.startsWith("0") && digits.length === 11) digits = digits.slice(1);
+  if (digits.length > 10) digits = digits.slice(-10);
+  return digits;
+}
 
 const INTEREST_OPTIONS = [
   {
@@ -22,6 +36,7 @@ const INTEREST_OPTIONS = [
 
 export default function CepClient({ html }: { html: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const sendingRef = useRef(false);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -86,10 +101,14 @@ export default function CepClient({ html }: { html: string }) {
     });
   };
 
-  const handleSubmit = async () => {
-    const name = form.name.trim();
-    const phone = form.phone.replace(/\D/g, "");
-    const email = form.email.trim();
+  const handleSubmit = async (formEl?: HTMLFormElement | null) => {
+    if (sendingRef.current) return;
+    const name = readValue(formEl ?? null, "name", form.name).trim();
+    const phone = normalizeIndianMobile(readValue(formEl ?? null, "phone", form.phone));
+    const email = readValue(formEl ?? null, "email", form.email).trim();
+    const clinic = readValue(formEl ?? null, "clinic", form.clinic).trim();
+    const interest = readValue(formEl ?? null, "interest", form.interest) || INTEREST_OPTIONS[0].value;
+    const note = readValue(formEl ?? null, "message", form.message).trim();
     const nextErrors = {
       name: !name,
       phone: !/^[6-9]\d{9}$/.test(phone),
@@ -102,10 +121,12 @@ export default function CepClient({ html }: { html: string }) {
       return;
     }
 
-    const message = [form.clinic.trim() && `Clinic: ${form.clinic.trim()}`, form.message.trim()]
-      .filter(Boolean)
-      .join("\n");
+    const message = [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n");
+    if (typeof document !== "undefined") {
+      (document.activeElement as HTMLElement | null)?.blur?.();
+    }
 
+    sendingRef.current = true;
     setSending(true);
     try {
       const formData = new FormData();
@@ -113,9 +134,9 @@ export default function CepClient({ html }: { html: string }) {
       formData.append("name", name);
       formData.append("phone", phone);
       formData.append("city", "Gurugram");
-      formData.append("address", form.clinic.trim() || "Gurugram");
+      formData.append("address", clinic || "Gurugram");
       formData.append("enquiry_type", "New Booking");
-      formData.append("test_type", form.interest);
+      formData.append("test_type", interest);
 
       const response = await fetch(WEBAPI_URL, {
         method: "POST",
@@ -129,7 +150,7 @@ export default function CepClient({ html }: { html: string }) {
         name,
         phone,
         email,
-        interest: form.interest,
+        interest,
         message,
       }).catch(() => undefined);
 
@@ -145,7 +166,7 @@ export default function CepClient({ html }: { html: string }) {
           name,
           phone,
           email,
-          interest: form.interest,
+          interest,
           message,
         });
         setSubmitted(true);
@@ -153,6 +174,7 @@ export default function CepClient({ html }: { html: string }) {
         setSubmitError("Could not submit. Please try again.");
       }
     } finally {
+      sendingRef.current = false;
       setSending(false);
     }
   };
@@ -179,7 +201,16 @@ export default function CepClient({ html }: { html: string }) {
             </div>
           </div>
 
-          <div className={`enquire-form${submitted ? " submitted" : ""}`} id="enquireForm">
+          <form
+            className={`enquire-form${submitted ? " submitted" : ""}`}
+            id="enquireForm"
+            method="dialog"
+            onSubmit={(event: FormEvent<HTMLFormElement>) => {
+              event.preventDefault();
+              event.stopPropagation();
+              void handleSubmit(event.currentTarget);
+            }}
+          >
             <div className="ef-success">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="#0879b8" strokeWidth="1.6" />
@@ -226,6 +257,9 @@ export default function CepClient({ html }: { html: string }) {
                   placeholder="Dr. Jane Doe"
                   autoComplete="name"
                   value={form.name}
+                  onInput={(event) =>
+                    setForm((current) => ({ ...current, name: event.currentTarget.value }))
+                  }
                   onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
                 />
                 <span className="ef-err">Please enter your name</span>
@@ -241,11 +275,18 @@ export default function CepClient({ html }: { html: string }) {
                     name="phone"
                     placeholder="98XXXXXXXX"
                     autoComplete="tel"
+                    inputMode="numeric"
                     value={form.phone}
+                    onInput={(event) =>
+                      setForm((current) => ({
+                        ...current,
+                        phone: normalizeIndianMobile(event.currentTarget.value),
+                      }))
+                    }
                     onChange={(event) =>
                       setForm((current) => ({
                         ...current,
-                        phone: event.target.value.replace(/\D/g, "").slice(0, 10),
+                        phone: normalizeIndianMobile(event.target.value),
                       }))
                     }
                   />
@@ -309,17 +350,20 @@ export default function CepClient({ html }: { html: string }) {
                 </p>
               ) : null}
               <button
-                type="button"
+                type="submit"
                 className="btn btn-primary"
-                style={{ width: "100%", justifyContent: "center" }}
+                style={{ width: "100%", justifyContent: "center", touchAction: "manipulation" }}
                 disabled={sending}
-                onClick={handleSubmit}
+                onPointerUp={(event) => {
+                  event.preventDefault();
+                  void handleSubmit(event.currentTarget.form);
+                }}
               >
                 {sending ? "Sending..." : "Send enquiry"}
               </button>
               <p className="ef-note">We will contact you on the number you provide.</p>
             </div>
-          </div>
+          </form>
         </div>
       </section>
     </div>
