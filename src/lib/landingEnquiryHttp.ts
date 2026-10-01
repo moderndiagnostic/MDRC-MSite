@@ -72,13 +72,31 @@ function getClientIp(request: Request) {
   return request.headers.get("x-real-ip") || request.headers.get("cf-connecting-ip") || "";
 }
 
+function enquiryPage(request: Request, incoming: FormData) {
+  const posted = String(incoming.get("page") || "").trim();
+  if (posted) return posted;
+  try {
+    return new URL(request.url).pathname
+      .replace(/\/$/, "")
+      .replace(/\/enquiry$/, "")
+      .replace(/^\/api\/landing-page-enquiry$/, "/landing")
+      .replace(/^\//, "");
+  } catch {
+    return "";
+  }
+}
+
 export async function handleLandingEnquiryPost(
   request: Request,
   mapFields: (incoming: FormData) => LandingEnquiryFields,
 ) {
   const incoming = await request.formData();
   const fields = mapFields(incoming);
-  const result = await submitLandingEnquiry(fields, getClientIp(request));
+  const result = await submitLandingEnquiry(
+    fields,
+    getClientIp(request),
+    enquiryPage(request, incoming),
+  );
   const accept = request.headers.get("accept") || "";
 
   if (accept.includes("application/json")) {

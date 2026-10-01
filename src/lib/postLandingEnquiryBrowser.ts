@@ -23,7 +23,10 @@ export async function postEnquiryWithPlainForm(fields: BrowserLandingEnquiry) {
   fd.append("scan", fields.scan);
   fd.append("message", fields.message);
   fd.append("terms", fields.terms || "Yes");
-  fd.append("method", "landing_page_enquiry");
+  fd.append(
+    "page",
+    typeof window === "undefined" ? "" : window.location.pathname.replace(/\/$/, "").replace(/^\//, ""),
+  );
 
   for (const url of enquiryUrls()) {
     try {
