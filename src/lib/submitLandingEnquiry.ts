@@ -17,7 +17,7 @@ type EnquiryJson = {
 
 const PHP_ENQUIRY_URLS = [
   process.env.LANDING_ENQUIRY_URL,
-  process.env.NODE_ENV === "production" ? "http://127.0.0.1/scripts/ajax/index.php" : "",
+  "http://127.0.0.1/scripts/ajax/index.php",
   "https://www.mdrcindia.com/scripts/ajax/index.php",
 ].filter((url): url is string => Boolean(url));
 
