@@ -1,10 +1,10 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { nativePostEnquiryForm } from "@/lib/postLandingEnquiryBrowser";
+import { useEffect, useRef, useState } from "react";
+import { postEnquiryWithPlainForm } from "@/lib/postLandingEnquiryBrowser";
 
-function readValue(formEl: HTMLFormElement | null, name: string, fallback = "") {
-  const field = formEl?.elements.namedItem(name);
+function readValue(root: HTMLElement | null, name: string, fallback = "") {
+  const field = root?.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(`[name="${name}"]`);
   if (field && "value" in field) return String(field.value || "");
   return fallback;
 }
@@ -75,9 +75,8 @@ export default function CepClient({ html }: { html: string }) {
     return () => root.removeEventListener("click", onFaqClick);
   }, [html]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formEl = event.currentTarget;
+  const handleSend = () => {
+    const formEl = document.getElementById("enquireForm");
     const name = readValue(formEl, "name", form.name).trim();
     const phone = normalizeIndianMobile(readValue(formEl, "phone", form.phone));
     const email = readValue(formEl, "email", form.email).trim();
@@ -96,17 +95,15 @@ export default function CepClient({ html }: { html: string }) {
       return;
     }
 
-    const phoneInput = formEl.elements.namedItem("phone");
-    if (phoneInput && "value" in phoneInput) phoneInput.value = phone;
-    const scanInput = formEl.elements.namedItem("scan");
-    if (scanInput && "value" in scanInput) scanInput.value = interest;
-    const messageInput = formEl.elements.namedItem("message");
-    if (messageInput && "value" in messageInput) {
-      messageInput.value = [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n");
-    }
-
     setSending(true);
-    nativePostEnquiryForm(formEl, "/chronic-endometritis-panel/enquiry");
+    postEnquiryWithPlainForm({
+      name,
+      phone,
+      email,
+      scan: interest,
+      message: [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n"),
+      terms: "Yes",
+    });
   };
 
   return (
@@ -131,18 +128,10 @@ export default function CepClient({ html }: { html: string }) {
             </div>
           </div>
 
-          <form
+          <div
             className={`enquire-form${submitted ? " submitted" : ""}`}
             id="enquireForm"
-            method="post"
-            encType="application/x-www-form-urlencoded"
-            onSubmit={handleSubmit}
-            noValidate
           >
-            <input type="hidden" name="method" value="landing_page_enquiry" />
-            <input type="hidden" name="terms" value="Yes" />
-            <input type="hidden" name="scan" value={form.interest} />
-            <input type="hidden" name="message" value="" />
             <div className="ef-success">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="#0879b8" strokeWidth="1.6" />
@@ -287,16 +276,17 @@ export default function CepClient({ html }: { html: string }) {
                 </p>
               ) : null}
               <button
-                type="submit"
+                type="button"
                 className="btn btn-primary"
                 style={{ width: "100%", justifyContent: "center", touchAction: "manipulation" }}
                 disabled={sending}
+                onClick={handleSend}
               >
                 {sending ? "Sending..." : "Send enquiry"}
               </button>
               <p className="ef-note">We will contact you on the number you provide.</p>
             </div>
-          </form>
+          </div>
         </div>
       </section>
     </div>

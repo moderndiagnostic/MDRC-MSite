@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
-import { nativePostEnquiryForm } from "@/lib/postLandingEnquiryBrowser";
+import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent, type RefObject } from "react";
+import { postEnquiryWithPlainForm } from "@/lib/postLandingEnquiryBrowser";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -372,8 +372,7 @@ export default function PetScanGurugramPage() {
     setForm((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     const trimmedName = form.name.trim();
     const cleanPhone = form.phone.replace(/\D/g, "");
 
@@ -392,11 +391,15 @@ export default function PetScanGurugramPage() {
       return;
     }
 
-    const phoneInput = event.currentTarget.elements.namedItem("phone");
-    if (phoneInput && "value" in phoneInput) phoneInput.value = cleanPhone;
-
     setIsSubmitting(true);
-    nativePostEnquiryForm(event.currentTarget, "/lp/imaging/pet-ct-scan-in-gurgaon/enquiry");
+    postEnquiryWithPlainForm({
+      name: trimmedName,
+      phone: cleanPhone,
+      email: form.email.trim(),
+      scan: form.scan,
+      message: form.message.trim(),
+      terms: "Yes",
+    });
   };
 
   return (
@@ -837,14 +840,7 @@ export default function PetScanGurugramPage() {
                 <p className="booking-lead">
                   Share your details and we will help you schedule at the nearest MDRC centre.
                 </p>
-                <form
-                  className="booking-form"
-                  method="post"
-                  encType="application/x-www-form-urlencoded"
-                  onSubmit={handleSubmit}
-                >
-                  <input type="hidden" name="method" value="landing_page_enquiry" />
-                  <input type="hidden" name="terms" value="Yes" />
+                <div className="booking-form">
                   <label>
                     <span>
                       Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>
@@ -926,10 +922,10 @@ export default function PetScanGurugramPage() {
                       </a>
                     </span>
                   </label>
-                  <button type="submit" className="btn-book booking-submit" disabled={isSubmitting}>
+                  <button type="button" className="btn-book booking-submit" disabled={isSubmitting} onClick={handleSubmit}>
                     {isSubmitting ? "Submitting..." : "Submit Request"}
                   </button>
-                </form>
+                </div>
               </>
             )}
           </div>
