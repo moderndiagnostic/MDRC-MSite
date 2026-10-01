@@ -383,7 +383,7 @@ export default function MriScanGurugramPage() {
           scan: form.scan,
           message: form.message.trim(),
           terms: "Yes",
-        });
+        }, "/lp/imaging/mri-scan-in-gurgaon/enquiry");
         setSubmitted(true);
       } catch {
         alert("Could not submit. Please try again.");

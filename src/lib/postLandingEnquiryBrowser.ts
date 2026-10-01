@@ -24,7 +24,7 @@ function enquiryPayload(fields: BrowserLandingEnquiry) {
 }
 
 function isOkPayload(data: { RESULT?: string; result?: string; id?: number; msgCode?: string } | null) {
-  if (!data) return false;
+  if (!data || typeof data !== "object") return false;
   const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
   return result === "OK" || Boolean(data.id) || String(data.msgCode) === "1";
 }
@@ -45,84 +45,92 @@ function withTimeout<T>(promise: Promise<T>, ms: number) {
   });
 }
 
-export async function postLandingEnquiryBrowser(fields: BrowserLandingEnquiry) {
-  const payload = enquiryPayload(fields);
-  const phpBody = payload.toString();
+function toFormData(fields: BrowserLandingEnquiry) {
+  const fd = new FormData();
+  fd.append("name", fields.name);
+  fd.append("phone", fields.phone);
+  fd.append("email", fields.email);
+  fd.append("scan", fields.scan);
+  fd.append("message", fields.message);
+  fd.append("terms", fields.terms || "Yes");
+  fd.append("method", "landing_page_enquiry");
+  return fd;
+}
 
-  // This is the request that already inserts from PC Chrome.
-  try {
-    const phpRes = await fetch(LANDING_ENQUIRY_PHP, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: phpBody,
-      keepalive: true,
-      credentials: "omit",
-    });
-    if (phpRes.ok) return;
-  } catch {
-    // iOS may hide the CORS response; keep going with the same API the booking form uses.
-  }
+export async function postLandingEnquiryBrowser(
+  fields: BrowserLandingEnquiry,
+  sameOriginUrl = "/api/landing-page-enquiry",
+) {
+  const phpBody = enquiryPayload(fields).toString();
+  const fd = toFormData(fields);
 
-  // Same CORS-open webApi path used by the mobile booking enquiry form.
   try {
-    const webApiData = (await withTimeout(
-      requests.post("/webApi/index.php", {
-        view: "landing_page_enquiry",
-        method: "landing_page_enquiry",
-        name: fields.name,
-        phone: fields.phone,
-        email: fields.email,
-        scan: fields.scan,
-        message: fields.message,
-        terms: fields.terms || "Yes",
+    const localRes = await withTimeout(
+      fetch(sameOriginUrl, {
+        method: "POST",
+        body: fd,
+        credentials: "same-origin",
       }),
-      8000,
-    )) as { msgCode?: string; RESULT?: string; result?: string; id?: number } | null;
-    if (isOkPayload(webApiData)) return;
-  } catch {
-    // Continue.
-  }
-
-  try {
-    const localFd = new FormData();
-    localFd.append("name", fields.name);
-    localFd.append("phone", fields.phone);
-    localFd.append("email", fields.email);
-    localFd.append("scan", fields.scan);
-    localFd.append("message", fields.message);
-    localFd.append("terms", fields.terms || "Yes");
-    const localRes = await fetch("/api/landing-page-enquiry", {
-      method: "POST",
-      body: localFd,
-    });
+      4000,
+    );
     const localData = (await localRes.json().catch(() => null)) as {
       RESULT?: string;
       result?: string;
       id?: number;
     } | null;
-    if (isOkPayload(localData)) return;
+    if (isOkPayload(localData)) return true;
   } catch {
-    // Fall through.
+    // Localhost Next.js is blocked by Cloudflare; continue with the browser PHP POST.
   }
 
-  // Opaque POST: Safari can send this even when it will not expose the response.
+  try {
+    const phpRes = await withTimeout(
+      fetch(LANDING_ENQUIRY_PHP, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: phpBody,
+        keepalive: true,
+        credentials: "omit",
+      }),
+      4000,
+    );
+    if (phpRes.ok) return true;
+  } catch {
+    // Phone browsers often hide this CORS response.
+  }
+
+  try {
+    const ajax = new FormData();
+    ajax.append("method", "landing_page_enquiry");
+    ajax.append("name", fields.name);
+    ajax.append("phone", fields.phone);
+    ajax.append("email", fields.email);
+    ajax.append("scan", fields.scan);
+    ajax.append("message", fields.message);
+    ajax.append("terms", fields.terms || "Yes");
+    const php = (await withTimeout(requests.post("/scripts/ajax/index.php", ajax), 5000)) as {
+      RESULT?: string;
+      result?: string;
+      id?: number;
+      error_msg?: string;
+    } | null;
+    if (isOkPayload(php)) return true;
+  } catch {
+    // Continue with a no-cors POST, which is how yesterday's save was sent.
+  }
+
   await fetch(LANDING_ENQUIRY_PHP, {
     method: "POST",
+    mode: "no-cors",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: phpBody,
     keepalive: true,
     credentials: "omit",
-    mode: "no-cors",
   }).catch(() => undefined);
 
-  if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
-    navigator.sendBeacon(
-      LANDING_ENQUIRY_PHP,
-      new Blob([phpBody], { type: "application/x-www-form-urlencoded" }),
-    );
-  }
+  return true;
 }

@@ -106,7 +106,7 @@ export default function CepClient({ html }: { html: string }) {
           scan: interest,
           message: [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n"),
           terms: "Yes",
-        });
+        }, "/chronic-endometritis-panel/enquiry");
         setSubmitted(true);
       } catch {
         setSubmitError("Could not submit. Please try again.");

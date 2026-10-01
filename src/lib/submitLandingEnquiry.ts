@@ -72,7 +72,7 @@ export async function submitLandingEnquiry(
         body: payload.toString(),
         cache: "no-store",
         redirect: "follow",
-        signal: AbortSignal.timeout(url.includes("127.0.0.1") ? 3000 : 15000),
+        signal: AbortSignal.timeout(url.includes("127.0.0.1") ? 3000 : 4000),
       });
 
       const text = await response.text();

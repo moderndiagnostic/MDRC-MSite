@@ -402,7 +402,7 @@ export default function PetScanGurugramPage() {
           scan: form.scan,
           message: form.message.trim(),
           terms: "Yes",
-        });
+        }, "/lp/imaging/pet-ct-scan-in-gurgaon/enquiry");
         setSubmitted(true);
       } catch {
         alert("Could not submit. Please try again.");
