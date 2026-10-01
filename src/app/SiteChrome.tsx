@@ -10,7 +10,8 @@ import ModalWrapper from "../components/modals/ModalWrapper";
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const landingPath = (pathname || "").replace(/\/$/, "");
-  const isImagingLanding = landingPath.startsWith("/lp/imaging/");
+  const isImagingLanding =
+    landingPath.startsWith("/lp/imaging/") || landingPath.startsWith("/lp/radio/");
 
   useEffect(() => {
     document.documentElement.classList.toggle("mri-landing-active", isImagingLanding);

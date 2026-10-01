@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
+import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -250,8 +251,6 @@ const emptyForm = {
 
 type BookingForm = typeof emptyForm;
 
-const LANDING_ENQUIRY_API = "/lp/imaging/pet-ct-scan-in-gurgaon/enquiry";
-
 export default function PetScanGurugramPage() {
   const doctorGrid = useRef<HTMLDivElement>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -393,28 +392,18 @@ export default function PetScanGurugramPage() {
       return;
     }
 
-    const fd = new FormData();
-    fd.append("method", "landing_page_enquiry");
-    fd.append("name", trimmedName);
-    fd.append("phone", cleanPhone);
-    fd.append("email", form.email.trim());
-    fd.append("scan", form.scan);
-    fd.append("message", form.message.trim());
-    fd.append("terms", "Yes");
-
+    const pending = postLandingEnquiryBrowser({
+      name: trimmedName,
+      phone: cleanPhone,
+      email: form.email.trim(),
+      scan: form.scan,
+      message: form.message.trim(),
+      terms: "Yes",
+    });
     setIsSubmitting(true);
-    fetch(LANDING_ENQUIRY_API, {
-      method: "POST",
-      body: fd,
-      credentials: "same-origin",
-    })
-      .then((res) => res.json())
-      .then((res: { RESULT?: string; error_msg?: string }) => {
-        if (String(res.RESULT || "").toUpperCase() === "OK") {
-          setSubmitted(true);
-          return;
-        }
-        alert(res.error_msg || "Could not submit. Please try again.");
+    pending
+      .then(() => {
+        setSubmitted(true);
       })
       .catch(() => {
         alert("Could not submit. Please try again.");
