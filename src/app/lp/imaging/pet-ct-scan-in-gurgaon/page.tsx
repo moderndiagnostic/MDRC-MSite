@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
-import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
+import { isPhoneBrowser, LANDING_ENQUIRY_PHP, nativeSubmitLandingForm, postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -372,8 +372,9 @@ export default function PetScanGurugramPage() {
     setForm((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const formEl = event.currentTarget;
     const trimmedName = form.name.trim();
     const cleanPhone = form.phone.replace(/\D/g, "");
 
@@ -392,22 +393,34 @@ export default function PetScanGurugramPage() {
       return;
     }
 
-    setIsSubmitting(true);
-    try {
-      await postLandingEnquiryBrowser({
-        name: trimmedName,
-        phone: cleanPhone,
-        email: form.email.trim(),
-        scan: form.scan,
-        message: form.message.trim(),
-        terms: "Yes",
-      });
-      setSubmitted(true);
-    } catch {
-      alert("Could not submit. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    const phoneInput = formEl.elements.namedItem("phone");
+    if (phoneInput && "value" in phoneInput) phoneInput.value = cleanPhone;
+
+    if (isPhoneBrowser()) {
+      if (nativeSubmitLandingForm(formEl)) {
+        window.setTimeout(() => setSubmitted(true), 600);
+      }
+      return;
     }
+
+    setIsSubmitting(true);
+    void (async () => {
+      try {
+        await postLandingEnquiryBrowser({
+          name: trimmedName,
+          phone: cleanPhone,
+          email: form.email.trim(),
+          scan: form.scan,
+          message: form.message.trim(),
+          terms: "Yes",
+        });
+        setSubmitted(true);
+      } catch {
+        alert("Could not submit. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    })();
   };
 
   return (
@@ -848,7 +861,17 @@ export default function PetScanGurugramPage() {
                 <p className="booking-lead">
                   Share your details and we will help you schedule at the nearest MDRC centre.
                 </p>
-                <form className="booking-form" onSubmit={handleSubmit}>
+                <form
+                  className="booking-form"
+                  method="post"
+                  action={LANDING_ENQUIRY_PHP}
+                  target="_blank"
+                  encType="application/x-www-form-urlencoded"
+                  acceptCharset="UTF-8"
+                  onSubmit={handleSubmit}
+                >
+                  <input type="hidden" name="method" value="landing_page_enquiry" />
+                  <input type="hidden" name="terms" value="Yes" />
                   <label>
                     <span>
                       Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>
