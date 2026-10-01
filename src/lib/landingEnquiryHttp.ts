@@ -72,12 +72,6 @@ function getClientIp(request: Request) {
   return request.headers.get("x-real-ip") || request.headers.get("cf-connecting-ip") || "";
 }
 
-function wantsHtml(request: Request) {
-  const mode = request.headers.get("sec-fetch-mode") || "";
-  const accept = request.headers.get("accept") || "";
-  return mode === "navigate" || accept.includes("text/html");
-}
-
 export async function handleLandingEnquiryPost(
   request: Request,
   mapFields: (incoming: FormData) => LandingEnquiryFields,
@@ -86,10 +80,6 @@ export async function handleLandingEnquiryPost(
   const fields = mapFields(incoming);
   const result = await submitLandingEnquiry(fields, getClientIp(request));
 
-  if (wantsHtml(request)) {
-    if (isEnquirySuccess(result)) return html(thankYouHtml());
-    return html(relayToPhpHtml(fields));
-  }
-
-  return NextResponse.json(result);
+  if (isEnquirySuccess(result)) return html(thankYouHtml());
+  return html(relayToPhpHtml(fields));
 }

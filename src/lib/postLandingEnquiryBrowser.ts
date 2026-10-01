@@ -1,5 +1,3 @@
-export const LANDING_ENQUIRY_PHP = "https://www.mdrcindia.com/scripts/ajax/index.php";
-
 export type BrowserLandingEnquiry = {
   name: string;
   phone: string;
@@ -12,8 +10,8 @@ export type BrowserLandingEnquiry = {
 export function postEnquiryWithPlainForm(fields: BrowserLandingEnquiry) {
   const form = document.createElement("form");
   form.method = "POST";
-  form.action = LANDING_ENQUIRY_PHP;
-  form.enctype = "application/x-www-form-urlencoded";
+  form.setAttribute("action", "/api/landing-page-enquiry");
+  form.setAttribute("enctype", "application/x-www-form-urlencoded");
   form.setAttribute("accept-charset", "UTF-8");
 
   const add = (name: string, value: string) => {
@@ -33,5 +31,5 @@ export function postEnquiryWithPlainForm(fields: BrowserLandingEnquiry) {
   add("terms", fields.terms || "Yes");
 
   document.body.appendChild(form);
-  form.submit();
+  HTMLFormElement.prototype.submit.call(form);
 }
