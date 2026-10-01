@@ -22,7 +22,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
-          script_stop: true
 
           script: |
             set -e
@@ -36,13 +35,16 @@ jobs:
             echo "Installing dependencies..."
             npm install --no-audit --no-fund
 
+            echo "Stopping app before cleaning build..."
+            pm2 stop msite || true
+
             echo "Cleaning previous build cache..."
-            rm -rf .next
+            sudo rm -rf .next
 
             echo "Building application..."
             npm run build
 
             echo "Reloading PM2..."
-            pm2 reload msite --update-env
+            pm2 reload msite --update-env || pm2 restart msite --update-env
 
             echo "Deployment completed successfully."
