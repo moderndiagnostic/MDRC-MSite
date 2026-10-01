@@ -7,6 +7,12 @@ const TABLE = "landingm_enquiry";
 const PHP_DB_FILES = [
   process.env.MYSQL_CONFIG_PATH,
   "/home/mdrcindia.com/html/application/config/database.php",
+  "/home/mdrcindia.com/html/config/database.php",
+  "/home/mdrcindia.com/html/webApi/config.php",
+  "/home/mdrcindia.com/html/includes/config.php",
+  "/home/mdrcindia.com/html/include/db.php",
+  "/home/mdrcindia.com/html/db.php",
+  "/home/mdrcindia.com/html/connection.php",
   "/home/mdrcindia.com/html/scripts/config.php",
 ].filter((path): path is string => Boolean(path));
 

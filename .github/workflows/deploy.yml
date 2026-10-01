@@ -35,6 +35,9 @@ jobs:
             echo "Installing dependencies..."
             npm install --no-audit --no-fund
 
+            echo "Loading MySQL settings from PHP config..."
+            node scripts/sync-mysql-env-from-php.mjs || true
+
             echo "Building new version without stopping the live app..."
             sudo rm -rf .next-build
             NEXT_DIST_DIR=.next-build npm run build
