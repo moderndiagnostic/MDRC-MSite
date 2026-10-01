@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
-import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
+import { nativePostEnquiryForm } from "@/lib/postLandingEnquiryBrowser";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -373,24 +373,11 @@ export default function MriScanGurugramPage() {
       return;
     }
 
+    const phoneInput = event.currentTarget.elements.namedItem("phone");
+    if (phoneInput && "value" in phoneInput) phoneInput.value = cleanPhone;
+
     setIsSubmitting(true);
-    void (async () => {
-      try {
-        await postLandingEnquiryBrowser({
-          name: trimmedName,
-          phone: cleanPhone,
-          email: form.email.trim(),
-          scan: form.scan,
-          message: form.message.trim(),
-          terms: "Yes",
-        }, "/lp/imaging/mri-scan-in-gurgaon/enquiry");
-        setSubmitted(true);
-      } catch {
-        alert("Could not submit. Please try again.");
-      } finally {
-        setIsSubmitting(false);
-      }
-    })();
+    nativePostEnquiryForm(event.currentTarget, "/lp/imaging/mri-scan-in-gurgaon/enquiry");
   };
 
   return (
@@ -849,7 +836,14 @@ export default function MriScanGurugramPage() {
                 <p className="booking-lead">
                   Share your details and we will help you schedule at the nearest MDRC centre.
                 </p>
-                <form className="booking-form" onSubmit={handleSubmit}>
+                <form
+                  className="booking-form"
+                  method="post"
+                  encType="application/x-www-form-urlencoded"
+                  onSubmit={handleSubmit}
+                >
+                  <input type="hidden" name="method" value="landing_page_enquiry" />
+                  <input type="hidden" name="terms" value="Yes" />
                   <label>
                     <span>
                       Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>

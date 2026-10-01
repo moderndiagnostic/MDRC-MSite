@@ -1,32 +1,19 @@
-import { NextResponse } from "next/server";
-import { submitLandingEnquiry } from "@/lib/submitLandingEnquiry";
+import { handleLandingEnquiryPost } from "@/lib/landingEnquiryHttp";
 
 export const dynamic = "force-dynamic";
 
-function getClientIp(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]?.trim() || "";
-  return request.headers.get("x-real-ip") || request.headers.get("cf-connecting-ip") || "";
-}
-
 export async function POST(request: Request) {
   try {
-    const incoming = await request.formData();
-    const result = await submitLandingEnquiry(
-      {
-        name: String(incoming.get("name") || ""),
-        phone: String(incoming.get("phone") || ""),
-        email: String(incoming.get("email") || ""),
-        scan: String(incoming.get("scan") || "MRI"),
-        message: String(incoming.get("message") || ""),
-        terms: "Yes",
-      },
-      getClientIp(request),
-    );
-
-    return NextResponse.json(result);
+    return await handleLandingEnquiryPost(request, (incoming) => ({
+      name: String(incoming.get("name") || ""),
+      phone: String(incoming.get("phone") || ""),
+      email: String(incoming.get("email") || ""),
+      scan: String(incoming.get("scan") || "MRI"),
+      message: String(incoming.get("message") || ""),
+      terms: "Yes",
+    }));
   } catch {
-    return NextResponse.json({
+    return Response.json({
       RESULT: "FAIL",
       error_msg: "Could not submit. Please try again.",
     });

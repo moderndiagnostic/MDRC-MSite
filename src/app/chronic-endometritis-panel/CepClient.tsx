@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
+import { nativePostEnquiryForm } from "@/lib/postLandingEnquiryBrowser";
 
 function readValue(formEl: HTMLFormElement | null, name: string, fallback = "") {
   const field = formEl?.elements.namedItem(name);
@@ -83,7 +83,7 @@ export default function CepClient({ html }: { html: string }) {
     const email = readValue(formEl, "email", form.email).trim();
     const clinic = readValue(formEl, "clinic", form.clinic).trim();
     const interest = readValue(formEl, "interest", form.interest) || INTEREST_OPTIONS[0].value;
-    const note = readValue(formEl, "message", form.message).trim();
+    const note = readValue(formEl, "note", form.message).trim();
     const nextErrors = {
       name: !name,
       phone: !/^[6-9]\d{9}$/.test(phone),
@@ -96,24 +96,17 @@ export default function CepClient({ html }: { html: string }) {
       return;
     }
 
+    const phoneInput = formEl.elements.namedItem("phone");
+    if (phoneInput && "value" in phoneInput) phoneInput.value = phone;
+    const scanInput = formEl.elements.namedItem("scan");
+    if (scanInput && "value" in scanInput) scanInput.value = interest;
+    const messageInput = formEl.elements.namedItem("message");
+    if (messageInput && "value" in messageInput) {
+      messageInput.value = [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n");
+    }
+
     setSending(true);
-    void (async () => {
-      try {
-        await postLandingEnquiryBrowser({
-          name,
-          phone,
-          email,
-          scan: interest,
-          message: [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n"),
-          terms: "Yes",
-        }, "/chronic-endometritis-panel/enquiry");
-        setSubmitted(true);
-      } catch {
-        setSubmitError("Could not submit. Please try again.");
-      } finally {
-        setSending(false);
-      }
-    })();
+    nativePostEnquiryForm(formEl, "/chronic-endometritis-panel/enquiry");
   };
 
   return (
@@ -141,9 +134,15 @@ export default function CepClient({ html }: { html: string }) {
           <form
             className={`enquire-form${submitted ? " submitted" : ""}`}
             id="enquireForm"
+            method="post"
+            encType="application/x-www-form-urlencoded"
             onSubmit={handleSubmit}
             noValidate
           >
+            <input type="hidden" name="method" value="landing_page_enquiry" />
+            <input type="hidden" name="terms" value="Yes" />
+            <input type="hidden" name="scan" value={form.interest} />
+            <input type="hidden" name="message" value="" />
             <div className="ef-success">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="#0879b8" strokeWidth="1.6" />
@@ -272,7 +271,7 @@ export default function CepClient({ html }: { html: string }) {
                 <label htmlFor="cep_efMsg">Message</label>
                 <textarea
                   id="cep_efMsg"
-                  name="message"
+                  name="note"
                   rows={3}
                   placeholder="Requisition forms, specimen kits, pricing, or anything else"
                   value={form.message}
