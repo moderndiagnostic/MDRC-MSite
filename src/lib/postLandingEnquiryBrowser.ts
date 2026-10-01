@@ -9,51 +9,79 @@ export type BrowserLandingEnquiry = {
   terms?: string;
 };
 
-export function postLandingEnquiryBrowser(fields: BrowserLandingEnquiry) {
-  return new Promise<void>((resolve, reject) => {
-    if (typeof document === "undefined") {
-      reject(new Error("Enquiry can only be submitted in the browser."));
-      return;
+function enquiryPayload(fields: BrowserLandingEnquiry) {
+  const payload = new URLSearchParams();
+  payload.set("method", "landing_page_enquiry");
+  payload.set("name", fields.name);
+  payload.set("phone", fields.phone);
+  payload.set("email", fields.email);
+  payload.set("scan", fields.scan);
+  payload.set("message", fields.message);
+  payload.set("terms", fields.terms || "Yes");
+  return payload;
+}
+
+function isOk(text: string) {
+  try {
+    const data = JSON.parse(text) as { RESULT?: string; result?: string; id?: number };
+    const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
+    return result === "OK" || Boolean(data.id);
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) return false;
+    try {
+      const data = JSON.parse(match[0]) as { RESULT?: string; result?: string; id?: number };
+      const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
+      return result === "OK" || Boolean(data.id);
+    } catch {
+      return false;
     }
+  }
+}
 
-    const frameName = `lp_enq_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-    const iframe = document.createElement("iframe");
-    iframe.name = frameName;
-    iframe.setAttribute("aria-hidden", "true");
-    iframe.style.cssText = "position:fixed;width:1px;height:1px;left:-9999px;border:0";
+function enquiryUrls() {
+  const urls = [LANDING_ENQUIRY_PHP];
+  if (typeof window !== "undefined" && /(^|\.)mdrcindia\.com$/i.test(window.location.hostname)) {
+    urls.unshift(`${window.location.origin}/scripts/ajax/index.php`);
+  }
+  return urls;
+}
 
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = LANDING_ENQUIRY_PHP;
-    form.target = frameName;
-    form.acceptCharset = "UTF-8";
+function isLocalBrowser() {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname;
+  return (
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host.startsWith("192.168.") ||
+    host.startsWith("10.")
+  );
+}
 
-    const values: Record<string, string> = {
-      method: "landing_page_enquiry",
-      name: fields.name,
-      phone: fields.phone,
-      email: fields.email,
-      scan: fields.scan,
-      message: fields.message,
-      terms: fields.terms || "Yes",
-    };
+export async function postLandingEnquiryBrowser(fields: BrowserLandingEnquiry) {
+  const body = enquiryPayload(fields).toString();
+  let lastError = "Could not submit. Please try again.";
+  let crossOriginBlocked = false;
 
-    Object.entries(values).forEach(([key, value]) => {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = key;
-      input.value = value;
-      form.appendChild(input);
-    });
+  for (const url of enquiryUrls()) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json, text/plain, */*",
+        },
+        body,
+        credentials: "omit",
+      });
+      const text = await response.text();
+      if (isOk(text)) return;
+      lastError = "Could not submit. Please try again.";
+    } catch {
+      crossOriginBlocked = true;
+    }
+  }
 
-    document.body.appendChild(iframe);
-    document.body.appendChild(form);
-    form.submit();
-
-    window.setTimeout(() => {
-      form.remove();
-      iframe.remove();
-      resolve();
-    }, 2000);
-  });
+  if (crossOriginBlocked && isLocalBrowser()) return;
+  throw new Error(lastError);
 }

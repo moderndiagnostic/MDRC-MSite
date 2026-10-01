@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
+import { LANDING_ENQUIRY_PHP } from "@/lib/postLandingEnquiryBrowser";
 
 function readValue(formEl: HTMLFormElement | null, name: string, fallback = "") {
   const field = formEl?.elements.namedItem(name);
@@ -34,7 +34,6 @@ const INTEREST_OPTIONS = [
 
 export default function CepClient({ html }: { html: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const sendingRef = useRef(false);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -76,14 +75,14 @@ export default function CepClient({ html }: { html: string }) {
     return () => root.removeEventListener("click", onFaqClick);
   }, [html]);
 
-  const handleSubmit = async (formEl?: HTMLFormElement | null) => {
-    if (sendingRef.current) return;
-    const name = readValue(formEl ?? null, "name", form.name).trim();
-    const phone = normalizeIndianMobile(readValue(formEl ?? null, "phone", form.phone));
-    const email = readValue(formEl ?? null, "email", form.email).trim();
-    const clinic = readValue(formEl ?? null, "clinic", form.clinic).trim();
-    const interest = readValue(formEl ?? null, "interest", form.interest) || INTEREST_OPTIONS[0].value;
-    const note = readValue(formEl ?? null, "message", form.message).trim();
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const formEl = event.currentTarget;
+    const name = readValue(formEl, "name", form.name).trim();
+    const phone = normalizeIndianMobile(readValue(formEl, "phone", form.phone));
+    const email = readValue(formEl, "email", form.email).trim();
+    const clinic = readValue(formEl, "clinic", form.clinic).trim();
+    const interest = readValue(formEl, "interest", form.interest) || INTEREST_OPTIONS[0].value;
+    const note = readValue(formEl, "note", form.message).trim();
     const nextErrors = {
       name: !name,
       phone: !/^[6-9]\d{9}$/.test(phone),
@@ -92,30 +91,25 @@ export default function CepClient({ html }: { html: string }) {
     setErrors(nextErrors);
     setSubmitError("");
     if (nextErrors.name || nextErrors.phone || nextErrors.email) {
+      event.preventDefault();
       setSubmitError("Please enter a valid name and 10-digit mobile number.");
       return;
     }
 
-    const message = [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n");
-    sendingRef.current = true;
-    const pending = postLandingEnquiryBrowser({
-      name,
-      phone,
-      email,
-      scan: interest,
-      message,
-      terms: "Yes",
-    });
-    setSending(true);
-    try {
-      await pending;
-      setSubmitted(true);
-    } catch {
-      setSubmitError("Could not submit. Please try again.");
-    } finally {
-      sendingRef.current = false;
-      setSending(false);
+    const phoneInput = formEl.elements.namedItem("phone");
+    if (phoneInput && "value" in phoneInput) phoneInput.value = phone;
+    const scanInput = formEl.elements.namedItem("scan");
+    if (scanInput && "value" in scanInput) scanInput.value = interest;
+    const messageInput = formEl.elements.namedItem("message");
+    if (messageInput && "value" in messageInput) {
+      messageInput.value = [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n");
     }
+
+    setSending(true);
+    window.setTimeout(() => {
+      setSubmitted(true);
+      setSending(false);
+    }, 1500);
   };
 
   return (
@@ -140,16 +134,25 @@ export default function CepClient({ html }: { html: string }) {
             </div>
           </div>
 
+          <iframe
+            name="cepLandingSink"
+            title="Enquiry"
+            style={{ position: "absolute", width: 0, height: 0, border: 0, visibility: "hidden" }}
+          />
           <form
             className={`enquire-form${submitted ? " submitted" : ""}`}
             id="enquireForm"
-            method="dialog"
-            onSubmit={(event: FormEvent<HTMLFormElement>) => {
-              event.preventDefault();
-              event.stopPropagation();
-              void handleSubmit(event.currentTarget);
-            }}
+            method="post"
+            action={LANDING_ENQUIRY_PHP}
+            target="cepLandingSink"
+            encType="application/x-www-form-urlencoded"
+            acceptCharset="UTF-8"
+            onSubmit={handleSubmit}
           >
+            <input type="hidden" name="method" value="landing_page_enquiry" />
+            <input type="hidden" name="terms" value="Yes" />
+            <input type="hidden" name="scan" value={form.interest} />
+            <input type="hidden" name="message" value="" />
             <div className="ef-success">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="#0879b8" strokeWidth="1.6" />
@@ -278,7 +281,7 @@ export default function CepClient({ html }: { html: string }) {
                 <label htmlFor="cep_efMsg">Message</label>
                 <textarea
                   id="cep_efMsg"
-                  name="message"
+                  name="note"
                   rows={3}
                   placeholder="Requisition forms, specimen kits, pricing, or anything else"
                   value={form.message}
@@ -298,10 +301,6 @@ export default function CepClient({ html }: { html: string }) {
                 className="btn btn-primary"
                 style={{ width: "100%", justifyContent: "center", touchAction: "manipulation" }}
                 disabled={sending}
-                onPointerUp={(event) => {
-                  event.preventDefault();
-                  void handleSubmit(event.currentTarget.form);
-                }}
               >
                 {sending ? "Sending..." : "Send enquiry"}
               </button>
