@@ -75,7 +75,7 @@ export default function CepClient({ html }: { html: string }) {
     return () => root.removeEventListener("click", onFaqClick);
   }, [html]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const formEl = document.getElementById("enquireForm");
     const name = readValue(formEl, "name", form.name).trim();
     const phone = normalizeIndianMobile(readValue(formEl, "phone", form.phone));
@@ -96,14 +96,22 @@ export default function CepClient({ html }: { html: string }) {
     }
 
     setSending(true);
-    postEnquiryWithPlainForm({
-      name,
-      phone,
-      email,
-      scan: interest,
-      message: [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n"),
-      terms: "Yes",
-    });
+    try {
+      const ok = await postEnquiryWithPlainForm({
+        name,
+        phone,
+        email,
+        scan: interest,
+        message: [clinic && `Clinic: ${clinic}`, note].filter(Boolean).join("\n"),
+        terms: "Yes",
+      });
+      if (ok) setSubmitted(true);
+      else setSubmitError("Could not submit. Please try again.");
+    } catch {
+      setSubmitError("Could not submit. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

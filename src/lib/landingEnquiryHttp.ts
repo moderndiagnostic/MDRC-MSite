@@ -79,7 +79,12 @@ export async function handleLandingEnquiryPost(
   const incoming = await request.formData();
   const fields = mapFields(incoming);
   const result = await submitLandingEnquiry(fields, getClientIp(request));
+  const accept = request.headers.get("accept") || "";
+
+  if (accept.includes("application/json")) {
+    return NextResponse.json(result);
+  }
 
   if (isEnquirySuccess(result)) return html(thankYouHtml());
-  return html(relayToPhpHtml(fields));
+  return NextResponse.json(result);
 }

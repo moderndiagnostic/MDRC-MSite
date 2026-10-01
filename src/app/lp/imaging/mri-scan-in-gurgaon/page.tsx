@@ -373,14 +373,24 @@ export default function MriScanGurugramPage() {
     }
 
     setIsSubmitting(true);
-    postEnquiryWithPlainForm({
-      name: trimmedName,
-      phone: cleanPhone,
-      email: form.email.trim(),
-      scan: form.scan,
-      message: form.message.trim(),
-      terms: "Yes",
-    });
+    void (async () => {
+      try {
+        const ok = await postEnquiryWithPlainForm({
+          name: trimmedName,
+          phone: cleanPhone,
+          email: form.email.trim(),
+          scan: form.scan,
+          message: form.message.trim(),
+          terms: "Yes",
+        });
+        if (ok) setSubmitted(true);
+        else alert("Could not submit. Please try again.");
+      } catch {
+        alert("Could not submit. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    })();
   };
 
   return (
