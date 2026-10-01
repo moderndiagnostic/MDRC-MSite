@@ -17,7 +17,6 @@ type EnquiryJson = {
 
 const PHP_ENQUIRY_URLS = [
   process.env.LANDING_ENQUIRY_URL,
-  "http://127.0.0.1/scripts/ajax/index.php",
   "https://www.mdrcindia.com/scripts/ajax/index.php",
 ].filter((url): url is string => Boolean(url));
 
@@ -63,10 +62,16 @@ export async function submitLandingEnquiry(
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json, text/plain, */*",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Origin: "https://www.mdrcindia.com",
+          Referer: "https://www.mdrcindia.com/lp/imaging/mri-scan-in-gurgaon/",
           ...(ip ? { "X-Forwarded-For": ip, "X-Real-IP": ip } : {}),
         },
         body: payload.toString(),
         cache: "no-store",
+        redirect: "follow",
+        signal: AbortSignal.timeout(15000),
       });
 
       const text = await response.text();
@@ -80,10 +85,7 @@ export async function submitLandingEnquiry(
         return { RESULT: "OK" as const, ...data };
       }
 
-      return {
-        RESULT: "FAIL" as const,
-        error_msg: data.error_msg || data.message || lastError,
-      };
+      lastError = data.error_msg || data.message || lastError;
     } catch {
       lastError = "Could not submit. Please try again.";
     }
