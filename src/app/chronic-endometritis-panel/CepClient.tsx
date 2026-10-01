@@ -2,9 +2,28 @@
 
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import requests from "@/lib/httpServices";
 
-const CEP_ENQUIRY_API = "/chronic-endometritis-panel/enquiry";
+const PHP_ENQUIRY_URL = "https://www.mdrcindia.com/scripts/ajax/index.php";
+const LOCAL_ENQUIRY_URL = "/chronic-endometritis-panel/enquiry";
+
+function parseJson(text: string) {
+  try {
+    return JSON.parse(text) as { RESULT?: string; result?: string; id?: number; error_msg?: string };
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) return null;
+    try {
+      return JSON.parse(match[0]) as { RESULT?: string; result?: string; id?: number; error_msg?: string };
+    } catch {
+      return null;
+    }
+  }
+}
+
+function isSuccess(data: { RESULT?: string; result?: string; id?: number } | null) {
+  const result = String(data?.RESULT ?? data?.result ?? "").toUpperCase();
+  return result === "OK" || Boolean(data?.id);
+}
 
 export default function CepClient({ html }: { html: string }) {
   useEffect(() => {
@@ -65,60 +84,59 @@ export default function CepClient({ html }: { html: string }) {
         submitBtn.textContent = "Sending...";
       }
 
-      const fd = new FormData();
-      fd.append("name", name?.value.trim() || "");
-      fd.append("phone", cleanPhone);
-      fd.append("email", email?.value.trim() || "");
-      fd.append("clinic", clinic?.value.trim() || "");
-      fd.append("scan", interest?.value || "Chronic Endometritis Panel");
-      fd.append("interest", interest?.value || "Chronic Endometritis Panel");
-      fd.append("message", message?.value.trim() || "");
-      fd.append("terms", "Yes");
+      const payload = new URLSearchParams();
+      payload.set("method", "landing_page_enquiry");
+      payload.set("name", name?.value.trim() || "");
+      payload.set("phone", cleanPhone);
+      payload.set("email", email?.value.trim() || "");
+      payload.set("scan", interest?.value || "Chronic Endometritis Panel");
+      payload.set(
+        "message",
+        [clinic?.value.trim() && `Clinic: ${clinic.value.trim()}`, message?.value.trim()]
+          .filter(Boolean)
+          .join("\n"),
+      );
+      payload.set("terms", "Yes");
 
-      const restoreBtn = () => {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalLabel;
-        }
-      };
+      const host = window.location.hostname;
+      const urls =
+        host === "localhost" || host === "127.0.0.1"
+          ? [LOCAL_ENQUIRY_URL, PHP_ENQUIRY_URL]
+          : [PHP_ENQUIRY_URL, LOCAL_ENQUIRY_URL];
 
       try {
-        const res = await fetch(CEP_ENQUIRY_API, {
-          method: "POST",
-          body: fd,
-          credentials: "same-origin",
-        });
-        const data = await res.json().catch(() => null);
-        if (String(data?.RESULT || "").toUpperCase() === "OK" || data?.id) {
-          form.classList.add("submitted");
-          restoreBtn();
-          return;
+        let saved = false;
+        let errorMsg = "Could not submit. Please try again.";
+
+        for (const url of urls) {
+          const res = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/json, text/plain, */*",
+            },
+            body: payload.toString(),
+          });
+          const data = parseJson(await res.text());
+          if (isSuccess(data)) {
+            saved = true;
+            break;
+          }
+          if (data?.error_msg) errorMsg = data.error_msg;
         }
 
-        const ajax = new FormData();
-        ajax.append("method", "landing_page_enquiry");
-        ajax.append("name", name?.value.trim() || "");
-        ajax.append("phone", cleanPhone);
-        ajax.append("email", email?.value.trim() || "");
-        ajax.append("scan", interest?.value || "Chronic Endometritis Panel");
-        ajax.append(
-          "message",
-          [clinic?.value.trim() && `Clinic: ${clinic.value.trim()}`, message?.value.trim()]
-            .filter(Boolean)
-            .join("\n"),
-        );
-        ajax.append("terms", "Yes");
-
-        const php = await requests.post("/scripts/ajax/index.php", ajax);
-        if (String(php?.RESULT || php?.result || "").toUpperCase() === "OK" || php?.id) {
+        if (saved) {
           form.classList.add("submitted");
         } else {
-          toast.error(php?.error_msg || data?.error_msg || "Could not submit. Please try again.");
+          toast.error(errorMsg);
         }
       } catch {
         toast.error("Could not submit. Please try again.");
       } finally {
-        restoreBtn();
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
       }
     };
 

@@ -35,16 +35,22 @@ jobs:
             echo "Installing dependencies..."
             npm install --no-audit --no-fund
 
-            echo "Stopping app before cleaning build..."
-            pm2 stop msite || true
+            echo "Building new version without stopping the live app..."
+            sudo rm -rf .next-build
+            NEXT_DIST_DIR=.next-build npm run build
 
-            echo "Cleaning previous build cache..."
-            sudo rm -rf .next
+            echo "Switching to the new build..."
+            sudo rm -rf .next-old
+            if [ -d .next ]; then
+              sudo mv .next .next-old
+            fi
+            sudo mv .next-build .next
+            sudo chown -R ubuntu:ubuntu .next
 
-            echo "Building application..."
-            npm run build
-
-            echo "Reloading PM2..."
+            echo "Reloading PM2 with zero stop..."
             pm2 reload msite --update-env || pm2 restart msite --update-env
+
+            echo "Removing previous build..."
+            sudo rm -rf .next-old
 
             echo "Deployment completed successfully."
