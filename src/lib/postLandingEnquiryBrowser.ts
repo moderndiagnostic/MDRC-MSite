@@ -2,27 +2,6 @@ import requests from "@/lib/httpServices";
 
 export const LANDING_ENQUIRY_PHP = "https://www.mdrcindia.com/scripts/ajax/index.php";
 
-export function isPhoneBrowser() {
-  if (typeof navigator === "undefined") return false;
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-/** Native POST so iOS/Android actually send the row (JS CORS is blocked on phones). */
-export function nativeSubmitLandingForm(form: HTMLFormElement) {
-  form.setAttribute("action", LANDING_ENQUIRY_PHP);
-  form.setAttribute("method", "post");
-  form.setAttribute("enctype", "application/x-www-form-urlencoded");
-  let popup: Window | null = null;
-  try {
-    popup = window.open("about:blank", "mdrcLandingEnquiry");
-  } catch {
-    popup = null;
-  }
-  form.setAttribute("target", popup ? "mdrcLandingEnquiry" : "_self");
-  HTMLFormElement.prototype.submit.call(form);
-  return Boolean(popup);
-}
-
 export type BrowserLandingEnquiry = {
   name: string;
   phone: string;
@@ -44,29 +23,66 @@ function enquiryPayload(fields: BrowserLandingEnquiry) {
   return payload;
 }
 
-function isOkPayload(data: { RESULT?: string; result?: string; id?: number } | null) {
+function isOkPayload(data: { RESULT?: string; result?: string; id?: number; msgCode?: string } | null) {
   if (!data) return false;
   const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
-  return result === "OK" || Boolean(data.id);
+  return result === "OK" || Boolean(data.id) || String(data.msgCode) === "1";
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number) {
+  return new Promise<T>((resolve, reject) => {
+    const timer = window.setTimeout(() => reject(new Error("timeout")), ms);
+    promise.then(
+      (value) => {
+        window.clearTimeout(timer);
+        resolve(value);
+      },
+      (error) => {
+        window.clearTimeout(timer);
+        reject(error);
+      },
+    );
+  });
 }
 
 export async function postLandingEnquiryBrowser(fields: BrowserLandingEnquiry) {
   const payload = enquiryPayload(fields);
+  const phpBody = payload.toString();
 
+  // This is the request that already inserts from PC Chrome.
   try {
-    const webApiData = (await requests.post("/webApi/index.php", {
-      view: "landing_page_enquiry",
-      method: "landing_page_enquiry",
-      name: fields.name,
-      phone: fields.phone,
-      email: fields.email,
-      scan: fields.scan,
-      message: fields.message,
-      terms: fields.terms || "Yes",
-    })) as { msgCode?: string; RESULT?: string; result?: string; id?: number } | null;
-    if (String(webApiData?.msgCode) === "1" || isOkPayload(webApiData)) return;
+    const phpRes = await fetch(LANDING_ENQUIRY_PHP, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: phpBody,
+      keepalive: true,
+      credentials: "omit",
+    });
+    if (phpRes.ok) return;
   } catch {
-    // Continue with the PHP ajax endpoint used by landing pages.
+    // iOS may hide the CORS response; keep going with the same API the booking form uses.
+  }
+
+  // Same CORS-open webApi path used by the mobile booking enquiry form.
+  try {
+    const webApiData = (await withTimeout(
+      requests.post("/webApi/index.php", {
+        view: "landing_page_enquiry",
+        method: "landing_page_enquiry",
+        name: fields.name,
+        phone: fields.phone,
+        email: fields.email,
+        scan: fields.scan,
+        message: fields.message,
+        terms: fields.terms || "Yes",
+      }),
+      8000,
+    )) as { msgCode?: string; RESULT?: string; result?: string; id?: number } | null;
+    if (isOkPayload(webApiData)) return;
+  } catch {
+    // Continue.
   }
 
   try {
@@ -88,16 +104,25 @@ export async function postLandingEnquiryBrowser(fields: BrowserLandingEnquiry) {
     } | null;
     if (isOkPayload(localData)) return;
   } catch {
-    // Fall through to a direct PHP POST.
+    // Fall through.
   }
 
+  // Opaque POST: Safari can send this even when it will not expose the response.
   await fetch(LANDING_ENQUIRY_PHP, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: payload.toString(),
+    body: phpBody,
     keepalive: true,
     credentials: "omit",
+    mode: "no-cors",
   }).catch(() => undefined);
+
+  if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+    navigator.sendBeacon(
+      LANDING_ENQUIRY_PHP,
+      new Blob([phpBody], { type: "application/x-www-form-urlencoded" }),
+    );
+  }
 }

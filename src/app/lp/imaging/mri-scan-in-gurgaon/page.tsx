@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
-import { isPhoneBrowser, LANDING_ENQUIRY_PHP, nativeSubmitLandingForm, postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
+import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -355,7 +355,6 @@ export default function MriScanGurugramPage() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formEl = event.currentTarget;
     const trimmedName = form.name.trim();
     const cleanPhone = form.phone.replace(/\D/g, "");
 
@@ -371,16 +370,6 @@ export default function MriScanGurugramPage() {
 
     if (!form.acceptedTerms) {
       alert("Please accept the Terms And Conditions.");
-      return;
-    }
-
-    const phoneInput = formEl.elements.namedItem("phone");
-    if (phoneInput && "value" in phoneInput) phoneInput.value = cleanPhone;
-
-    if (isPhoneBrowser()) {
-      if (nativeSubmitLandingForm(formEl)) {
-        window.setTimeout(() => setSubmitted(true), 600);
-      }
       return;
     }
 
@@ -860,17 +849,7 @@ export default function MriScanGurugramPage() {
                 <p className="booking-lead">
                   Share your details and we will help you schedule at the nearest MDRC centre.
                 </p>
-                <form
-                  className="booking-form"
-                  method="post"
-                  action={LANDING_ENQUIRY_PHP}
-                  target="_blank"
-                  encType="application/x-www-form-urlencoded"
-                  acceptCharset="UTF-8"
-                  onSubmit={handleSubmit}
-                >
-                  <input type="hidden" name="method" value="landing_page_enquiry" />
-                  <input type="hidden" name="terms" value="Yes" />
+                <form className="booking-form" onSubmit={handleSubmit}>
                   <label>
                     <span>
                       Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>
