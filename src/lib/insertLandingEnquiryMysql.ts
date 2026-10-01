@@ -2,8 +2,6 @@ import mysql from "mysql2/promise";
 import fs from "node:fs";
 import type { LandingEnquiryFields } from "@/lib/submitLandingEnquiry";
 
-const TABLE = "landingm_enquiry";
-
 const PHP_DB_FILES = [
   process.env.MYSQL_CONFIG_PATH,
   "/home/mdrcindia.com/html/application/config/database.php",
@@ -71,24 +69,36 @@ export async function insertLandingEnquiryMysql(
   const config = mysqlConfig();
   if (!config) return null;
 
+  const values = [
+    fields.name.trim(),
+    fields.phone.trim(),
+    fields.email.trim(),
+    fields.scan || "",
+    fields.message.trim(),
+    fields.terms || "Yes",
+    ip,
+  ];
+
   const conn = await mysql.createConnection(config);
   try {
     const [result] = await conn.execute(
-      `INSERT INTO \`${TABLE}\` (page, name, phone, email, scan, message, terms, ip)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        page,
-        fields.name.trim(),
-        fields.phone.trim(),
-        fields.email.trim(),
-        fields.scan || "",
-        fields.message.trim(),
-        fields.terms || "Yes",
-        ip,
-      ],
+      `INSERT INTO \`landing_page_enquiry\` (name, phone, email, scan, message, terms, ip)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      values,
     );
     const id = Number((result as mysql.ResultSetHeader).insertId);
     if (!id) return null;
+
+    try {
+      await conn.execute(
+        `INSERT INTO \`landingm_enquiry\` (page, name, phone, email, scan, message, terms, ip)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [page, ...values],
+      );
+    } catch {
+      // landingm_enquiry is optional.
+    }
+
     return { RESULT: "OK" as const, id };
   } finally {
     await conn.end();
