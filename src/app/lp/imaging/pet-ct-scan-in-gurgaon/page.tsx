@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type RefObject } from "react";
-import { LANDING_ENQUIRY_PHP } from "@/lib/postLandingEnquiryBrowser";
+import { postLandingEnquiryBrowser } from "@/lib/postLandingEnquiryBrowser";
 
 const SITE_URL = "https://www.mdrcindia.com";
 const PHONE_DISPLAY = "8920 300 300";
@@ -372,36 +372,42 @@ export default function PetScanGurugramPage() {
     setForm((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const trimmedName = form.name.trim();
     const cleanPhone = form.phone.replace(/\D/g, "");
 
     if (!/^[A-Za-z][A-Za-z .']{1,59}$/.test(trimmedName)) {
-      event.preventDefault();
       alert("Please enter a valid name using letters only.");
       return;
     }
 
     if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
-      event.preventDefault();
       alert("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     if (!form.acceptedTerms) {
-      event.preventDefault();
       alert("Please accept the Terms And Conditions.");
       return;
     }
 
-    const phoneInput = event.currentTarget.elements.namedItem("phone");
-    if (phoneInput && "value" in phoneInput) phoneInput.value = cleanPhone;
-
     setIsSubmitting(true);
-    window.setTimeout(() => {
+    try {
+      await postLandingEnquiryBrowser({
+        name: trimmedName,
+        phone: cleanPhone,
+        email: form.email.trim(),
+        scan: form.scan,
+        message: form.message.trim(),
+        terms: "Yes",
+      });
       setSubmitted(true);
+    } catch {
+      alert("Could not submit. Please try again.");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -842,22 +848,7 @@ export default function PetScanGurugramPage() {
                 <p className="booking-lead">
                   Share your details and we will help you schedule at the nearest MDRC centre.
                 </p>
-                <iframe
-                  name="petLandingSink"
-                  title="Enquiry"
-                  style={{ position: "absolute", width: 0, height: 0, border: 0, visibility: "hidden" }}
-                />
-                <form
-                  className="booking-form"
-                  method="post"
-                  action={LANDING_ENQUIRY_PHP}
-                  target="petLandingSink"
-                  encType="application/x-www-form-urlencoded"
-                  acceptCharset="UTF-8"
-                  onSubmit={handleSubmit}
-                >
-                  <input type="hidden" name="method" value="landing_page_enquiry" />
-                  <input type="hidden" name="terms" value="Yes" />
+                <form className="booking-form" onSubmit={handleSubmit}>
                   <label>
                     <span>
                       Full Name <span style={{ color: "#dc2626", fontWeight: "700" }}>*</span>

@@ -21,67 +21,44 @@ function enquiryPayload(fields: BrowserLandingEnquiry) {
   return payload;
 }
 
-function isOk(text: string) {
-  try {
-    const data = JSON.parse(text) as { RESULT?: string; result?: string; id?: number };
-    const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
-    return result === "OK" || Boolean(data.id);
-  } catch {
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) return false;
-    try {
-      const data = JSON.parse(match[0]) as { RESULT?: string; result?: string; id?: number };
-      const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
-      return result === "OK" || Boolean(data.id);
-    } catch {
-      return false;
-    }
-  }
-}
-
-function enquiryUrls() {
-  const urls = [LANDING_ENQUIRY_PHP];
-  if (typeof window !== "undefined" && /(^|\.)mdrcindia\.com$/i.test(window.location.hostname)) {
-    urls.unshift(`${window.location.origin}/scripts/ajax/index.php`);
-  }
-  return urls;
-}
-
-function isLocalBrowser() {
-  if (typeof window === "undefined") return false;
-  const host = window.location.hostname;
-  return (
-    host === "localhost" ||
-    host === "127.0.0.1" ||
-    host.startsWith("192.168.") ||
-    host.startsWith("10.")
-  );
+function isOkPayload(data: { RESULT?: string; result?: string; id?: number } | null) {
+  if (!data) return false;
+  const result = String(data.RESULT ?? data.result ?? "").toUpperCase();
+  return result === "OK" || Boolean(data.id);
 }
 
 export async function postLandingEnquiryBrowser(fields: BrowserLandingEnquiry) {
-  const body = enquiryPayload(fields).toString();
-  let lastError = "Could not submit. Please try again.";
-  let crossOriginBlocked = false;
+  const payload = enquiryPayload(fields);
 
-  for (const url of enquiryUrls()) {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json, text/plain, */*",
-        },
-        body,
-        credentials: "omit",
-      });
-      const text = await response.text();
-      if (isOk(text)) return;
-      lastError = "Could not submit. Please try again.";
-    } catch {
-      crossOriginBlocked = true;
-    }
+  try {
+    const localFd = new FormData();
+    localFd.append("name", fields.name);
+    localFd.append("phone", fields.phone);
+    localFd.append("email", fields.email);
+    localFd.append("scan", fields.scan);
+    localFd.append("message", fields.message);
+    localFd.append("terms", fields.terms || "Yes");
+    const localRes = await fetch("/api/landing-page-enquiry", {
+      method: "POST",
+      body: localFd,
+    });
+    const localData = (await localRes.json().catch(() => null)) as {
+      RESULT?: string;
+      result?: string;
+      id?: number;
+    } | null;
+    if (isOkPayload(localData)) return;
+  } catch {
+    // Fall through to a direct PHP POST. Phones can send this when it is a simple request.
   }
 
-  if (crossOriginBlocked && isLocalBrowser()) return;
-  throw new Error(lastError);
+  await fetch(LANDING_ENQUIRY_PHP, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: payload.toString(),
+    keepalive: true,
+    credentials: "omit",
+  }).catch(() => undefined);
 }
