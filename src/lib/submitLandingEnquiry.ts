@@ -17,6 +17,7 @@ type EnquiryJson = {
 
 const PHP_ENQUIRY_URLS = [
   process.env.LANDING_ENQUIRY_URL,
+  process.env.NODE_ENV === "production" ? "http://127.0.0.1/scripts/ajax/index.php" : "",
   "https://www.mdrcindia.com/scripts/ajax/index.php",
 ].filter((url): url is string => Boolean(url));
 
@@ -71,7 +72,7 @@ export async function submitLandingEnquiry(
         body: payload.toString(),
         cache: "no-store",
         redirect: "follow",
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(url.includes("127.0.0.1") ? 3000 : 15000),
       });
 
       const text = await response.text();

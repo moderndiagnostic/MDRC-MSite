@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 
-const WEBAPI_URL = "https://www.mdrcindia.com/webApi/index.php";
 const PHP_ENQUIRY_URL = "https://www.mdrcindia.com/scripts/ajax/index.php";
 
 function readValue(formEl: HTMLFormElement | null, name: string, fallback = "") {
@@ -78,28 +77,59 @@ export default function CepClient({ html }: { html: string }) {
     return () => root.removeEventListener("click", onFaqClick);
   }, [html]);
 
-  const saveLandingEnquiry = (fields: {
+  const postLandingEnquiry = (fields: {
     name: string;
     phone: string;
     email: string;
     interest: string;
     message: string;
-  }) => {
-    const payload = new URLSearchParams();
-    payload.set("method", "landing_page_enquiry");
-    payload.set("name", fields.name);
-    payload.set("phone", fields.phone);
-    payload.set("email", fields.email);
-    payload.set("scan", fields.interest);
-    payload.set("message", fields.message);
-    payload.set("terms", "Yes");
-    return fetch(PHP_ENQUIRY_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: payload.toString(),
+  }) =>
+    new Promise<void>((resolve) => {
+      const frameName = `cep_enquiry_${Date.now()}`;
+      const iframe = document.createElement("iframe");
+      iframe.name = frameName;
+      iframe.setAttribute("aria-hidden", "true");
+      iframe.style.cssText =
+        "position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0";
+
+      const htmlForm = document.createElement("form");
+      htmlForm.method = "POST";
+      htmlForm.action = PHP_ENQUIRY_URL;
+      htmlForm.target = frameName;
+      htmlForm.acceptCharset = "UTF-8";
+      htmlForm.style.display = "none";
+
+      const values: Record<string, string> = {
+        method: "landing_page_enquiry",
+        name: fields.name,
+        phone: fields.phone,
+        email: fields.email,
+        scan: fields.interest,
+        message: fields.message,
+        terms: "Yes",
+      };
+      Object.entries(values).forEach(([key, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        htmlForm.appendChild(input);
+      });
+
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        htmlForm.remove();
+        iframe.remove();
+        resolve();
+      };
+
+      document.body.appendChild(iframe);
+      document.body.appendChild(htmlForm);
+      htmlForm.submit();
+      window.setTimeout(finish, 1800);
     });
-  };
 
   const handleSubmit = async (formEl?: HTMLFormElement | null) => {
     if (sendingRef.current) return;
@@ -129,50 +159,29 @@ export default function CepClient({ html }: { html: string }) {
     sendingRef.current = true;
     setSending(true);
     try {
-      const formData = new FormData();
-      formData.append("view", "test_booking_inquiry");
-      formData.append("name", name);
-      formData.append("phone", phone);
-      formData.append("city", "Gurugram");
-      formData.append("address", clinic || "Gurugram");
-      formData.append("enquiry_type", "New Booking");
-      formData.append("test_type", interest);
-
-      const response = await fetch(WEBAPI_URL, {
+      const localFd = new FormData();
+      localFd.append("name", name);
+      localFd.append("phone", phone);
+      localFd.append("email", email);
+      localFd.append("clinic", clinic);
+      localFd.append("scan", interest);
+      localFd.append("message", note);
+      localFd.append("terms", "Yes");
+      void fetch("/chronic-endometritis-panel/enquiry", {
         method: "POST",
-        body: formData,
-      });
-      const result = (await response.json().catch(() => null)) as
-        | { msgCode?: string; message?: string }
-        | null;
+        body: localFd,
+      }).catch(() => undefined);
 
-      await saveLandingEnquiry({
+      await postLandingEnquiry({
         name,
         phone,
         email,
         interest,
         message,
-      }).catch(() => undefined);
-
-      if (result?.msgCode === "1") {
-        setSubmitted(true);
-        return;
-      }
-
+      });
       setSubmitted(true);
     } catch {
-      try {
-        await saveLandingEnquiry({
-          name,
-          phone,
-          email,
-          interest,
-          message,
-        });
-        setSubmitted(true);
-      } catch {
-        setSubmitError("Could not submit. Please try again.");
-      }
+      setSubmitError("Could not submit. Please try again.");
     } finally {
       sendingRef.current = false;
       setSending(false);
