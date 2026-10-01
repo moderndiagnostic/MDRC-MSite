@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import requests from "@/lib/httpServices";
 
+const CEP_ENQUIRY_API = "/chronic-endometritis-panel/enquiry";
+
 export default function CepClient({ html }: { html: string }) {
   useEffect(() => {
     const root = document.querySelector(".cep-page");
@@ -31,6 +33,7 @@ export default function CepClient({ html }: { html: string }) {
 
     const onSubmit = async (event: Event) => {
       event.preventDefault();
+      event.stopPropagation();
       const form = event.currentTarget as HTMLFormElement;
       const name = form.querySelector<HTMLInputElement>("#cep_efName");
       const phone = form.querySelector<HTMLInputElement>("#cep_efPhone");
@@ -62,31 +65,60 @@ export default function CepClient({ html }: { html: string }) {
         submitBtn.textContent = "Sending...";
       }
 
-      try {
-        const formData = new FormData();
-        formData.append("view", "test_booking_inquiry");
-        formData.append("name", name?.value.trim() || "");
-        formData.append("phone", cleanPhone);
-        formData.append("city", clinic?.value.trim() || "Gurugram");
-        formData.append("address", clinic?.value.trim() || "Gurugram");
-        formData.append("enquiry_type", interest?.value || "Chronic Endometritis Panel");
-        formData.append("test_type", "Chronic Endometritis Panel");
-        if (email?.value.trim()) formData.append("email", email.value.trim());
-        if (message?.value.trim()) formData.append("message", message.value.trim());
+      const fd = new FormData();
+      fd.append("name", name?.value.trim() || "");
+      fd.append("phone", cleanPhone);
+      fd.append("email", email?.value.trim() || "");
+      fd.append("clinic", clinic?.value.trim() || "");
+      fd.append("scan", interest?.value || "Chronic Endometritis Panel");
+      fd.append("interest", interest?.value || "Chronic Endometritis Panel");
+      fd.append("message", message?.value.trim() || "");
+      fd.append("terms", "Yes");
 
-        const result = await requests.post("/webApi/index.php", formData);
-        if (result?.msgCode === "1" || result === 0 || result?.RESULT === "OK") {
-          form.classList.add("submitted");
-        } else {
-          toast.error(result?.message || "Could not submit. Please try again.");
-        }
-      } catch {
-        toast.error("Failed to connect to the server.");
-      } finally {
+      const restoreBtn = () => {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = originalLabel;
         }
+      };
+
+      try {
+        const res = await fetch(CEP_ENQUIRY_API, {
+          method: "POST",
+          body: fd,
+          credentials: "same-origin",
+        });
+        const data = await res.json().catch(() => null);
+        if (String(data?.RESULT || "").toUpperCase() === "OK" || data?.id) {
+          form.classList.add("submitted");
+          restoreBtn();
+          return;
+        }
+
+        const ajax = new FormData();
+        ajax.append("method", "landing_page_enquiry");
+        ajax.append("name", name?.value.trim() || "");
+        ajax.append("phone", cleanPhone);
+        ajax.append("email", email?.value.trim() || "");
+        ajax.append("scan", interest?.value || "Chronic Endometritis Panel");
+        ajax.append(
+          "message",
+          [clinic?.value.trim() && `Clinic: ${clinic.value.trim()}`, message?.value.trim()]
+            .filter(Boolean)
+            .join("\n"),
+        );
+        ajax.append("terms", "Yes");
+
+        const php = await requests.post("/scripts/ajax/index.php", ajax);
+        if (String(php?.RESULT || php?.result || "").toUpperCase() === "OK" || php?.id) {
+          form.classList.add("submitted");
+        } else {
+          toast.error(php?.error_msg || data?.error_msg || "Could not submit. Please try again.");
+        }
+      } catch {
+        toast.error("Could not submit. Please try again.");
+      } finally {
+        restoreBtn();
       }
     };
 
