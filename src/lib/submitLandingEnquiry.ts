@@ -17,6 +17,9 @@ type EnquiryJson = {
   message?: string;
 };
 
+const CHROME_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+
 export function parseEnquiryJson(text: string): EnquiryJson | null {
   try {
     return JSON.parse(text) as EnquiryJson;
@@ -49,20 +52,26 @@ function enquiryBody(fields: LandingEnquiryFields, ip = "") {
   return payload.toString();
 }
 
-function postLocalPhp(body: string, ip = "") {
+function postPhpHttp(
+  body: string,
+  ip: string,
+  options: { host: string; port: number; hostHeader: string },
+) {
   return new Promise<string>((resolve, reject) => {
     const req = http.request(
       {
-        host: "127.0.0.1",
-        port: 80,
+        host: options.host,
+        port: options.port,
         path: "/scripts/ajax/index.php",
         method: "POST",
         headers: {
-          Host: "www.mdrcindia.com",
+          Host: options.hostHeader,
+          "User-Agent": CHROME_UA,
           "Content-Type": "application/x-www-form-urlencoded",
           "Content-Length": Buffer.byteLength(body),
           Origin: "https://www.mdrcindia.com",
           Referer: "https://www.mdrcindia.com/",
+          Accept: "application/json, text/plain, */*",
           ...(ip ? { "X-Forwarded-For": ip, "X-Real-IP": ip } : {}),
         },
         timeout: 4000,
@@ -87,21 +96,30 @@ export async function submitLandingEnquiry(fields: LandingEnquiryFields, ip = ""
   const body = enquiryBody(fields, ip);
   let lastError = "Could not submit. Please try again.";
 
-  try {
-    const localText = await postLocalPhp(body, ip);
-    const localData = parseEnquiryJson(localText);
-    if (isEnquirySuccess(localData)) {
-      return { RESULT: "OK" as const, ...localData };
+  const localAttempts = [
+    { host: "127.0.0.1", port: 80, hostHeader: "127.0.0.1" },
+    { host: "127.0.0.1", port: 80, hostHeader: "www.mdrcindia.com" },
+    { host: "127.0.0.1", port: 80, hostHeader: "localhost" },
+  ];
+
+  for (const attempt of localAttempts) {
+    try {
+      const localText = await postPhpHttp(body, ip, attempt);
+      const localData = parseEnquiryJson(localText);
+      if (isEnquirySuccess(localData)) {
+        return { RESULT: "OK" as const, ...localData };
+      }
+      if (localData?.error_msg || localData?.message) {
+        lastError = localData.error_msg || localData.message || lastError;
+      }
+    } catch {
+      // Try the next local PHP vhost.
     }
-    if (localData?.error_msg || localData?.message) {
-      lastError = localData.error_msg || localData.message || lastError;
-    }
-  } catch {
-    // Not running on the PHP host (localhost). Fall through.
   }
 
   const remoteUrls = [
     process.env.LANDING_ENQUIRY_URL,
+    "http://127.0.0.1/scripts/ajax/index.php",
     "https://www.mdrcindia.com/scripts/ajax/index.php",
   ].filter((url): url is string => Boolean(url));
 
@@ -112,8 +130,7 @@ export async function submitLandingEnquiry(fields: LandingEnquiryFields, ip = ""
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json, text/plain, */*",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "User-Agent": CHROME_UA,
           Origin: "https://www.mdrcindia.com",
           Referer: "https://www.mdrcindia.com/lp/imaging/mri-scan-in-gurgaon/",
           ...(ip ? { "X-Forwarded-For": ip, "X-Real-IP": ip } : {}),
