@@ -257,10 +257,10 @@ export default function CepClient({ html }: { html: string }) {
                   placeholder="Dr. Jane Doe"
                   autoComplete="name"
                   value={form.name}
-                  onInput={(event) =>
-                    setForm((current) => ({ ...current, name: event.currentTarget.value }))
-                  }
-                  onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+                  onChange={(event) => {
+                    const name = event.target.value;
+                    setForm((current) => ({ ...current, name }));
+                  }}
                 />
                 <span className="ef-err">Please enter your name</span>
               </div>
@@ -276,19 +276,12 @@ export default function CepClient({ html }: { html: string }) {
                     placeholder="98XXXXXXXX"
                     autoComplete="tel"
                     inputMode="numeric"
+                    maxLength={13}
                     value={form.phone}
-                    onInput={(event) =>
-                      setForm((current) => ({
-                        ...current,
-                        phone: normalizeIndianMobile(event.currentTarget.value),
-                      }))
-                    }
-                    onChange={(event) =>
-                      setForm((current) => ({
-                        ...current,
-                        phone: normalizeIndianMobile(event.target.value),
-                      }))
-                    }
+                    onChange={(event) => {
+                      const phone = normalizeIndianMobile(event.target.value);
+                      setForm((current) => ({ ...current, phone }));
+                    }}
                   />
                   <span className="ef-err">Enter a valid 10-digit number</span>
                 </div>
@@ -301,7 +294,10 @@ export default function CepClient({ html }: { html: string }) {
                     placeholder="you@clinic.com"
                     autoComplete="email"
                     value={form.email}
-                    onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+                    onChange={(event) => {
+                      const email = event.target.value;
+                      setForm((current) => ({ ...current, email }));
+                    }}
                   />
                   <span className="ef-err">Enter a valid email</span>
                 </div>
@@ -315,7 +311,10 @@ export default function CepClient({ html }: { html: string }) {
                   placeholder="Optional"
                   autoComplete="organization"
                   value={form.clinic}
-                  onChange={(event) => setForm((current) => ({ ...current, clinic: event.target.value }))}
+                  onChange={(event) => {
+                    const clinic = event.target.value;
+                    setForm((current) => ({ ...current, clinic }));
+                  }}
                 />
               </div>
               <div className="ef-row">
@@ -324,7 +323,10 @@ export default function CepClient({ html }: { html: string }) {
                   id="cep_efInterest"
                   name="interest"
                   value={form.interest}
-                  onChange={(event) => setForm((current) => ({ ...current, interest: event.target.value }))}
+                  onChange={(event) => {
+                    const interest = event.target.value;
+                    setForm((current) => ({ ...current, interest }));
+                  }}
                 >
                   {INTEREST_OPTIONS.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -341,7 +343,10 @@ export default function CepClient({ html }: { html: string }) {
                   rows={3}
                   placeholder="Requisition forms, specimen kits, pricing, or anything else"
                   value={form.message}
-                  onChange={(event) => setForm((current) => ({ ...current, message: event.target.value }))}
+                  onChange={(event) => {
+                    const message = event.target.value;
+                    setForm((current) => ({ ...current, message }));
+                  }}
                 />
               </div>
               {submitError ? (
