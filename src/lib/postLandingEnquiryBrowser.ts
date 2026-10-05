@@ -34,7 +34,7 @@ export async function postEnquiryWithPlainForm(fields: BrowserLandingEnquiry) {
       : [fields.scan, fields.message].filter(Boolean).join("\n");
 
   const fd = new FormData();
-  fd.append("method", "landing_page_enquiry");
+  fd.append("view", "landing_page_enquiry");
   fd.append("name", fields.name);
   fd.append("phone", fields.phone);
   fd.append("email", fields.email);
@@ -42,9 +42,10 @@ export async function postEnquiryWithPlainForm(fields: BrowserLandingEnquiry) {
   fd.append("message", message);
   fd.append("terms", fields.terms || "Yes");
 
-  const result = await requests.post("/scripts/ajax/index.php", fd);
-  const ok =
+  const result = await requests.post("/webApi/index.php", fd);
+  return (
+    String(result?.msgCode) === "1" ||
     String(result?.RESULT ?? result?.result ?? "").toUpperCase() === "OK" ||
-    Boolean(result?.id);
-  return Boolean(ok);
+    Boolean(result?.id)
+  );
 }
