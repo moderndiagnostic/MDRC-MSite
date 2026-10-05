@@ -23,18 +23,6 @@ const nextConfig: import("next").NextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: "/scripts/ajax",
-        destination: "/api/landing-page-enquiry",
-      },
-      {
-        source: "/scripts/ajax/:path*",
-        destination: "/api/landing-page-enquiry",
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
