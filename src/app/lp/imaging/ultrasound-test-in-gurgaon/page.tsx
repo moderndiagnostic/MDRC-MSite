@@ -268,7 +268,8 @@ export default function UltrasoundLandingPage() {
   const update = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = event.target;
     if (type === "checkbox" && event.target instanceof HTMLInputElement) {
-      setForm((current) => ({ ...current, acceptedTerms: event.target.checked }));
+      const acceptedTerms = event.target.checked;
+      setForm((current) => ({ ...current, acceptedTerms }));
       return;
     }
     if (name === "name") {
