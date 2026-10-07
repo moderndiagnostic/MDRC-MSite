@@ -1036,11 +1036,65 @@ body.mri-landing-active {
   .ultrasound-landing .final-cta-inner,
   .ultrasound-landing .trust-strip-grid,
   .ultrasound-landing .content-points,
-  .ultrasound-landing .services-grid,
-  .ultrasound-landing .steps-grid,
-  .ultrasound-landing .scans-grid,
   .ultrasound-landing .booking-form {
     grid-template-columns: 1fr;
+  }
+
+  .ultrasound-landing .scans-grid,
+  .ultrasound-landing .feature-grid,
+  .ultrasound-landing .steps-grid,
+  .ultrasound-landing .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .ultrasound-landing .scan-card,
+  .ultrasound-landing .feature-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 0;
+    padding: 14px 12px;
+  }
+
+  .ultrasound-landing .scan-icon {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .ultrasound-landing .scan-icon img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ultrasound-landing .scan-content h3,
+  .ultrasound-landing .feature-card h3,
+  .ultrasound-landing .step-card h3 {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .ultrasound-landing .scan-content p,
+  .ultrasound-landing .feature-card p,
+  .ultrasound-landing .step-card p {
+    font-size: 12px;
+  }
+
+  .ultrasound-landing .step-card {
+    padding: 16px 12px;
+  }
+
+  .ultrasound-landing .step-number {
+    font-size: 20px;
+  }
+
+  .ultrasound-landing .simple-service {
+    padding: 12px 6px;
+  }
+
+  .ultrasound-landing .simple-service span {
+    font-size: 12px;
   }
 
   .ultrasound-landing .header-inner,

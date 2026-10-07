@@ -1036,11 +1036,65 @@ body.mri-landing-active {
   .ct-landing .final-cta-inner,
   .ct-landing .trust-strip-grid,
   .ct-landing .content-points,
-  .ct-landing .services-grid,
-  .ct-landing .steps-grid,
-  .ct-landing .scans-grid,
   .ct-landing .booking-form {
     grid-template-columns: 1fr;
+  }
+
+  .ct-landing .scans-grid,
+  .ct-landing .feature-grid,
+  .ct-landing .steps-grid,
+  .ct-landing .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .ct-landing .scan-card,
+  .ct-landing .feature-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 0;
+    padding: 14px 12px;
+  }
+
+  .ct-landing .scan-icon {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .ct-landing .scan-icon img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ct-landing .scan-content h3,
+  .ct-landing .feature-card h3,
+  .ct-landing .step-card h3 {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .ct-landing .scan-content p,
+  .ct-landing .feature-card p,
+  .ct-landing .step-card p {
+    font-size: 12px;
+  }
+
+  .ct-landing .step-card {
+    padding: 16px 12px;
+  }
+
+  .ct-landing .step-number {
+    font-size: 20px;
+  }
+
+  .ct-landing .simple-service {
+    padding: 12px 6px;
+  }
+
+  .ct-landing .simple-service span {
+    font-size: 12px;
   }
 
   .ct-landing .header-inner,
