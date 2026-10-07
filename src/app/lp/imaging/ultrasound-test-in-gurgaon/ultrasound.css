@@ -1,0 +1,1150 @@
+.ultrasound-landing {
+  --primary: #0879b8;
+  --primary-dark: #05618f;
+  --primary-light: #eef8fc;
+  --whatsapp: #25d366;
+  --dark: #102a43;
+  --text: #53657a;
+  --border: #e5edf2;
+  --light: #f6fafc;
+  --white: #ffffff;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172b4d;
+  background: #fff;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html.mri-landing-active,
+body.mri-landing-active {
+  background: #fff;
+}
+
+.ultrasound-landing *,
+.ultrasound-landing *::before,
+.ultrasound-landing *::after {
+  box-sizing: border-box;
+}
+
+.ultrasound-landing img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ultrasound-landing a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.ultrasound-landing button,
+.ultrasound-landing input,
+.ultrasound-landing select,
+.ultrasound-landing textarea {
+  font-family: inherit;
+}
+
+.ultrasound-landing .container {
+  width: min(1180px, 92%);
+  margin: 0 auto;
+}
+
+.ultrasound-landing .eyebrow {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.ultrasound-landing h1,
+.ultrasound-landing h2,
+.ultrasound-landing h3 {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.ultrasound-landing .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.ultrasound-landing .header-inner {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ultrasound-landing .logo img {
+  width: 220px;
+}
+
+.ultrasound-landing .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ultrasound-landing .btn-book,
+.ultrasound-landing .header-call,
+.ultrasound-landing .header-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ultrasound-landing .btn-book:hover,
+.ultrasound-landing .header-call:hover,
+.ultrasound-landing .header-whatsapp:hover {
+  transform: translateY(-1px);
+}
+
+.ultrasound-landing .btn-book,
+.ultrasound-landing .header-call {
+  background: var(--primary);
+}
+
+.ultrasound-landing .btn-book:hover,
+.ultrasound-landing .header-call:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 8px 20px rgba(8, 121, 184, 0.22);
+}
+
+.ultrasound-landing .header-whatsapp {
+  background: var(--whatsapp);
+}
+
+.ultrasound-landing .header-whatsapp:hover {
+  background: #1ebe5d;
+}
+
+.ultrasound-landing .header-call img,
+.ultrasound-landing .header-whatsapp img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+.ultrasound-landing .hero {
+  background: linear-gradient(120deg, #eef8fc 0%, #ffffff 68%);
+  padding: 64px 0 72px;
+}
+
+.ultrasound-landing .hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.ultrasound-landing .hero h1 {
+  margin-bottom: 16px;
+  font-size: 56px;
+  line-height: 1.08;
+  letter-spacing: -1.4px;
+}
+
+.ultrasound-landing .hero h1 span {
+  color: var(--primary);
+}
+
+.ultrasound-landing .hero-description {
+  max-width: 520px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.ultrasound-landing .hero-buttons {
+  margin-top: 28px;
+}
+
+.ultrasound-landing .hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  margin-top: 28px;
+  color: #3e5568;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ultrasound-landing .check-icon {
+  color: var(--primary);
+  margin-right: 4px;
+}
+
+.ultrasound-landing .hero-visual {
+  position: relative;
+}
+
+.ultrasound-landing .hero-image-wrapper,
+.ultrasound-landing .intro-visual {
+  overflow: hidden;
+  border-radius: 20px;
+  background: #dceff7;
+  box-shadow: 0 22px 50px rgba(8, 121, 184, 0.12);
+}
+
+.ultrasound-landing .hero-image-wrapper img {
+  width: 100%;
+  aspect-ratio: 7 / 6;
+  object-fit: contain;
+  background: linear-gradient(180deg, #d7eef8 0%, #eef8fc 100%);
+}
+
+.ultrasound-landing .hero-badge {
+  position: absolute;
+  left: -16px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(16, 42, 67, 0.12);
+}
+
+.ultrasound-landing .badge-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.ultrasound-landing .hero-badge small {
+  display: block;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.ultrasound-landing .trust-strip {
+  background: var(--primary);
+  color: #fff;
+}
+
+.ultrasound-landing .trust-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.ultrasound-landing .trust-item {
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ultrasound-landing .trust-item:last-child {
+  border-right: 0;
+}
+
+.ultrasound-landing .trust-number {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.ultrasound-landing .trust-label {
+  max-width: 180px;
+  font-size: 13px;
+  opacity: 0.92;
+}
+
+.ultrasound-landing .section {
+  padding: 72px 0;
+}
+
+.ultrasound-landing .section-light {
+  background: var(--light);
+}
+
+.ultrasound-landing .section-blue-light {
+  background: var(--primary-light);
+}
+
+.ultrasound-landing .center-heading {
+  max-width: 700px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.ultrasound-landing .center-heading h2,
+.ultrasound-landing .section-heading h2 {
+  margin-top: 8px;
+  font-size: 38px;
+  line-height: 1.18;
+}
+
+.ultrasound-landing .center-heading p {
+  margin-top: 12px;
+  color: var(--text);
+}
+
+.ultrasound-landing .intro-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.ultrasound-landing .intro-content {
+  color: var(--text);
+}
+
+.ultrasound-landing .intro-content p + p {
+  margin-top: 14px;
+}
+
+.ultrasound-landing .content-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.ultrasound-landing .content-point {
+  padding: 14px;
+  background: var(--primary-light);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.ultrasound-landing .intro-visual img {
+  width: 100%;
+  min-height: 340px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.ultrasound-landing .scans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.ultrasound-landing .scan-card,
+.ultrasound-landing .feature-card,
+.ultrasound-landing .step-card,
+.ultrasound-landing .location-card,
+.ultrasound-landing .simple-service,
+.ultrasound-landing .doctor-card {
+  background: #fff;
+  border: 1px solid #dcecf3;
+  border-radius: 14px;
+}
+
+.ultrasound-landing .scan-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 132px;
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ultrasound-landing .scan-card:hover,
+.ultrasound-landing .feature-card:hover,
+.ultrasound-landing .step-card:hover,
+.ultrasound-landing .simple-service:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(12, 71, 98, 0.08);
+}
+
+.ultrasound-landing .scan-icon,
+.ultrasound-landing .feature-icon,
+.ultrasound-landing .step-icon {
+  display: grid;
+  place-items: center;
+  background: var(--primary-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ultrasound-landing .scan-icon {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+}
+
+.ultrasound-landing .scan-icon img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.ultrasound-landing .scan-content h3 {
+  font-size: 17px;
+}
+
+.ultrasound-landing .scan-content p {
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.ultrasound-landing .section-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.ultrasound-landing .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ultrasound-landing .feature-card {
+  display: flex;
+  gap: 14px;
+  padding: 22px;
+}
+
+.ultrasound-landing .feature-icon {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+}
+
+.ultrasound-landing .feature-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.ultrasound-landing .feature-card h3 {
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.ultrasound-landing .feature-card p {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.ultrasound-landing .steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.ultrasound-landing .step-card {
+  position: relative;
+  padding: 24px;
+}
+
+.ultrasound-landing .step-number {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  color: #b6dbe9;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.ultrasound-landing .step-icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+}
+
+.ultrasound-landing .step-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.ultrasound-landing .step-card h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.ultrasound-landing .step-card p {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.ultrasound-landing .doctor-slider {
+  position: relative;
+  padding: 0 8px;
+}
+
+.ultrasound-landing .doctor-grid {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.ultrasound-landing .doctor-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.ultrasound-landing .doctor-card {
+  flex: 0 0 260px;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+.ultrasound-landing .doctor-photo {
+  background: var(--primary-light);
+}
+
+.ultrasound-landing .doctor-photo img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.ultrasound-landing .doctor-info {
+  padding: 16px;
+}
+
+.ultrasound-landing .doctor-info h3 {
+  font-size: 16px;
+}
+
+.ultrasound-landing .doctor-info p {
+  margin-top: 4px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ultrasound-landing .doctor-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--primary);
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  transform: translateY(-50%);
+}
+
+.ultrasound-landing .doctor-arrow-left {
+  left: -8px;
+}
+
+.ultrasound-landing .doctor-arrow-right {
+  right: -8px;
+}
+
+.ultrasound-landing .location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.ultrasound-landing .location-card {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 42% 58%;
+}
+
+.ultrasound-landing .location-image {
+  min-height: 220px;
+  background: var(--primary-light);
+}
+
+.ultrasound-landing .location-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ultrasound-landing .location-content {
+  padding: 24px;
+}
+
+.ultrasound-landing .location-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ultrasound-landing .location-label {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.ultrasound-landing .location-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ultrasound-landing .location-open-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.ultrasound-landing .location-content h3 {
+  margin: 8px 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.ultrasound-landing .location-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-style: normal;
+}
+
+.ultrasound-landing .location-pin {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  color: var(--primary);
+}
+
+.ultrasound-landing .location-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 14px;
+}
+
+.ultrasound-landing .location-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ultrasound-landing .location-chip-check {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.ultrasound-landing .location-chip-highlight {
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.ultrasound-landing .services-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.ultrasound-landing .simple-service {
+  width: 100%;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.ultrasound-landing .simple-service-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.ultrasound-landing .simple-service span {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--dark);
+}
+
+.ultrasound-landing .final-cta {
+  color: #fff;
+  background: linear-gradient(120deg, #0879b8, #07567f);
+}
+
+.ultrasound-landing .final-cta-inner {
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 0;
+}
+
+.ultrasound-landing .final-cta h2 {
+  max-width: 620px;
+  color: #fff;
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+.ultrasound-landing .final-cta p {
+  max-width: 560px;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.ultrasound-landing .final-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ultrasound-landing .btn-white-book {
+  background: #fff;
+  color: var(--primary);
+}
+
+.ultrasound-landing .btn-white-book:hover {
+  background: #f4fbff;
+  color: var(--primary-dark);
+}
+
+.ultrasound-landing .section-dark {
+  color: #fff;
+  background: var(--dark);
+  padding: 48px 0;
+}
+
+.ultrasound-landing .trust-image-grid {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.ultrasound-landing .trust-image-wrapper {
+  height: 280px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--primary-light);
+}
+
+.ultrasound-landing .trust-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ultrasound-landing .eyebrow-light {
+  color: #7dd3f7;
+}
+
+.ultrasound-landing .trust-content h2 {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 32px;
+}
+
+.ultrasound-landing .trust-list {
+  list-style: none;
+  margin-top: 16px;
+  padding: 0;
+}
+
+.ultrasound-landing .trust-list li {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ultrasound-landing .faq-container {
+  max-width: 850px;
+}
+
+.ultrasound-landing .faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.ultrasound-landing .faq-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.ultrasound-landing .faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ultrasound-landing .faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.ultrasound-landing .faq-plus {
+  color: var(--primary);
+  font-size: 22px;
+}
+
+.ultrasound-landing .faq-item[open] .faq-plus {
+  transform: rotate(45deg);
+}
+
+.ultrasound-landing .faq-item p {
+  padding: 0 36px 18px 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.ultrasound-landing .footer {
+  background: #f2f2f2;
+  padding: 18px 0;
+}
+
+.ultrasound-landing .footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ultrasound-landing .footer-logo img {
+  width: 150px;
+}
+
+.ultrasound-landing .footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.ultrasound-landing .footer-link {
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ultrasound-landing .footer p {
+  color: #000;
+  font-size: 13px;
+}
+
+.ultrasound-landing .booking-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(16, 42, 67, 0.55);
+}
+
+.ultrasound-landing .booking-modal {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 28px 24px 24px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.ultrasound-landing .booking-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.ultrasound-landing .booking-modal h2 {
+  margin: 8px 0 6px;
+  font-size: 26px;
+}
+
+.ultrasound-landing .booking-lead {
+  margin-bottom: 18px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.ultrasound-landing .booking-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ultrasound-landing .booking-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ultrasound-landing .booking-form input,
+.ultrasound-landing .booking-form select,
+.ultrasound-landing .booking-form textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.ultrasound-landing .booking-full,
+.ultrasound-landing .booking-submit {
+  grid-column: 1 / -1;
+}
+
+.ultrasound-landing .field-label.is-required::after {
+  content: " *";
+  color: #d92d20;
+}
+
+.ultrasound-landing .booking-terms {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.ultrasound-landing .booking-terms input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: 0 0 18px;
+  accent-color: var(--primary);
+}
+
+.ultrasound-landing .booking-terms a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.ultrasound-landing .booking-success {
+  text-align: center;
+  padding: 20px 8px;
+}
+
+.ultrasound-landing .booking-success p {
+  margin: 10px 0 20px;
+  color: var(--text);
+}
+
+.ultrasound-landing .mobile-sticky-cta {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .ultrasound-landing .hero-grid,
+  .ultrasound-landing .intro-grid,
+  .ultrasound-landing .trust-image-grid,
+  .ultrasound-landing .location-grid,
+  .ultrasound-landing .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ultrasound-landing .hero h1 {
+    font-size: 42px;
+  }
+
+  .ultrasound-landing .center-heading h2,
+  .ultrasound-landing .section-heading h2,
+  .ultrasound-landing .final-cta h2 {
+    font-size: 32px;
+  }
+
+  .ultrasound-landing .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ultrasound-landing .steps-grid,
+  .ultrasound-landing .scans-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ultrasound-landing .hero-badge {
+    left: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ultrasound-landing {
+    padding-bottom: 76px;
+  }
+
+  .ultrasound-landing .header-inner,
+  .ultrasound-landing .footer-inner,
+  .ultrasound-landing .final-cta-inner,
+  .ultrasound-landing .trust-strip-grid,
+  .ultrasound-landing .content-points,
+  .ultrasound-landing .services-grid,
+  .ultrasound-landing .steps-grid,
+  .ultrasound-landing .scans-grid,
+  .ultrasound-landing .booking-form {
+    grid-template-columns: 1fr;
+  }
+
+  .ultrasound-landing .header-inner,
+  .ultrasound-landing .footer-inner,
+  .ultrasound-landing .final-cta-inner {
+    flex-direction: column;
+  }
+
+  .ultrasound-landing .header-inner,
+  .ultrasound-landing .footer-meta,
+  .ultrasound-landing .hero-content,
+  .ultrasound-landing .center-heading,
+  .ultrasound-landing .final-cta-inner {
+    text-align: center;
+    align-items: center;
+  }
+
+  .ultrasound-landing .hero-description,
+  .ultrasound-landing .final-cta p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ultrasound-landing .hero-trust {
+    justify-content: center;
+  }
+
+  .ultrasound-landing .logo img {
+    width: 176px;
+  }
+
+  .ultrasound-landing .hero {
+    padding: 36px 0 48px;
+  }
+
+  .ultrasound-landing .hero h1 {
+    font-size: 32px;
+    letter-spacing: -0.6px;
+  }
+
+  .ultrasound-landing .section {
+    padding: 48px 0;
+  }
+
+  .ultrasound-landing .location-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ultrasound-landing .location-image {
+    min-height: 180px;
+  }
+
+  .ultrasound-landing .intro-visual img {
+    min-height: 220px;
+  }
+
+  .ultrasound-landing .trust-item {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .ultrasound-landing .trust-item:last-child {
+    border-bottom: 0;
+  }
+
+  .ultrasound-landing .footer-meta {
+    align-items: center;
+  }
+
+  .ultrasound-landing .doctor-arrow-left {
+    left: 0;
+  }
+
+  .ultrasound-landing .doctor-arrow-right {
+    right: 0;
+  }
+
+  .ultrasound-landing .mobile-sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1200;
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+
+  .ultrasound-landing .mobile-sticky-cta .header-call,
+  .ultrasound-landing .mobile-sticky-cta .btn-book {
+    flex: 1;
+  }
+
+  .ultrasound-landing .site-header .btn-book,
+  .ultrasound-landing .site-header .header-call,
+  .ultrasound-landing .site-header .header-whatsapp {
+    display: none;
+  }
+
+  .ultrasound-landing .header-inner {
+    min-height: 64px;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
