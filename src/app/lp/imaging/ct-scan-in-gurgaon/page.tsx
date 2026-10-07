@@ -35,39 +35,39 @@ const SCAN_TYPES = [
 const scans = [
   {
     title: "NCCT Head",
-    description: "Non-contrast CT for detailed imaging of the head. Starting at ₹3,000.",
+    description: "Non-contrast CT for detailed imaging of the head.",
     image: `${IMG}/ct-head.svg`,
     scan: "NCCT Head",
   },
   {
     title: "CECT Whole Abdomen",
-    description: "Contrast CT of the whole abdomen for organs and soft tissues. Starting at ₹8,000.",
+    description: "Contrast CT of the whole abdomen for organs and soft tissues.",
     image: `${IMG}/ct-abdomen.svg`,
     scan: "CECT Whole Abdomen",
   },
   {
     title: "CECT Chest",
-    description: "Contrast CT of the chest for lungs and surrounding structures. Starting at ₹6,500.",
+    description: "Contrast CT of the chest for lungs and surrounding structures.",
     image: `${IMG}/ct-chest.svg`,
     scan: "CECT Chest",
   },
   {
     title: "NCCT PNS",
-    description: "Coronal and axial CT of the paranasal sinuses. Starting at ₹5,200.",
+    description: "Coronal and axial CT of the paranasal sinuses.",
     image: `${IMG}/ct-pns.svg`,
     scan: "NCCT PNS",
   },
   {
     title: "NCCT KUB",
-    description: "Non-contrast CT of the kidneys, ureters and bladder. Starting at ₹5,500.",
+    description: "Non-contrast CT of the kidneys, ureters and bladder.",
     image: `${IMG}/ct-kub.svg`,
     scan: "NCCT KUB",
   },
   {
-    title: "NCCT Orbit",
-    description: "Non-contrast CT of the orbit. Starting at ₹5,000.",
-    image: `${IMG}/ct-orbit.svg`,
-    scan: "NCCT Orbit",
+    title: "Others",
+    description: "Other specialised CT studies, including orbit, 3D imaging and angiography.",
+    image: `${IMG}/service-other.svg`,
+    scan: "Others",
   },
 ];
 
@@ -132,13 +132,13 @@ const steps = [
 ];
 
 const doctors = [
-  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab6293222f360.01643474.jpg" },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629eb9d81b8.78874086.jpg" },
-  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629c50e8631.06714162.jpg" },
-  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629adb09171.37034093.jpg" },
-  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b65e9e178.76656913.jpg" },
-  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b43e47b16.91390783.jpg" },
-  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b30207909.87842987.jpg" },
+  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: `${IMG}/doctor-devendra.jpg` },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: `${IMG}/doctor-deepali.jpg` },
+  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: `${IMG}/doctor-nitin.jpg` },
+  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: `${IMG}/doctor-rashmi.jpg` },
+  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: `${IMG}/doctor-ankit.jpg` },
+  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: `${IMG}/doctor-rajat.jpg` },
+  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: `${IMG}/doctor-padma.jpg` },
 ];
 
 const locations = [
@@ -147,7 +147,6 @@ const locations = [
     title: "Modern Diagnostic & Research Centre, Sector-40, Gurugram",
     address: "1057P, Sector-40, Gurugram, Haryana – 122002",
     image: `${IMG}/lab-sector40.jpg`,
-    highlight: "CT Scan Available",
     tags: ["NABL & NABH", "7:00 AM – 8:00 PM"],
   },
   {
@@ -160,10 +159,10 @@ const locations = [
 ];
 
 const services = [
-  { name: "Ultrasound", image: `${IMG}/service-ultrasound.svg`, scan: "Ultrasound" },
   { name: "PET-CT", image: `${IMG}/service-petct.svg`, scan: "PET-CT" },
   { name: "MRI", image: `${IMG}/service-mri.svg`, scan: "MRI" },
   { name: "CT Scan", image: `${IMG}/service-ct.svg`, scan: "CT Scan" },
+  { name: "Ultrasound", image: `${IMG}/service-ultrasound.svg`, scan: "Ultrasound" },
   { name: "X-Ray", image: `${IMG}/service-xray.svg`, scan: "X-Ray" },
   { name: "CBCT", image: `${IMG}/service-cbct.svg`, scan: "CBCT" },
   { name: "Mammography", image: `${IMG}/service-mammo.svg`, scan: "Mammography" },
@@ -437,7 +436,7 @@ export default function CtLandingPage() {
             <div className="center-heading">
               <span className="eyebrow">CT SCAN SERVICES</span>
               <h2>CT Scans We Offer</h2>
-              <p>NCCT, contrast CECT, 3D imaging and angiography, reported from the same Gurugram facility.</p>
+              <p>Head, chest, abdomen, sinus and KUB studies, along with other specialised CT scans at our Gurugram centre.</p>
             </div>
             <div className="scans-grid">
               {scans.map((item) => (
@@ -564,11 +563,6 @@ export default function CtLandingPage() {
                       <span>{location.address}</span>
                     </address>
                     <div className="location-meta">
-                      {location.highlight ? (
-                        <span className="location-chip location-chip-highlight">
-                          <span className="location-chip-check">✓</span> {location.highlight}
-                        </span>
-                      ) : null}
                       {location.tags.map((tag) => (
                         <span className="location-chip" key={tag}>
                           <span className="location-chip-check">✓</span> {tag}

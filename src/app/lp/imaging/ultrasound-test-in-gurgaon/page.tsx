@@ -46,7 +46,7 @@ const scans = [
   },
   {
     title: "Obstetric / Level I & II Scan",
-    description: "Pregnancy scans for fetal well-being, growth and anomaly screening, including 2D/4D imaging.",
+    description: "Pregnancy scans for fetal well-being, growth and anomaly screening, including 2D imaging.",
     image: `${IMG}/obstetric.svg`,
     scan: "Obstetric / Pregnancy Scan",
   },
@@ -73,7 +73,7 @@ const scans = [
 const features = [
   {
     title: "Samsung V7 Ultrasound",
-    description: "High-end 2D, 3D and 4D imaging with excellent colour sensitivity for precise diagnosis.",
+    description: "High-end 2D and 3D imaging with excellent colour sensitivity for precise diagnosis.",
     image: `${IMG}/feature-samsung.png`,
   },
   {
@@ -131,13 +131,13 @@ const steps = [
 ];
 
 const doctors = [
-  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab6293222f360.01643474.jpg" },
-  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629eb9d81b8.78874086.jpg" },
-  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629c50e8631.06714162.jpg" },
-  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab629adb09171.37034093.jpg" },
-  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b65e9e178.76656913.jpg" },
-  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b43e47b16.91390783.jpg" },
-  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: "https://www.mdrcindia.com/uploads/doctor/img_6ab62b30207909.87842987.jpg" },
+  { name: "Dr. Devendra Singh Yadav", role: "Managing Director", image: `${IMG}/doctor-devendra.jpg` },
+  { name: "Dr. Deepali Yadav", role: "Director & Sr. Consultant - Radiology", image: `${IMG}/doctor-deepali.jpg` },
+  { name: "Dr. Nitin Kumar", role: "Director & Sr. Consultant - Radiology & Imaging", image: `${IMG}/doctor-nitin.jpg` },
+  { name: "Dr. Rashmi Kumari", role: "Sr. Consultant Radiologist", image: `${IMG}/doctor-rashmi.jpg` },
+  { name: "Dr. Ankit Kataria", role: "Sr. Consultant Radiologist", image: `${IMG}/doctor-ankit.jpg` },
+  { name: "Dr. Rajat Garg", role: "Consultant Radiologist", image: `${IMG}/doctor-rajat.jpg` },
+  { name: "Dr. Padma Chauhan", role: "Consultant Radiologist", image: `${IMG}/doctor-padma.jpg` },
 ];
 
 const locations = [
@@ -209,7 +209,7 @@ const faqs = [
   {
     question: "What are Level I and Level II pregnancy scans?",
     answer:
-      "These obstetric scans check fetal growth and well-being and look for congenital anomalies. Level II is commonly called the anomaly scan. 2D remains the gold standard; 4D imaging can add diagnostic detail.",
+      "These obstetric scans check fetal growth and well-being and look for congenital anomalies. Level II is commonly called the anomaly scan. 2D remains the gold standard for these scans.",
   },
 ];
 
@@ -355,7 +355,7 @@ export default function UltrasoundLandingPage() {
           <div className="container hero-grid">
             <div className="hero-content">
               <h1>
-                Advanced Ultrasound Scan <span>in Gurugram</span>
+                Advanced Ultrasound & Colour Doppler <span>in Gurugram</span>
               </h1>
               <p className="hero-description">
                 Safe, radiation-free sonography with high-resolution Samsung V7 imaging, reported by experienced radiologists.
@@ -424,7 +424,7 @@ export default function UltrasoundLandingPage() {
                   An ultrasound scan, commonly known as sonography, is one of the safest and most frequently prescribed imaging tests. Unlike X-rays or CT scans, ultrasound does not use ionizing radiation. It uses high-frequency sound waves to generate real-time images of your internal organs, pregnancy, blood flow and soft tissues.
                 </p>
                 <p>
-                  At MDRC Gurugram, scans are performed on advanced Samsung V7 ultrasound systems for excellent 2D, 3D and 4D imaging. From whole abdomen and KUB studies to obstetric Level I & II scans, color Doppler, breast, thyroid and TVS, every examination is reported by experienced radiologists in a calm, patient-friendly setting.
+                  At MDRC Gurugram, scans are performed on advanced Samsung V7 ultrasound systems for excellent 2D and 3D imaging. From whole abdomen and KUB studies to obstetric Level I & II scans, color Doppler, breast, thyroid and TVS, every examination is reported by experienced radiologists in a calm, patient-friendly setting.
                 </p>
                 <div className="content-points">
                   <div className="content-point">
