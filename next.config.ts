@@ -21,6 +21,16 @@ const nextConfig: import("next").NextConfig = {
         destination: "/lp/imaging/pet-ct-scan-in-gurgaon/:path*",
         permanent: true,
       },
+      {
+        source: "/lp/imaging/ultrasound-test-in-gurgaon",
+        destination: "/lp/imaging/ultrasound-in-gurgaon",
+        permanent: true,
+      },
+      {
+        source: "/lp/imaging/ultrasound-test-in-gurgaon/:path*",
+        destination: "/lp/imaging/ultrasound-in-gurgaon/:path*",
+        permanent: true,
+      },
     ];
   },
 };

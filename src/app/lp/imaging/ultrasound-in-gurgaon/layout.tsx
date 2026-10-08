@@ -1,7 +1,7 @@
 import "./ultrasound.css";
 
 const SITE_URL = "https://www.mdrcindia.com";
-const PAGE_URL = `${SITE_URL}/lp/imaging/ultrasound-test-in-gurgaon`;
+const PAGE_URL = `${SITE_URL}/lp/imaging/ultrasound-in-gurgaon`;
 const TITLE = "Ultrasound Scan in Gurugram | Abdomen, Pregnancy, Doppler | MDRC";
 const DESCRIPTION =
   "Book an ultrasound scan in Gurugram at MDRC. Whole abdomen, KUB, obstetric Level I & II, color Doppler, breast, thyroid and TVS with expert radiologists. Samsung V7 imaging. NABL & NABH accredited.";
