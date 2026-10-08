@@ -15,6 +15,7 @@
   -webkit-font-smoothing: antialiased;
   width: 100%;
   overflow-x: hidden;
+  padding-top: 82px;
 }
 
 html.mri-landing-active,
@@ -67,8 +68,10 @@ body.mri-landing-active {
 }
 
 .ct-landing .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--border);
@@ -1028,16 +1031,20 @@ body.mri-landing-active {
 
 @media (max-width: 700px) {
   .ct-landing {
+    padding-top: 64px;
     padding-bottom: 76px;
   }
 
   .ct-landing .header-inner,
   .ct-landing .footer-inner,
   .ct-landing .final-cta-inner,
-  .ct-landing .trust-strip-grid,
   .ct-landing .content-points,
   .ct-landing .booking-form {
     grid-template-columns: 1fr;
+  }
+
+  .ct-landing .trust-strip-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .ct-landing .scans-grid,
@@ -1152,11 +1159,15 @@ body.mri-landing-active {
   }
 
   .ct-landing .trust-item {
-    border-right: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .ct-landing .trust-item:last-child {
+  .ct-landing .trust-item:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .ct-landing .trust-item:nth-last-child(-n + 2) {
     border-bottom: 0;
   }
 

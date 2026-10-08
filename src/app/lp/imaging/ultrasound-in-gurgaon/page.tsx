@@ -666,13 +666,6 @@ export default function UltrasoundLandingPage() {
               <p>Book abdomen, pregnancy, Doppler, breast, thyroid and other ultrasound scans with experienced radiologists at MDRC.</p>
             </div>
             <div className="final-buttons">
-              <button type="button" className="btn-book btn-white-book" onClick={() => openBooking("Ultrasound")}>
-                Book Now
-              </button>
-              <a href={PHONE_HREF} className="header-call">
-                <img src={`${IMG}/call.png`} alt="" />
-                <span>{PHONE_DISPLAY}</span>
-              </a>
               <a href={WHATSAPP_HREF} className="header-whatsapp" target="_blank" rel="noopener noreferrer">
                 <img src={`${IMG}/whatsapp.png`} alt="" />
                 <span>WhatsApp</span>

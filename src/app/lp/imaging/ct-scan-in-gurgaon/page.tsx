@@ -647,13 +647,6 @@ export default function CtLandingPage() {
               <p>Book NCCT, CECT, 3D and angiography scans on a 128 Slice Cardiac CT Scanner with experienced radiologists at MDRC.</p>
             </div>
             <div className="final-buttons">
-              <button type="button" className="btn-book btn-white-book" onClick={() => openBooking("CT Scan")}>
-                Book Now
-              </button>
-              <a href={PHONE_HREF} className="header-call">
-                <img src={`${IMG}/call.png`} alt="" />
-                <span>{PHONE_DISPLAY}</span>
-              </a>
               <a href={WHATSAPP_HREF} className="header-whatsapp" target="_blank" rel="noopener noreferrer">
                 <img src={`${IMG}/whatsapp.png`} alt="" />
                 <span>WhatsApp</span>
