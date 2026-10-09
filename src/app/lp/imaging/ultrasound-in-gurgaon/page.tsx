@@ -379,7 +379,7 @@ export default function UltrasoundLandingPage() {
             </div>
             <div className="hero-visual">
               <div className="hero-image-wrapper">
-                <img src={`${IMG}/ultrasound-machine.jpg`} alt="Ultrasound scan machine for advanced imaging in Gurugram" width={1400} height={1050} />
+                <img src={`${IMG}/ultrasound-machine.jpg`} alt="Ultrasound scan machine for advanced imaging in Gurugram" width={864} height={1152} />
               </div>
               <div className="hero-badge">
                 <span className="badge-icon">+</span>

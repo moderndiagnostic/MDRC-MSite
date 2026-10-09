@@ -209,9 +209,9 @@ body.mri-landing-active {
 
 .ct-landing .hero-image-wrapper img {
   width: 100%;
-  aspect-ratio: 7 / 6;
-  object-fit: contain;
-  background: linear-gradient(180deg, #d7eef8 0%, #eef8fc 100%);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
 }
 
 .ct-landing .hero-badge {

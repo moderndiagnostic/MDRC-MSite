@@ -365,7 +365,7 @@ export default function CtLandingPage() {
             </div>
             <div className="hero-visual">
               <div className="hero-image-wrapper">
-                <img src={`${IMG}/ct-machine.jpg`} alt="Indian patient on a CT scanner at MDRC Gurugram" width={1400} height={1050} />
+                <img src={`${IMG}/ct-machine.jpg`} alt="Indian patient on a CT scanner at MDRC Gurugram" width={1280} height={720} />
               </div>
               <div className="hero-badge">
                 <span className="badge-icon">+</span>

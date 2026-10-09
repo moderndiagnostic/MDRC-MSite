@@ -209,9 +209,9 @@ body.mri-landing-active {
 
 .ultrasound-landing .hero-image-wrapper img {
   width: 100%;
-  aspect-ratio: 7 / 6;
-  object-fit: contain;
-  background: linear-gradient(180deg, #d7eef8 0%, #eef8fc 100%);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center;
 }
 
 .ultrasound-landing .hero-badge {
