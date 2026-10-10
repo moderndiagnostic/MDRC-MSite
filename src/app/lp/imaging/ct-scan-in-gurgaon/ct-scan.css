@@ -343,9 +343,9 @@ body.mri-landing-active {
 
 .ct-landing .intro-visual img {
   width: 100%;
-  min-height: 340px;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
+  object-position: center;
 }
 
 .ct-landing .scans-grid {
@@ -1152,10 +1152,6 @@ body.mri-landing-active {
 
   .ct-landing .location-image {
     min-height: 180px;
-  }
-
-  .ct-landing .intro-visual img {
-    min-height: 220px;
   }
 
   .ct-landing .trust-item {

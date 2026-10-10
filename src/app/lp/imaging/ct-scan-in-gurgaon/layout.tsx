@@ -44,8 +44,8 @@ export const metadata = {
     images: [
       {
         url: IMAGE,
-        width: 1400,
-        height: 1050,
+        width: 1024,
+        height: 576,
         alt: "Indian patient during a CT scan at MDRC Gurugram",
       },
     ],
