@@ -92,7 +92,6 @@ export default function Header() {
   const router = useRouter(); // Get the Next.js router instance
 
   const [searchValue, setSearchValue] = useState("");
-  const [displayedPlaceholder, setDisplayedPlaceholder] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const { user, setUser } = useUser();
   const { clearCart } = useCart(user?.userID, user?.userPhone, "");
@@ -157,6 +156,15 @@ export default function Header() {
 
   // Search Placeholder Animation
   useEffect(() => {
+    // Written straight to the inputs so each typing tick does not re-render the whole header.
+    const setDisplayedPlaceholder = (text: string) => {
+      document
+        .querySelectorAll<HTMLInputElement>("input[data-search-placeholder]")
+        .forEach((input) => {
+          input.placeholder = text;
+        });
+    };
+
     if (!isSearchFocused && searchValue === "") {
       let currentIndex = 0;
       let timeoutId: ReturnType<typeof setTimeout>;
@@ -445,7 +453,7 @@ export default function Header() {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
-                placeholder={displayedPlaceholder}
+                data-search-placeholder
                 className="w-full h-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:gradient-blue"
               />
               <img
@@ -492,7 +500,7 @@ export default function Header() {
                   onChange={handleSearchChange}
                   onFocus={() => setIsSearchFocused(true)}
                   onBlur={() => setIsSearchFocused(false)}
-                  placeholder={displayedPlaceholder}
+                  data-search-placeholder
                   className="w-full h-11 rounded-lg border py-2 border-gray-300 px-4 text-sm focus:outline-none"
                 />
                 <img
@@ -592,7 +600,7 @@ export default function Header() {
                   onChange={handleSearchChange}
                   onFocus={() => setIsSearchFocused(true)}
                   onBlur={() => setIsSearchFocused(false)}
-                  placeholder={displayedPlaceholder}
+                  data-search-placeholder
                   className="w-full rounded-lg px-4 py-2 text-sm focus:outline-none"
                 />
                 <img

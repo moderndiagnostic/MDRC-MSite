@@ -48,7 +48,8 @@ const ContactInquiryModal = dynamic(
 );
 
 export default function HomePageClient() {
-  const { homeData } = useDashboard();
+  const { homeData, error } = useDashboard();
+  const isHomeDataPending = !homeData?.cityDetail && !error;
   const { cityDetails } = useCity();
   const [openInquiry, setOpenInquiry] = useState(false);
   const [openAppPopup, setOpenAppPopup] = useState(false);
@@ -63,7 +64,7 @@ export default function HomePageClient() {
 
     const timer = setTimeout(() => {
       setOpenAppPopup(true);
-    }, 600);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -118,7 +119,18 @@ export default function HomePageClient() {
 
   return (
     <div className=" space-y-6">
-      {homeData?.banner && <BannerSlider banners={homeData.banner} />}
+      {homeData?.banner?.length ? (
+        <BannerSlider banners={homeData.banner} />
+      ) : isHomeDataPending ? (
+        <div className="relative overflow-hidden mb-0" aria-hidden="true">
+          <div className="p-3">
+            <div className="w-full aspect-[650/350] bg-[#E0E0E0]" />
+          </div>
+          <div className="w-full gradient-blue pt-4 pb-3 -mt-5">
+            <div className="h-2" />
+          </div>
+        </div>
+      ) : null}
       <section className="grid grid-cols-2 gap-3 my-8 px-4">
         <div className="rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.15)]  overflow-hidden bg-[#EAF9FF] ">
           <Link href={`/pathology/lab-blood-test-near/${cityDetails?.slug}`}>
@@ -215,7 +227,7 @@ export default function HomePageClient() {
 
             <div className="grid grid-cols-2 gap-2 mt-2">
               <div className="flex gap-4 items-center">
-                <img src="/assets/images/icon/certified.svg" className="" />
+                <img src="/assets/images/icon/certified.svg" width={30} height={30} className="" />
                 <div>
                   <p className="font-semibold tx-light-blue ">NABH & NABL</p>
                   <p className="text-xs text-gray-500">Certified Labs</p>
@@ -223,7 +235,7 @@ export default function HomePageClient() {
               </div>
 
               <div className="flex gap-4 items-center">
-                <img src="/assets/images/icon/experience.svg" className="" />
+                <img src="/assets/images/icon/experience.svg" width={30} height={30} className="" />
                 <div>
                   <p className="font-semibold tx-light-blue ">41+</p>
                   <p className="text-xs text-gray-500">Years Of Experience</p>
@@ -231,7 +243,7 @@ export default function HomePageClient() {
               </div>
 
               <div className="flex gap-4 items-center">
-                <img src="/assets/images/icon/labs.svg" className="" />
+                <img src="/assets/images/icon/labs.svg" width={30} height={30} className="" />
                 <div>
                   <p className="font-semibold tx-light-blue ">25+</p>
                   <p className="text-xs text-gray-500">Labs in India</p>
@@ -239,7 +251,7 @@ export default function HomePageClient() {
               </div>
 
               <div className="flex gap-4 items-center">
-                <img src="/assets/images/icon/customers.svg" className="" />
+                <img src="/assets/images/icon/customers.svg" width={30} height={30} className="" />
                 <div>
                   <p className="font-semibold tx-light-blue ">1.5 Crore+</p>
                   <p className="text-xs text-gray-500">Satisfied Customers</p>
@@ -272,7 +284,7 @@ export default function HomePageClient() {
             className="flex gap-4 items-center"
             onClick={() => setOpenInquiry(true)}
           >
-            <img src="/assets/images/logo/call.svg" alt="call" />
+            <img src="/assets/images/logo/call.svg" alt="call" width={45} height={45} />
             <div>
               <h4 className="text-[14px] tx-blue font-semibold ">
                 Unable To Find The Right Test/Scan ?
@@ -309,6 +321,10 @@ export default function HomePageClient() {
                   <img
                     src={banner || "/assets/images/doctor/doctor.svg"}
                     alt="Food Intolerance Test"
+                    width={1300}
+                    height={667}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full object-cover"
                   />
                 </SwiperSlide>
@@ -331,7 +347,15 @@ export default function HomePageClient() {
           Our Health Checkup Journey
         </h2>
 
-        <img src="/assets/svg/checkup-journy.svg" alt="" className="w-full" />
+        <img
+          src="/assets/svg/checkup-journy.svg"
+          alt=""
+          width={347}
+          height={443}
+          loading="lazy"
+          decoding="async"
+          className="w-full"
+        />
       </section>
 
       <RadiologyImaginingTest />
@@ -356,6 +380,10 @@ export default function HomePageClient() {
                   <img
                     src={banner || "/assets/images/doctor/doctor.svg"}
                     alt="Food Intolerance Test"
+                    width={1300}
+                    height={667}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full object-cover"
                   />
                 </SwiperSlide>
@@ -388,6 +416,10 @@ export default function HomePageClient() {
               <img
                 src="https://www.mdrcindia.com/images/home_image_2.jpg"
                 alt="Why Modern Diagnostic 2"
+                width={1432}
+                height={1536}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
@@ -397,6 +429,10 @@ export default function HomePageClient() {
               <img
                 src="https://www.mdrcindia.com/images/home_image_3.jpg"
                 alt="Why Modern Diagnostic 3"
+                width={1432}
+                height={1536}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
@@ -406,6 +442,10 @@ export default function HomePageClient() {
               <img
                 src="https://www.mdrcindia.com/images/home_image_1.jpg"
                 alt="Why Modern Diagnostic 1"
+                width={1432}
+                height={1536}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto object-cover"
               />
             </SwiperSlide>
@@ -542,6 +582,10 @@ export default function HomePageClient() {
                 <img
                   src="/assets/images/high-end-testing/pregnancy.svg"
                   alt="Pregnancy Care"
+                  width={114}
+                  height={76}
+                  loading="lazy"
+                  decoding="async"
                   className=" w-full object-cover mb-3"
                 />
                 <p className="text-gray-800 font-semibold mb-2">Pregnancy </p>
@@ -554,6 +598,10 @@ export default function HomePageClient() {
                 <img
                   src="/assets/images/high-end-testing/tdm.svg"
                   alt="TDM"
+                  width={114}
+                  height={76}
+                  loading="lazy"
+                  decoding="async"
                   className=" w-full object-cover  mb-3"
                 />
                 <p className="text-gray-800 font-semibold mb-2">TDM</p>
@@ -566,6 +614,10 @@ export default function HomePageClient() {
                 <img
                   src="/assets/images/high-end-testing/oncology.svg"
                   alt="Oncology"
+                  width={114}
+                  height={76}
+                  loading="lazy"
+                  decoding="async"
                   className=" w-full object-cover mb-3"
                 />
                 <p className="text-gray-800 font-semibold mb-2">Oncology</p>

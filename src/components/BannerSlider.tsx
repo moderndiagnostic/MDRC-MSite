@@ -127,6 +127,8 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                     <img
                       src={item.image}
                       alt={`banner-${i}`}
+                      width={650}
+                      height={350}
                       onLoad={() => handleImageLoad(i)}
                       fetchPriority={i === 0 ? "high" : "low"}
                       loading={i === 0 ? "eager" : "lazy"}
@@ -138,6 +140,8 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                   <img
                     src={item.image}
                     alt={`banner-${i}`}
+                    width={650}
+                    height={350}
                     onLoad={() => handleImageLoad(i)}
                     fetchPriority={i === 0 ? "high" : "low"}
                     loading={i === 0 ? "eager" : "lazy"}

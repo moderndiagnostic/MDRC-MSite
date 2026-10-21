@@ -86,6 +86,8 @@ export default function AppDownloadPopup({
           className={styles.mdrcPopupLogo}
           src="/assets/images/logo/mdrc-app-popup-logo.jpg"
           alt="Modern Diagnostic & Research Centre"
+          width={1024}
+          height={258}
         />
 
         <h2 id="mdrc-popup-title" className={styles.mdrcPopupTitle}>
