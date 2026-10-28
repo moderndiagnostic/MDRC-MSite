@@ -1,0 +1,1055 @@
+.allscans-landing {
+  --primary: #0879b8;
+  --primary-dark: #05618f;
+  --primary-light: #eef8fc;
+  --whatsapp: #25d366;
+  --dark: #102a43;
+  --text: #53657a;
+  --border: #e5edf2;
+  --light: #f6fafc;
+  --white: #ffffff;
+}
+
+.allscans-landing * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html:has(.allscans-landing) {
+  scroll-behavior: smooth;
+}
+
+.allscans-landing {
+  color: #172b4d;
+  background: var(--white);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.allscans-landing img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.allscans-landing a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.allscans-landing button,
+.allscans-landing input,
+.allscans-landing select,
+.allscans-landing textarea {
+  font-family: inherit;
+}
+
+.allscans-landing .container {
+  width: min(1180px, 92%);
+  margin: 0 auto;
+}
+
+.allscans-landing .eyebrow {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.allscans-landing h1, .allscans-landing h2, .allscans-landing h3 {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.allscans-landing .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.allscans-landing .header-inner {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.allscans-landing .logo img {
+  width: 220px;
+}
+
+.allscans-landing .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.allscans-landing .btn,
+.allscans-landing .btn-book,
+.allscans-landing .header-call,
+.allscans-landing .header-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allscans-landing .btn:hover,
+.allscans-landing .btn-book:hover,
+.allscans-landing .header-call:hover,
+.allscans-landing .header-whatsapp:hover {
+  transform: translateY(-1px);
+}
+
+.allscans-landing .btn-book,
+.allscans-landing .header-call {
+  background: var(--primary);
+}
+
+.allscans-landing .btn-book:hover,
+.allscans-landing .header-call:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 8px 20px rgba(8, 121, 184, 0.22);
+}
+
+.allscans-landing .header-whatsapp {
+  background: var(--whatsapp);
+}
+
+.allscans-landing .header-whatsapp:hover {
+  background: #1ebe5d;
+}
+
+.allscans-landing .header-call img,
+.allscans-landing .header-whatsapp img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+.allscans-landing .header-call-copy {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.15;
+}
+
+.allscans-landing .header-call-number {
+  display: inline;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.allscans-landing .hero {
+  background: linear-gradient(120deg, #eef8fc 0%, #ffffff 68%);
+  padding: 64px 0 72px;
+}
+
+.allscans-landing .hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.allscans-landing .hero h1 {
+  margin-bottom: 16px;
+  font-size: 56px;
+  line-height: 1.08;
+  letter-spacing: -1.4px;
+}
+
+.allscans-landing .hero h1 span {
+  color: var(--primary);
+}
+
+.allscans-landing .hero-description {
+  max-width: 520px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.allscans-landing .hero-buttons {
+  margin-top: 28px;
+}
+
+.allscans-landing .hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  margin-top: 28px;
+  color: #3e5568;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.allscans-landing .check-icon {
+  color: var(--primary);
+  margin-right: 4px;
+}
+
+.allscans-landing .hero-visual {
+  position: relative;
+}
+
+.allscans-landing .hero-image-wrapper,
+.allscans-landing .intro-visual {
+  overflow: hidden;
+  border-radius: 20px;
+  background: #dceff7;
+  box-shadow: 0 22px 50px rgba(8, 121, 184, 0.12);
+}
+
+.allscans-landing .hero-image-wrapper img {
+  width: 100%;
+  aspect-ratio: 7 / 6;
+  object-fit: cover;
+}
+
+.allscans-landing .hero-badge {
+  position: absolute;
+  left: -16px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(16, 42, 67, 0.12);
+}
+
+.allscans-landing .badge-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.allscans-landing .hero-badge small {
+  display: block;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.allscans-landing .trust-strip {
+  background: var(--primary);
+  color: #fff;
+}
+
+.allscans-landing .trust-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.allscans-landing .trust-item {
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.allscans-landing .trust-item:last-child {
+  border-right: 0;
+}
+
+.allscans-landing .trust-number {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.allscans-landing .trust-label {
+  max-width: 180px;
+  font-size: 13px;
+  opacity: 0.92;
+}
+
+.allscans-landing .section {
+  padding: 72px 0;
+}
+
+.allscans-landing .section-light {
+  background: var(--light);
+}
+
+.allscans-landing .section-blue-light {
+  background: var(--primary-light);
+}
+
+.allscans-landing .center-heading {
+  max-width: 700px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.allscans-landing .center-heading h2,
+.allscans-landing .section-heading h2 {
+  margin-top: 8px;
+  font-size: 38px;
+  line-height: 1.18;
+}
+
+.allscans-landing .center-heading p {
+  margin-top: 12px;
+  color: var(--text);
+}
+
+.allscans-landing .intro-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.allscans-landing .intro-content {
+  color: var(--text);
+}
+
+.allscans-landing .intro-content p + p {
+  margin-top: 14px;
+}
+
+.allscans-landing .content-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.allscans-landing .content-point {
+  padding: 14px;
+  background: var(--primary-light);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.allscans-landing .intro-visual img {
+  width: 100%;
+  min-height: 340px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.allscans-landing .mri-scans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.allscans-landing .mri-scan-card,
+.allscans-landing .feature-card,
+.allscans-landing .step-card,
+.allscans-landing .location-card,
+.allscans-landing .simple-service,
+.allscans-landing .doctor-card {
+  background: #fff;
+  border: 1px solid #dcecf3;
+  border-radius: 14px;
+}
+
+.allscans-landing .mri-scan-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 132px;
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allscans-landing .mri-scan-card:hover,
+.allscans-landing .feature-card:hover,
+.allscans-landing .step-card:hover,
+.allscans-landing .simple-service:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(12, 71, 98, 0.08);
+}
+
+.allscans-landing .mri-scan-icon,
+.allscans-landing .feature-icon,
+.allscans-landing .step-icon {
+  display: grid;
+  place-items: center;
+  background: var(--primary-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.allscans-landing .mri-scan-icon {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+}
+
+.allscans-landing .mri-scan-icon img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.allscans-landing .mri-scan-content h3 {
+  font-size: 17px;
+}
+
+.allscans-landing .mri-scan-content p {
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.allscans-landing .section-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.allscans-landing .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.allscans-landing .feature-card {
+  display: flex;
+  gap: 14px;
+  padding: 22px;
+}
+
+.allscans-landing .feature-icon {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+}
+
+.allscans-landing .feature-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.allscans-landing .feature-card h3 {
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.allscans-landing .feature-card p {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.allscans-landing .steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.allscans-landing .step-card {
+  position: relative;
+  padding: 24px;
+}
+
+.allscans-landing .step-number {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  color: #b6dbe9;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.allscans-landing .step-icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+}
+
+.allscans-landing .step-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.allscans-landing .step-card h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.allscans-landing .step-card p {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.allscans-landing .doctor-slider {
+  position: relative;
+  padding: 0 8px;
+}
+
+.allscans-landing .doctor-grid {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.allscans-landing .doctor-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.allscans-landing .doctor-card {
+  flex: 0 0 260px;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+.allscans-landing .doctor-photo {
+  aspect-ratio: 2.5 / 3;
+  background: var(--primary-light);
+}
+
+.allscans-landing .doctor-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.allscans-landing .doctor-info {
+  padding: 16px;
+}
+
+.allscans-landing .doctor-info h3 {
+  font-size: 16px;
+}
+
+.allscans-landing .doctor-info p {
+  margin-top: 4px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.allscans-landing .doctor-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--primary);
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  transform: translateY(-50%);
+}
+
+.allscans-landing .doctor-arrow-left { left: -8px; }
+.allscans-landing .doctor-arrow-right { right: -8px; }
+
+.allscans-landing .location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.allscans-landing .location-card {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 42% 58%;
+}
+
+.allscans-landing .location-image {
+  min-height: 220px;
+  background: var(--primary-light);
+}
+
+.allscans-landing .location-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.allscans-landing .location-content {
+  padding: 24px;
+}
+
+.allscans-landing .location-label {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.allscans-landing .location-content h3 {
+  margin: 8px 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.allscans-landing .location-content p {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.allscans-landing .services-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.allscans-landing .simple-service {
+  width: 100%;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.allscans-landing .simple-service-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.allscans-landing .simple-service span {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--dark);
+}
+
+.allscans-landing .final-cta {
+  color: #fff;
+  background: linear-gradient(120deg, #0879b8, #07567f);
+}
+
+.allscans-landing .final-cta-inner {
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 0;
+}
+
+.allscans-landing .final-cta h2 {
+  max-width: 620px;
+  color: #fff;
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+.allscans-landing .final-cta p {
+  max-width: 560px;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.allscans-landing .final-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.allscans-landing .btn-white-book {
+  background: #fff;
+  color: var(--primary);
+}
+
+.allscans-landing .btn-white-book:hover {
+  background: #f4fbff;
+  color: var(--primary-dark);
+}
+
+.allscans-landing .section-dark {
+  color: #fff;
+  background: var(--dark);
+  padding: 48px 0;
+}
+
+.allscans-landing .trust-image-grid {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.allscans-landing .trust-image-wrapper {
+  height: 280px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--primary-light);
+}
+
+.allscans-landing .trust-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.allscans-landing .eyebrow-light {
+  color: #7dd3f7;
+}
+
+.allscans-landing .trust-content h2 {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 32px;
+}
+
+.allscans-landing .trust-list {
+  list-style: none;
+  margin-top: 16px;
+}
+
+.allscans-landing .trust-list li {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.allscans-landing .faq-container {
+  max-width: 850px;
+}
+
+.allscans-landing .faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.allscans-landing .faq-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.allscans-landing .faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.allscans-landing .faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.allscans-landing .faq-plus {
+  color: var(--primary);
+  font-size: 22px;
+}
+
+.allscans-landing .faq-item[open] .faq-plus {
+  transform: rotate(45deg);
+}
+
+.allscans-landing .faq-item p {
+  padding: 0 36px 18px 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.allscans-landing .footer {
+  background: #f2f2f2;
+  padding: 18px 0;
+}
+
+.allscans-landing .footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.allscans-landing .footer-logo img {
+  width: 150px;
+}
+
+.allscans-landing .footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.allscans-landing .footer-link {
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.allscans-landing .footer p {
+  color: #000;
+  font-size: 13px;
+}
+
+.allscans-landing .booking-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(16, 42, 67, 0.55);
+}
+
+.allscans-landing .booking-overlay[hidden] {
+  display: none;
+}
+
+.allscans-landing .booking-modal {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 28px 24px 24px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.allscans-landing .booking-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.allscans-landing .booking-modal h2 {
+  margin: 8px 0 6px;
+  font-size: 26px;
+}
+
+.allscans-landing .booking-lead {
+  margin-bottom: 18px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.allscans-landing .booking-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.allscans-landing .booking-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.allscans-landing .required-mark {
+  color: #d32f2f;
+}
+
+.allscans-landing .booking-form input,
+.allscans-landing .booking-form select,
+.allscans-landing .booking-form textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.allscans-landing .booking-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.allscans-landing .booking-form label.booking-terms {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.allscans-landing .booking-form label.booking-terms input[type="checkbox"] {
+  margin-top: 0;
+}
+
+.allscans-landing .booking-terms a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.allscans-landing .booking-full,
+.allscans-landing .booking-submit {
+  grid-column: 1 / -1;
+}
+
+.allscans-landing .booking-success {
+  text-align: center;
+  padding: 20px 8px;
+}
+
+.allscans-landing .booking-success p {
+  margin: 10px 0 20px;
+  color: var(--text);
+}
+
+.allscans-landing .mobile-sticky-cta {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .allscans-landing .hero-grid,
+  .allscans-landing .intro-grid,
+  .allscans-landing .trust-image-grid,
+  .allscans-landing .location-grid,
+  .allscans-landing .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .allscans-landing .hero h1 {
+    font-size: 42px;
+  }
+
+  .allscans-landing .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .allscans-landing .steps-grid,
+  .allscans-landing .mri-scans-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .allscans-landing .header-inner,
+  .allscans-landing .footer-inner,
+  .allscans-landing .final-cta-inner,
+  .allscans-landing .trust-strip-grid,
+  .allscans-landing .content-points,
+  .allscans-landing .services-grid,
+  .allscans-landing .steps-grid,
+  .allscans-landing .mri-scans-grid,
+  .allscans-landing .booking-form {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .allscans-landing .header-inner,
+  .allscans-landing .footer-meta,
+  .allscans-landing .hero-content,
+  .allscans-landing .center-heading,
+  .allscans-landing .intro-copy,
+  .allscans-landing .final-cta-inner {
+    text-align: center;
+    align-items: center;
+  }
+
+  .allscans-landing .logo img {
+    width: 176px;
+  }
+
+  .allscans-landing .location-card {
+    grid-template-columns: 1fr;
+  }
+
+  .allscans-landing {
+    padding-bottom: 76px;
+  }
+
+  .allscans-landing .mobile-sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1200;
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+
+  .allscans-landing .mobile-sticky-cta .header-call,
+  .allscans-landing .mobile-sticky-cta .btn-book {
+    flex: 1;
+  }
+
+  .allscans-landing .mobile-sticky-cta .header-call-number {
+    font-size: 12px;
+  }
+
+  .allscans-landing .site-header .btn-book {
+    display: none;
+  }
+}
+
+.allscans-landing {
+  width: 100%;
+  overflow-x: clip;
+}
+
+html.mri-landing-active,
+body.mri-landing-active {
+  background: #fff;
+}
+
+.allscans-landing .container {
+  max-width: none;
+}
+
+.allscans-landing a:hover,
+.allscans-landing button:hover {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .allscans-landing .mobile-sticky-cta {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+}
