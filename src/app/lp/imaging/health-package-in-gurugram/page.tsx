@@ -538,17 +538,9 @@ export default function HealthPackageLandingPage() {
             <img src={`${IMG}/mdrc-logo.webp`} alt="Modern Diagnostic & Research Centre" width={400} height={113} />
           </a>
           <div className="header-actions">
-            <img
-              src={`${IMG}/nabl-ilac-mra-logo.png`}
-              alt="NABL Accredited - ilac-MRA MC 7157"
-              className="header-nabl"
-              width={300}
-              height={177}
-            />
             <button type="button" className="btn-book" onClick={() => openBooking()}>
               Book Now
             </button>
-            <CallButton />
           </div>
         </div>
       </header>
@@ -818,7 +810,6 @@ export default function HealthPackageLandingPage() {
               <button type="button" className="btn-book btn-white-book" onClick={() => openBooking()}>
                 Book Now
               </button>
-              <CallButton />
             </div>
           </div>
         </section>

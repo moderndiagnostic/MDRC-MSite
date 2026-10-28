@@ -383,7 +383,6 @@ export default function AllScansLandingPage() {
             <button type="button" className="btn-book" onClick={() => openBooking()}>
               Book Now
             </button>
-            <CallButton />
           </div>
         </div>
       </header>
@@ -707,7 +706,6 @@ export default function AllScansLandingPage() {
               <button type="button" className="btn-book btn-white-book" onClick={() => openBooking()}>
                 Book Now
               </button>
-              <CallButton />
             </div>
           </div>
         </section>

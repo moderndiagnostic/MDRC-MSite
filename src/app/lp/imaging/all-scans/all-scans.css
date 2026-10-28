@@ -1052,4 +1052,30 @@ body.mri-landing-active {
   .allscans-landing .mobile-sticky-cta {
     padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   }
+
+  .allscans-landing .site-header .header-actions {
+    display: none;
+  }
+
+  .allscans-landing .site-header .header-inner {
+    min-height: 64px;
+    justify-content: center;
+  }
+
+  .allscans-landing .trust-strip-grid,
+  .allscans-landing .services-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .allscans-landing .trust-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .allscans-landing .trust-item:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .allscans-landing .trust-item:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
 }
