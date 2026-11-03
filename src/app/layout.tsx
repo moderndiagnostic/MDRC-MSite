@@ -1,6 +1,6 @@
 
 import "./globals.css";
-import { Roboto } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import { UserProvider } from "@/context/userContext";
 import { CityProvider } from "@/context/CityContext";
@@ -8,9 +8,11 @@ import { CartProvider } from "@/context/CartContext";
 import { DashboardProvider } from "@/context/DashboardContext";
 import SiteChrome from "./SiteChrome";
 
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "800"],
+const roboto = localFont({
+  src: "../fonts/roboto-latin.woff2",
+  weight: "300 900",
+  display: "swap",
+  fallback: ["Arial", "Helvetica", "sans-serif"],
 });
 
 export const viewport = {
