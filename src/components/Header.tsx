@@ -189,7 +189,25 @@ export default function Header() {
     }
   }, [isSearchFocused, searchValue]);
 
-  const menu = menuList.map(transformMenuItem);
+  const GENOMIC_SERVICES_HREF = "https://genomics.mdrcindia.com/";
+  const menu = (() => {
+    const items = menuList.map(transformMenuItem);
+    if (items.some((item) => item.href === GENOMIC_SERVICES_HREF)) {
+      return items;
+    }
+
+    const superIndex = items.findIndex((item) =>
+      /super\s*special/i.test(item.title || ""),
+    );
+    if (superIndex === -1) return items;
+
+    const next = [...items];
+    next.splice(superIndex, 0, {
+      title: "Genomic Services",
+      href: GENOMIC_SERVICES_HREF,
+    });
+    return next;
+  })();
 
   const handleLogout = async () => {
     try {
