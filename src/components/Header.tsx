@@ -203,7 +203,7 @@ export default function Header() {
 
     const next = [...items];
     next.splice(superIndex, 0, {
-      title: "Genomic Services",
+      title: "Genomic Services.",
       href: GENOMIC_SERVICES_HREF,
     });
     return next;
