@@ -5,8 +5,8 @@ const PAGE_URL = `${SITE_URL}/lp/imaging/all-scans`;
 const IMG = "/assets/images/lp/all-scans";
 const TITLE = "Radiology Scans in Gurugram | MRI, CT, PET-CT, Ultrasound, X-Ray | MDRC";
 const DESCRIPTION =
-  "Book MRI, CT, PET-CT, SPECT, Ultrasound, Digital X-Ray, Mammography, CBCT and Bone Densitometry scans in Gurugram at MDRC's NABH accredited imaging centres with expert radiologists.";
-const IMAGE = `${IMG}/advanced-mri-scan-gurugram-hero.webp`;
+  "Book MRI, CT, PET-CT, Ultrasound, Digital X-Ray, Mammography, CBCT and Bone Densitometry scans in Gurugram at MDRC's NABH accredited imaging centres with expert radiologists.";
+const IMAGE = `${IMG}/pet-ct-scanner.webp`;
 
 export const viewport = {
   width: "device-width",

@@ -9,7 +9,7 @@ const PHONE_HREF = "tel:+918920300300";
 const IMG = "/assets/images/lp/all-scans";
 const DEFAULT_SCAN = "MRI";
 
-const SCAN_TYPES = ["MRI", "PET-CT / SPECT-CT", "CT Scan", "Ultrasound", "CBCT", "Mammography", "X-Ray", "Others"];
+const SCAN_TYPES = ["MRI", "PET-CT", "CT Scan", "Ultrasound", "CBCT", "Mammography", "X-Ray", "Others"];
 
 const scans = [
   {
@@ -28,9 +28,9 @@ const scans = [
     image: `${IMG}/services/icon-petct.svg`,
   },
   {
-    title: "SPECT Scan",
-    description: "Functional 3D imaging of heart, brain and bone activity using a gamma camera.",
-    image: `${IMG}/services/icon-petct.svg`,
+    title: "Pulmonary Function Test (PFT)",
+    description: "Breathing test to assess lung capacity and airflow for asthma, COPD and other lung conditions.",
+    image: `${IMG}/services/icon-checkup.svg`,
   },
   {
     title: "Ultrasound & Doppler",
@@ -62,7 +62,7 @@ const scans = [
 const features = [
   {
     title: "All Scans Under One Roof",
-    description: "3T MRI, 128 slice CT, PET-CT, SPECT, ultrasound, X-ray and more at one centre.",
+    description: "3T MRI, 128 slice CT, PET-CT, ultrasound, X-ray and more at one centre.",
     image: `${IMG}/why-choose-mri/3t-mri-technology.webp`,
   },
   {
@@ -180,7 +180,7 @@ const locations = [
 ];
 
 const services = [
-  { name: "PET-CT / SPECT-CT", image: `${IMG}/services/icon-petct.svg`, scan: "PET-CT / SPECT-CT" },
+  { name: "PET-CT", image: `${IMG}/services/icon-petct.svg`, scan: "PET-CT" },
   { name: "MRI", image: `${IMG}/services/icon-mri.svg`, scan: "MRI" },
   { name: "CT Scan", image: `${IMG}/services/icon-ct.svg`, scan: "CT Scan" },
   { name: "X-Ray", image: `${IMG}/services/icon-xray.svg`, scan: "X-Ray" },
@@ -196,7 +196,7 @@ const faqs = [
   {
     question: "Which radiology scans are available at MDRC Gurugram?",
     answer:
-      "MDRC offers MRI, CT, PET-CT, SPECT, Ultrasound and Doppler, Digital X-Ray, Mammography, CBCT and Bone Densitometry (DEXA) scans at its NABH accredited imaging centres in Gurugram.",
+      "MDRC offers MRI, CT, PET-CT, Ultrasound and Doppler, Digital X-Ray, Mammography, CBCT and Bone Densitometry (DEXA) scans at its NABH accredited imaging centres in Gurugram.",
   },
   {
     question: "How much does a radiology scan cost in Gurugram?",
@@ -392,10 +392,10 @@ export default function AllScansLandingPage() {
           <div className="container hero-grid">
             <div className="hero-content">
               <h1>
-                Advanced Diagnostic Imaging <span>in Gurugram</span>
+                Advanced Radiology &amp; Imaging <span>in Gurugram</span>
               </h1>
               <p className="hero-description">
-                MRI, CT, PET-CT, SPECT, Ultrasound, Digital X-Ray, Mammography, CBCT and Bone Densitometry, all under one roof with expert radiologists.
+                PET-CT, 3T MRI, 128 Slice CT, Ultrasound, Digital X-Ray, Mammography, CBCT and Bone Densitometry, all under one roof with expert radiologists.
               </p>
               <div className="hero-buttons">
                 <button type="button" className="btn-book" onClick={() => openBooking()}>
@@ -417,19 +417,12 @@ export default function AllScansLandingPage() {
             <div className="hero-visual">
               <div className="hero-image-wrapper">
                 <img
-                  src={`${IMG}/advanced-mri-scan-gurugram-hero.webp`}
+                  src={`${IMG}/pet-ct-scanner.webp`}
                   alt="Radiology and imaging scans in Gurugram"
                   width={1024}
                   height={1024}
                   fetchPriority="high"
                 />
-              </div>
-              <div className="hero-badge">
-                <span className="badge-icon">+</span>
-                <div>
-                  <strong>3T MRI &amp; 128 Slice CT</strong>
-                  <small>Advanced Imaging</small>
-                </div>
               </div>
             </div>
           </div>
@@ -446,7 +439,7 @@ export default function AllScansLandingPage() {
               <span className="trust-label">Diagnostic Labs</span>
             </div>
             <div className="trust-item">
-              <span className="trust-number">1 Cr+</span>
+              <span className="trust-number">1.5 Cr+</span>
               <span className="trust-label">Patients Served</span>
             </div>
             <div className="trust-item">
@@ -464,7 +457,7 @@ export default function AllScansLandingPage() {
               </div>
               <div className="intro-content">
                 <p>
-                  Our imaging centres in Gurugram are among the NABH accredited imaging centres, which assures reliable reports. From routine X-rays and ultrasounds to advanced MRI, CT, PET-CT and SPECT studies, MDRC offers advanced medical imaging procedures for your health diagnosis, all under one roof.
+                  Our imaging centres in Gurugram are among the NABH accredited imaging centres, which assures reliable reports. From routine X-rays and ultrasounds to advanced MRI, CT and PET-CT studies, MDRC offers advanced medical imaging procedures for your health diagnosis, all under one roof.
                 </p>
                 <p>
                   Every scan is performed in a calm, patient-friendly setting and reported by experienced radiologists. Our <b>SkyraFit 3T MRI has a wide bore (70 cm) gantry</b> that is less claustrophobic, our <b>128 slice CT</b> supports cardiac and vascular studies, and our PET-CT offers FDG, PSMA, DOTA and DOPA protocols, so that treatment decisions are made with confidence.
@@ -484,10 +477,10 @@ export default function AllScansLandingPage() {
             </div>
             <div className="intro-visual">
               <img
-                src={`${IMG}/img/ct-patient.jpg`}
+                src={`${IMG}/pet-ct-patient.webp`}
                 alt="Indian patient undergoing a radiology scan at MDRC Gurugram"
-                width={1600}
-                height={900}
+                width={1024}
+                height={1024}
                 loading="lazy"
               />
             </div>

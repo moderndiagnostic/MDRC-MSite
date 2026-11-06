@@ -223,36 +223,6 @@ html:has(.allscans-landing) {
   object-fit: cover;
 }
 
-.allscans-landing .hero-badge {
-  position: absolute;
-  left: -16px;
-  bottom: 22px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 12px 32px rgba(16, 42, 67, 0.12);
-}
-
-.allscans-landing .badge-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: var(--primary);
-  border-radius: 50%;
-  font-weight: 700;
-}
-
-.allscans-landing .hero-badge small {
-  display: block;
-  color: var(--text);
-  font-size: 12px;
-}
-
 .allscans-landing .trust-strip {
   background: var(--primary);
   color: #fff;
@@ -947,9 +917,12 @@ html:has(.allscans-landing) {
   .allscans-landing .hero-grid,
   .allscans-landing .intro-grid,
   .allscans-landing .trust-image-grid,
-  .allscans-landing .location-grid,
-  .allscans-landing .feature-grid {
+  .allscans-landing .location-grid {
     grid-template-columns: 1fr;
+  }
+
+  .allscans-landing .feature-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .allscans-landing .hero h1 {
@@ -970,11 +943,6 @@ html:has(.allscans-landing) {
   .allscans-landing .header-inner,
   .allscans-landing .footer-inner,
   .allscans-landing .final-cta-inner,
-  .allscans-landing .trust-strip-grid,
-  .allscans-landing .content-points,
-  .allscans-landing .services-grid,
-  .allscans-landing .steps-grid,
-  .allscans-landing .mri-scans-grid,
   .allscans-landing .booking-form {
     grid-template-columns: 1fr;
     flex-direction: column;
@@ -1077,5 +1045,275 @@ body.mri-landing-active {
 
   .allscans-landing .trust-item:nth-last-child(-n + 2) {
     border-bottom: 0;
+  }
+
+  .allscans-landing .trust-item {
+    min-height: 92px;
+    padding: 14px 10px;
+  }
+
+  .allscans-landing .trust-number {
+    font-size: 22px;
+  }
+
+  .allscans-landing .trust-label {
+    font-size: 12px;
+  }
+
+  .allscans-landing .section {
+    padding: 44px 0;
+  }
+
+  .allscans-landing .hero {
+    padding: 32px 0 40px;
+  }
+
+  .allscans-landing .hero-grid,
+  .allscans-landing .intro-grid {
+    gap: 28px;
+  }
+
+  .allscans-landing .hero h1 {
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.6px;
+  }
+
+  .allscans-landing .hero-description {
+    margin: 0 auto;
+    font-size: 15px;
+  }
+
+  .allscans-landing .hero-buttons {
+    margin-top: 20px;
+  }
+
+  .allscans-landing .hero-trust {
+    justify-content: center;
+    gap: 8px 14px;
+    margin-top: 20px;
+    font-size: 13px;
+  }
+
+  .allscans-landing .hero-image-wrapper img {
+    aspect-ratio: 1 / 1;
+  }
+
+  .allscans-landing .center-heading {
+    margin-bottom: 24px;
+  }
+
+  .allscans-landing .center-heading h2,
+  .allscans-landing .section-heading h2 {
+    font-size: 26px;
+  }
+
+  .allscans-landing .center-heading p,
+  .allscans-landing .intro-content {
+    font-size: 14px;
+  }
+
+  .allscans-landing .content-points {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .allscans-landing .content-point {
+    padding: 10px 6px;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .allscans-landing .intro-visual img {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .allscans-landing .mri-scans-grid,
+  .allscans-landing .feature-grid,
+  .allscans-landing .steps-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .allscans-landing .mri-scan-card,
+  .allscans-landing .feature-card {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .allscans-landing .mri-scan-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .allscans-landing .mri-scan-icon {
+    flex-basis: auto;
+    width: 56px;
+    height: 56px;
+  }
+
+  .allscans-landing .mri-scan-icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .allscans-landing .mri-scan-content h3,
+  .allscans-landing .feature-card h3,
+  .allscans-landing .step-card h3 {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .allscans-landing .mri-scan-content p,
+  .allscans-landing .feature-card p,
+  .allscans-landing .step-card p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .allscans-landing .feature-icon {
+    flex-basis: auto;
+  }
+
+  .allscans-landing .step-card {
+    padding: 16px 12px;
+  }
+
+  .allscans-landing .step-number {
+    top: 10px;
+    right: 12px;
+    font-size: 20px;
+  }
+
+  .allscans-landing .step-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 12px;
+  }
+
+  .allscans-landing .doctor-slider {
+    padding: 0;
+  }
+
+  .allscans-landing .doctor-grid {
+    gap: 12px;
+    padding-bottom: 4px;
+  }
+
+  .allscans-landing .doctor-card {
+    flex: 0 0 calc(50% - 6px);
+  }
+
+  .allscans-landing .doctor-info {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .allscans-landing .doctor-info h3 {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .allscans-landing .doctor-info p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .allscans-landing .doctor-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: 20px;
+  }
+
+  .allscans-landing .doctor-arrow-left { left: -6px; }
+  .allscans-landing .doctor-arrow-right { right: -6px; }
+
+  .allscans-landing .location-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .allscans-landing .location-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .allscans-landing .location-card {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+  }
+
+  .allscans-landing .location-image {
+    min-height: 0;
+    height: 180px;
+  }
+
+  .allscans-landing .location-content {
+    padding: 16px;
+  }
+
+  .allscans-landing .location-content h3 {
+    font-size: 16px;
+  }
+
+  .allscans-landing .location-content p {
+    font-size: 13px;
+  }
+
+  .allscans-landing .trust-image-grid {
+    gap: 24px;
+  }
+
+  .allscans-landing .trust-image-wrapper {
+    height: 220px;
+  }
+
+  .allscans-landing .trust-content h2 {
+    font-size: 26px;
+  }
+
+  .allscans-landing .faq-item summary {
+    padding: 16px 0;
+    font-size: 15px;
+  }
+
+  .allscans-landing .faq-item p {
+    padding-right: 0;
+  }
+
+  .allscans-landing .final-cta-inner {
+    min-height: 0;
+    gap: 20px;
+    padding: 40px 0;
+  }
+
+  .allscans-landing .final-cta h2 {
+    font-size: 26px;
+  }
+
+  .allscans-landing .booking-modal {
+    padding: 24px 18px 18px;
+  }
+
+  .allscans-landing .booking-modal h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  .allscans-landing .hero h1 {
+    font-size: 26px;
+  }
+
+  .allscans-landing .content-points {
+    grid-template-columns: 1fr;
   }
 }
