@@ -191,19 +191,20 @@ export default function Header() {
 
   const GENOMIC_SERVICES_HREF = "https://genomics.mdrcindia.com/";
   const menu = (() => {
-    const items = menuList.map(transformMenuItem);
-    if (items.some((item) => item.href === GENOMIC_SERVICES_HREF)) {
+    const items = (menuList || []).map(transformMenuItem);
+    const isGenomics = (item: { title?: string; href?: string }) =>
+      /genomics\.mdrcindia\.com/i.test(item?.href || "") ||
+      /genomic/i.test(item?.title || "");
+    if (items.length === 0 || items.some(isGenomics)) {
       return items;
     }
 
-    const superIndex = items.findIndex((item) =>
-      /super\s*special/i.test(item.title || ""),
+    const contactIndex = items.findIndex((item) =>
+      /contact/i.test(item?.title || ""),
     );
-    if (superIndex === -1) return items;
-
     const next = [...items];
-    next.splice(superIndex, 0, {
-      title: "Genomic Services.",
+    next.splice(contactIndex === -1 ? next.length : contactIndex, 0, {
+      title: "Genomic Services",
       href: GENOMIC_SERVICES_HREF,
     });
     return next;
